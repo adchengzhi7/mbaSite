@@ -46,37 +46,13 @@
 
 
        </div>
-       <div v-else>
-          <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+       <div v-else class="row mt-5">
+
+         <div class="col">
+            <input class="form-control" v-model="filter" placeholder="Search" type="text"  >
+            <tables :filter= "filter"></tables>
+         </div>
+         <div class="col"></div>
        </div>
      </div>
    </page>
@@ -86,9 +62,19 @@
 <script>
 import page from "../components/ele-pageTemplate"
 import avatar from "../components/ele-avatar"
+import tables from "../components/ele-table"
 export default {
-  data() {
+
+  components:{
+    page,
+    avatar,tables
+  },
+  methods: {
+    
+  },
+data() {
     return {
+      filter:"",
       userData:{
         name:"李正治",
         stuId:"105306030",
@@ -115,10 +101,6 @@ export default {
     }
   },
 
-  components:{
-    page,
-    avatar
-  }
 }
 </script>
 <style scoped>
