@@ -47,11 +47,12 @@
 
        </div>
        <div v-else class="row mt-5">
-
-         <div class="col">
-            <input class="form-control" v-model="filter" placeholder="Search" type="text"  >
+         <div class="col"></div>
+         <div class="col-6">
+            <input class="form-control" v-model="filter" placeholder="輸入查詢的姓名、學號" type="text"  >
             <tables :filter= "filter"></tables>
          </div>
+         <div class="col-4"></div>
          <div class="col"></div>
        </div>
      </div>
@@ -69,6 +70,12 @@ export default {
     page,
     avatar,tables
   },
+  computed:{
+    totalPoint(){
+      let vm =this;
+      return vm.userData.points;
+    }
+  },
   methods: {
     
   },
@@ -80,6 +87,12 @@ data() {
         stuId:"105306030",
         points:[
           {
+            type:"",
+            point:"1"
+          },{
+            type:"",
+            point:"1"
+          },{
             type:"",
             point:"1"
           }

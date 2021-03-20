@@ -2,6 +2,9 @@
     --green : #38b269 !important;
     --blue:#005ead !important;
 }
+html,body{
+    background-color: rgba(212,218,224,0.12);
+}
 .bg-shadow {
     box-shadow: 0 5px 10px rgba(154,160,185,0.05), 0 15px 40px rgba(166,173,201,0.2) !important;
 }

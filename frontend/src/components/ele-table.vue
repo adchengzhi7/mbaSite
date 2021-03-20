@@ -1,20 +1,23 @@
 <template>
     <div>
         <table class="table">
+            <caption>{{filterData.length}} of {{nameList.length }}</caption>
   <thead>
     <tr>
       <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">#</th>
       <th  scope="col">姓名</th>
       <th @click ="sortBy = 'last',isReverse = !isReverse" scope="col">學號</th>
       <th @click ="sortBy = 'handle',isReverse = !isReverse" scope="col">登記點數</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr :key="item.id" v-for="item in filterData">
+    <tr class="bg-shadow rounded" :key="item.id" v-for="item in filterData">
       <th scope="row">{{item.id}}</th>
       <td   v-html="highlightMatches(item.first)"></td>
       <td  v-html="highlightMatches(item.last)"></td>
       <td  v-html="highlightMatches(item.handle)"></td>
+      <td> <router-link to="/">查看</router-link></td>
     </tr>
   </tbody>
 </table>        
@@ -118,3 +121,24 @@ export default {
     
 }
 </script>
+<style scoped>
+.table td, .table th {
+    border-top: 0px !important;
+}
+.table {
+    border-collapse: separate;
+    border-spacing: 0px 0.5rem;
+}
+.table thead th {
+    border-bottom: 0px;
+    font-weight:900px;
+    font-size: 14px;
+    color:#c0c0c0;
+}
+a{
+    color:var(--green);
+    font-weight:900;
+}
+
+
+</style>
