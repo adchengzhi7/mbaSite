@@ -60,7 +60,7 @@
 
 }
 .section-height{
-  height: 80%;
+  height: 85%;
 }
 .section{
   padding:15px 0;
@@ -68,28 +68,32 @@
   font-weight: 900;
 }
 .section:hover{
-    color: #38b269;
+    color: var(--green);
     background-color: rgba(0,0,0,0.12);
 }
 .section-active{
-    color: #38b269;
+    color: var(--green);
 }
 .m-top{
   margin-top: 90px;
 }
-.bg-shadow {
-    box-shadow: 0 5px 10px rgba(154,160,185,0.05), 0 15px 40px rgba(166,173,201,0.2);
-}
+
 .closebar{
  width:65px;
   height: 100%;
   position: fixed;
+  top:0;
+  z-index: 2;
+  background-color: #ffffff;
+
 }
 .sidebar{
-  width:25%;
+  width:250px;
   height: 100%;
   position: fixed;
+  top:0;
   z-index: 2;
+  background-color: #ffffff;
 }
 
 </style>

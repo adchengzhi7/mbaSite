@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
   <router-view/>
+  
   </div>
 </template>
 
@@ -12,6 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.no{
+  color :var(--color)
 }
 
 </style>

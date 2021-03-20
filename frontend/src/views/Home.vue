@@ -71,6 +71,7 @@ export default {
 };
 </script>
 <style scoped>
+@import "../assets/css/index.css";
 
 .btn-icon{
   background-color: #ffffff;
@@ -85,21 +86,14 @@ export default {
 .p-50{
   padding: 35% 10%;
 }
-.btn-success{
-  background-color: #38b269;
-  border:0px;
-  box-shadow: 0px 8px 41px rgba(0, 159, 64, 0.25);
-  padding: 10px 60px;
-  border-radius: 15px;
-  font-weight: 700;
-}
+
 .title-green {
   font-weight: 900;
-  color: #38b269;
+  color:var(--green);
 }
 .title-blue {
   font-weight: 900;
-  color: #005ead;
+  color: var(--blue);
 }
 
 .login-box {
