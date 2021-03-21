@@ -5,6 +5,15 @@
 html,body{
     background-color: rgba(212,218,224,0.12);
 }
+
+.title-green {
+    font-weight: 900;
+    color:var(--green);
+  }
+  .title-blue {
+    font-weight: 900;
+    color: var(--blue);
+  }
 .bg-shadow {
     box-shadow: 0 5px 10px rgba(154,160,185,0.05), 0 15px 40px rgba(166,173,201,0.2) !important;
 }

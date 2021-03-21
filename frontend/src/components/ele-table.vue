@@ -4,10 +4,31 @@
             <caption>{{filterData.length}} of {{nameList.length }}</caption>
   <thead>
     <tr>
-      <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">#</th>
+      <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
+          <span :class="{'title-green':sortBy =='id'}">
+            #
+            <i v-if="sortBy =='id' && isReverse== false" class="fas fa-sort-down"></i>
+            <i v-else-if="sortBy == 'id' && isReverse== true" class="fas fa-sort-up"></i>
+            <i v-else class="fas fa-sort"></i>
+          </span>
+
+      </th>
       <th  scope="col">姓名</th>
-      <th @click ="sortBy = 'last',isReverse = !isReverse" scope="col">學號</th>
-      <th @click ="sortBy = 'handle',isReverse = !isReverse" scope="col">登記點數</th>
+      <th @click ="sortBy = 'last',isReverse = !isReverse " scope="col">
+          <span :class="{'title-green':sortBy =='last'}">
+              學號
+            <i v-if="sortBy =='last' && isReverse== false" class="fas fa-sort-down"></i>
+            <i v-else-if="sortBy == 'last' && isReverse== true" class="fas fa-sort-up"></i>
+            <i v-else class="fas fa-sort"></i>
+          </span>
+      </th>
+      <th @click ="sortBy = 'handle',isReverse = !isReverse, sortHandle= !sortHandle" scope="col">
+          <span :class="{'title-green':sortBy =='handle'}">登記點數
+          <i v-if="sortBy =='handle' && isReverse== false" class="fas fa-sort-down"></i>
+          <i v-else-if="sortBy == 'handle' && isReverse== true" class="fas fa-sort-up"></i>
+          <i v-else class="fas fa-sort"></i>
+          </span> 
+          </th>
       <th></th>
     </tr>
   </thead>
@@ -84,6 +105,9 @@ export default {
         return {
             sortBy :'first',
             isReverse:'false',
+            sortId:true,
+            sortLast:false,
+            sortHandle:false,
             nameList:[
                 {
                     id:"1",

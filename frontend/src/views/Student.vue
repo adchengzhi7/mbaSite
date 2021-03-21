@@ -52,7 +52,9 @@
             <input class="form-control" v-model="filter" placeholder="輸入查詢的姓名、學號" type="text"  >
             <tables :filter= "filter"></tables>
          </div>
-         <div class="col-4"></div>
+         <div class="col-4">
+           <div>待審核清單</div>
+         </div>
          <div class="col"></div>
        </div>
      </div>
