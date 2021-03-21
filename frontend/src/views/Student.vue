@@ -53,7 +53,7 @@
             <tables :filter= "filter"></tables>
          </div>
          <div class="col-4">
-           <div>待審核清單</div>
+           <div>待審核清單 <span class="badge badge-pill badge-success">1</span></div>
          </div>
          <div class="col"></div>
        </div>

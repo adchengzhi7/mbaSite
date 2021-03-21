@@ -1,7 +1,16 @@
 <template>
     <div>
         <table class="table">
-            <caption>{{filterData.length}} of {{nameList.length }}</caption>
+            <caption>
+                <span>
+                    {{filterData.length}} of {{nameList.length }}
+                </span>
+                <span style="float:right">
+
+                    <button class="btn btn-light" @click="prevPage" :disabled="currentPage == 1" ><i class="fas fa-arrow-left"></i></button>
+                    <button class="btn btn-light" @click="nextPage" :disabled="currentPage == prevPageStatus" ><i class="fas fa-arrow-right"></i></button>
+                </span>
+            </caption>
   <thead>
     <tr>
       <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
@@ -54,9 +63,20 @@ export default {
 
       const re = new RegExp(this.filter,'ig');
       return text.replace(re,matchedText => `<strong class="text-success">${matchedText}</strong>`)
+    },
+    nextPage:function() {
+      if((this.currentPage*this.pageSize) < this.nameList.length) this.currentPage++;
+    },
+    prevPage:function() {
+      if(this.currentPage > 1) this.currentPage--;
     }
     },
     computed:{
+        prevPageStatus(){
+            let vm =this;
+            const totalPage =vm.nameList.length/vm.pageSize
+            return Math.ceil(totalPage)
+        },
         filterData(){
             let vm =this;
             const filterToLower = vm.filter.toString().toLowerCase();
@@ -74,7 +94,11 @@ export default {
                 } else {
                 return b[vm.sortBy] - a[vm.sortBy];
                 }
-            });
+            }).filter((row, index) => {
+        let start = (this.currentPage-1)*this.pageSize;
+        let end = this.currentPage*this.pageSize;
+        if(index >= start && index < end) return true;
+      });
             
             // if (vm.sort == 'last') {
             //     if(vm.isReverse ){
@@ -108,6 +132,8 @@ export default {
             sortId:true,
             sortLast:false,
             sortHandle:false,
+            pageSize:5,
+            currentPage:1,
             nameList:[
                 {
                     id:"1",
@@ -135,6 +161,16 @@ export default {
                 },
                 {
                     id:"5",
+                    first:"Aarry",
+                    last:"119932098",
+                    handle:"4"
+                },{
+                    id:"6",
+                    first:"Aarry",
+                    last:"119932098",
+                    handle:"4"
+                },{
+                    id:"7",
                     first:"Aarry",
                     last:"119932098",
                     handle:"4"
