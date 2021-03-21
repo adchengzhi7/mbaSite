@@ -18,10 +18,10 @@
           <div class="avatar-box p-3 ">
             <div class="d-flex pb-3 ">
               <div >已確認點數</div>
-              <div class="ml-auto" >0/3</div>
+              <div class="ml-auto" >{{totalPoint}}/3</div>
             </div>
             <div class="progress">
-              <div class="progress-bar success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar success" role="progressbar" :style="{'width':totalPointToPrecent }" :aria-valuenow="totalPointToPrecent" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
         </div>
@@ -73,7 +73,15 @@ export default {
   computed:{
     totalPoint(){
       let vm =this;
-      return vm.userData.points;
+      const pointArray=Object.values(vm.userData.points).map(item => parseInt(item.point));
+      return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
+      ;
+    },
+    totalPointToPrecent(){
+      let vm =this;
+      const pointPercent = vm.finalPoints/ 3 *100;
+      return pointPercent.toString()+"%";
+      
     }
   },
   methods: {
@@ -82,6 +90,7 @@ export default {
 data() {
     return {
       filter:"",
+      finalPoints:0,
       userData:{
         name:"李正治",
         stuId:"105306030",
@@ -92,10 +101,7 @@ data() {
           },{
             type:"",
             point:"1"
-          },{
-            type:"",
-            point:"1"
-          }
+          },
         ]
       },
       avatarImg:"http://placehold.it/64x64",
