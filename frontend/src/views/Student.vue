@@ -47,7 +47,12 @@
 
        </div>
        <div v-else class="row mt-5">
-        
+         <div class="col"></div>
+         <div class="col-8">
+
+         <tables></tables>
+         </div>
+         <div class="col"></div>
        </div>
      </div>
    </page>
@@ -55,13 +60,16 @@
 </template>
 
 <script>
-import page from "../components/ele-pageTemplate"
+import page from "../components/tmp-page"
 import avatar from "../components/ele-avatar"
+import tables from "../components/ele-tableStudent"
+
 export default {
 
   components:{
     page,
-    avatar
+    avatar,
+    tables
   },
   computed:{
     totalPoint(){

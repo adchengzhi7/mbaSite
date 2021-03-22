@@ -1,61 +1,67 @@
 <template>
     <div>
-        <table class="table">
-            <caption>
-                <span>
-                    {{filterData.length}} of {{nameList.length }}
-                </span>
-                <span style="float:right">
+        <customTable>
+            <template #caption>
+                <caption>
+                    <span>
+                        {{filterData.length}} of {{nameList.length }}
+                    </span>
+                    <span style="float:right">
 
-                    <button class="btn btn-light" @click="prevPage" :disabled="currentPage == 1" ><i class="fas fa-arrow-left"></i></button>
-                    <button class="btn btn-light" @click="nextPage" :disabled="currentPage == prevPageStatus" ><i class="fas fa-arrow-right"></i></button>
-                </span>
-            </caption>
-  <thead>
-    <tr>
-      <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
-          <span :class="{'title-green':sortBy =='id'}">
-            #
-            <i v-if="sortBy =='id' && isReverse== false" class="fas fa-sort-down"></i>
-            <i v-else-if="sortBy == 'id' && isReverse== true" class="fas fa-sort-up"></i>
-            <i v-else class="fas fa-sort"></i>
-          </span>
+                        <button class="btn btn-light" @click="prevPage" :disabled="currentPage == 1" ><i class="fas fa-arrow-left"></i></button>
+                        <button class="btn btn-light" @click="nextPage" :disabled="currentPage == prevPageStatus" ><i class="fas fa-arrow-right"></i></button>
+                    </span>
+                </caption>
+            </template>
+            <template #thead>
+                  <tr>
+                    <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
+                        <span :class="{'title-green':sortBy =='id'}">
+                            #
+                            <i v-if="sortBy =='id' && isReverse== false" class="fas fa-sort-down"></i>
+                            <i v-else-if="sortBy == 'id' && isReverse== true" class="fas fa-sort-up"></i>
+                            <i v-else class="fas fa-sort"></i>
+                        </span>
 
-      </th>
-      <th  scope="col">姓名</th>
-      <th @click ="sortBy = 'last',isReverse = !isReverse " scope="col">
-          <span :class="{'title-green':sortBy =='last'}">
-              學號
-            <i v-if="sortBy =='last' && isReverse== false" class="fas fa-sort-down"></i>
-            <i v-else-if="sortBy == 'last' && isReverse== true" class="fas fa-sort-up"></i>
-            <i v-else class="fas fa-sort"></i>
-          </span>
-      </th>
-      <th @click ="sortBy = 'handle',isReverse = !isReverse, sortHandle= !sortHandle" scope="col">
-          <span :class="{'title-green':sortBy =='handle'}">登記點數
-          <i v-if="sortBy =='handle' && isReverse== false" class="fas fa-sort-down"></i>
-          <i v-else-if="sortBy == 'handle' && isReverse== true" class="fas fa-sort-up"></i>
-          <i v-else class="fas fa-sort"></i>
-          </span> 
-          </th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="bg-shadow-hover rounded" :key="item.id" v-for="item in filterData">
-      <th scope="row">{{item.id}}</th>
-      <td   v-html="highlightMatches(item.first)"></td>
-      <td  v-html="highlightMatches(item.last)"></td>
-      <td  v-html="highlightMatches(item.handle)"></td>
-      <td> <router-link to="/">查看</router-link></td>
-    </tr>
-  </tbody>
-</table>        
+                    </th>
+                    <th  scope="col">姓名</th>
+                    <th @click ="sortBy = 'last',isReverse = !isReverse " scope="col">
+                        <span :class="{'title-green':sortBy =='last'}">
+                            學號
+                            <i v-if="sortBy =='last' && isReverse== false" class="fas fa-sort-down"></i>
+                            <i v-else-if="sortBy == 'last' && isReverse== true" class="fas fa-sort-up"></i>
+                            <i v-else class="fas fa-sort"></i>
+                        </span>
+                    </th>
+                    <th @click ="sortBy = 'handle',isReverse = !isReverse, sortHandle= !sortHandle" scope="col">
+                        <span :class="{'title-green':sortBy =='handle'}">登記點數
+                        <i v-if="sortBy =='handle' && isReverse== false" class="fas fa-sort-down"></i>
+                        <i v-else-if="sortBy == 'handle' && isReverse== true" class="fas fa-sort-up"></i>
+                        <i v-else class="fas fa-sort"></i>
+                        </span> 
+                        </th>
+                    <th></th>
+                </tr>
+            </template>
+            <template #tbody>
+                <tr class="bg-shadow-hover rounded" :key="item.id" v-for="item in filterData">
+                    <th scope="row">{{item.id}}</th>
+                    <td   v-html="highlightMatches(item.first)"></td>
+                    <td  v-html="highlightMatches(item.last)"></td>
+                    <td  v-html="highlightMatches(item.handle)"></td>
+                    <td> <router-link to="/">查看</router-link></td>
+                </tr>
+            </template>
+        </customTable>
     </div>
 </template>
 <script>
+import customTable from "./tmp-table"
 export default {
     props:["filter"],
+    components:{
+        customTable
+    },
     methods: {
         highlightMatches(text){
       const matchExists = text.toLowerCase().includes(this.filter.toLowerCase());

@@ -68,13 +68,14 @@
 </template>
 
 <script>
-import page from "../components/ele-pageTemplate"
-import tables from "../components/ele-table"
+import page from "../components/tmp-page"
+import tables from "../components/ele-tableTA"
+
 export default {
 
   components:{
     page,
-    tables
+    tables,
   },
 
   computed:{
