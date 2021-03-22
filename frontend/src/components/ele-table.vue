@@ -42,7 +42,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="bg-shadow rounded" :key="item.id" v-for="item in filterData">
+    <tr class="bg-shadow-hover rounded" :key="item.id" v-for="item in filterData">
       <th scope="row">{{item.id}}</th>
       <td   v-html="highlightMatches(item.first)"></td>
       <td  v-html="highlightMatches(item.last)"></td>
@@ -195,6 +195,11 @@ export default {
     font-size: 14px;
     color:#c0c0c0;
 }
+table tbody tr:hover {
+    background-color:var(--hoverBgColor);
+
+}
+
 a{
     color:var(--green);
     font-weight:900;

@@ -78,14 +78,7 @@ export default {
   padding: 35% 10%;
 }
 
-.title-green {
-  font-weight: 900;
-  color:var(--green);
-}
-.title-blue {
-  font-weight: 900;
-  color: var(--blue);
-}
+
 
 .login-box {
   width: 40%;

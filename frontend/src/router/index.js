@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Student from '../views/Student.vue'
+import TaIndex from '../views/Ta-index.vue'
 
 const routes = [
   {
@@ -12,6 +13,13 @@ const routes = [
     path: "/student",
     name: 'Student',
     component:Student
+
+  },
+  {
+    path: "/ta",
+    name: 'TaIndex',
+    component:TaIndex
+
 
   }
 ]

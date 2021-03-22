@@ -16,7 +16,7 @@
 
         <div class="col">
           <div class="avatar-box p-3 ">
-            <div class="d-flex pb-3 ">
+            <div class="d-flex flex-wrap pb-3 ">
               <div >已確認點數</div>
               <div class="ml-auto" >{{totalPoint}}/3</div>
             </div>
@@ -47,15 +47,7 @@
 
        </div>
        <div v-else class="row mt-5">
-         <div class="col"></div>
-         <div class="col-6">
-            <input class="form-control" v-model="filter" placeholder="輸入查詢的姓名、學號" type="text"  >
-            <tables :filter= "filter"></tables>
-         </div>
-         <div class="col-4">
-           <div>待審核清單 <span class="badge badge-pill badge-success">1</span></div>
-         </div>
-         <div class="col"></div>
+        
        </div>
      </div>
    </page>
@@ -65,12 +57,11 @@
 <script>
 import page from "../components/ele-pageTemplate"
 import avatar from "../components/ele-avatar"
-import tables from "../components/ele-table"
 export default {
 
   components:{
     page,
-    avatar,tables
+    avatar
   },
   computed:{
     totalPoint(){
@@ -109,16 +100,23 @@ data() {
       avatarImg:"http://placehold.it/64x64",
       section:[{
         id:"S01",
-        title:"學分查詢",
+        title:"快速查詢",
         icon:"fas fa-search",
         router:"Student"
       },
       {
         id:"S02",
-        title:"登錄點數",
-        icon:"far fa-plus-square",
-         router:"Register"
-      }],
+        title:"待審核",
+        icon:"far fa-exclamation-triangle",
+        router:"Register"
+      },
+       {
+        id:"S03",
+        title:"匯入名單",
+        icon:"far fa-file-upload",
+        router:"Register"
+      }
+      ],
     }
   },
 
@@ -141,5 +139,19 @@ data() {
 .content-box{
   margin: auto 0;
 }
+.review-box{
+  padding:15px;
+}
+.review-box:hover{
+  background-color: var(--hoverBgColor);
+}
+.circle.small {
+  background:var(--success);
+	border-radius: 50%;
+	width: 5px;
+	height: 5px;
+
+}
+
 
 </style>>
