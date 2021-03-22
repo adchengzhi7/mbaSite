@@ -131,18 +131,26 @@ data() {
       }
       ],
       avatarImg:"http://placehold.it/64x64",
-      section:[{
+       section:[{
         id:"S01",
-        title:"學分查詢",
+        title:"快速查詢",
         icon:"fas fa-search",
         router:"Student"
       },
       {
         id:"S02",
-        title:"登錄點數",
-        icon:"far fa-plus-square",
-         router:"Register"
-      }],
+        title:"待審核",
+        icon:"fas fa-exclamation-triangle",
+        router:"Register"
+      },
+       {
+        id:"S03",
+        title:"匯入名單",
+        icon:"fas fa-file-import",
+        router:"Register"
+      }
+      ],
+      
     }
   },
 
