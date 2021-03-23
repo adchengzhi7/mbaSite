@@ -40,13 +40,11 @@ const routes = [
       path: "register",
       name: 'StudentReg',
       component:StudentReg,
-      children:[
-        {
-          path:"type",
-          name:"StudentRegType",
-          component:StudentRegType
-        }
-      ]
+    },
+    {
+      path:"registerType",
+      name:"StudentRegType",
+      component:StudentRegType
     }]
 
   },

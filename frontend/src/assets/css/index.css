@@ -4,6 +4,7 @@
     --hoverBgColor:rgba(56, 178, 105,0.1) !important;
     --danger:#FF3867 !important;
     --success:#21E496 !important;
+    --disableColor:rgba(192, 192, 192, 0.4) !important
 }
 html,body{
     background-color: rgba(212,218,224,0.12);
@@ -62,7 +63,7 @@ html,body{
     color:#c4c4c4 !important;
   }
   .icon-disable{
-    color:rgba(192, 192, 192, 0.4)
+    color:var(--disableColor)
   }
   .pointer{
     cursor: pointer;
