@@ -4,13 +4,14 @@
        @mouseenter="sidebarIsExpand=true">
          <div class="m-top text-left h-100 ">
            <div class="section-height">
-
-           <div class="section" :key="item.id" v-for="item in section" :class="{'section-active':currentRouteName == item.router}" >
-             <span class="p-4">
-             <i :class="item.icon"></i>
-             </span>
-             <span v-show="sidebarIsExpand">{{item.title}}</span>
-           </div>
+            <router-link  :key="item.id" v-for="item in section"  :to="{name:item.router}" tag="div">
+              <div class="section" :class="{'section-active':currentRouteName == item.router}" >
+                <span class="p-4">
+                <i :class="item.icon"></i>
+                </span>
+                <span v-show="sidebarIsExpand">{{item.title}}</span>
+              </div>
+            </router-link>
            </div>
 
            <div class="logout">
@@ -68,8 +69,7 @@
   font-weight: 900;
 }
 .section:hover{
-    color: var(--green);
-    background-color: rgba(0,0,0,0.12);
+    background-color:var(--hoverBgColor)
 }
 .section-active{
     color: var(--green);
@@ -94,6 +94,9 @@
   top:0;
   z-index: 2;
   background-color: #ffffff;
+}
+a:link{
+  text-decoration: none;
 }
 
 </style>
