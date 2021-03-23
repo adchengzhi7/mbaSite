@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Student from '../views/Student.vue'
 import Ta from '../views/Ta.vue'
 import TaDash from '../views/Ta-Dash.vue'
+import TaReview from '../views/Ta-Review.vue'
 import StudentReg from '../views/Student-Reg.vue'
 import StudentRegType from '../views/Student-Reg-Type.vue'
 import StudentDash from '../views/Student-Dash.vue'
@@ -22,6 +23,11 @@ const routes = [
       path: "dash",
       name: 'TaDash',
       component:TaDash
+    },
+    {
+      path: "review",
+      name: 'TaReview',
+      component:TaReview
     }]
 
 

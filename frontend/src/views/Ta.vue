@@ -29,7 +29,7 @@ data() {
         id:"S02",
         title:"待審核",
         icon:"fas fa-exclamation-triangle",
-        router:"Ta"
+        router:"TaReview"
       },
        {
         id:"S03",
