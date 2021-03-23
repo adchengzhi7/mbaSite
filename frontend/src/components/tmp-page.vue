@@ -26,7 +26,7 @@ export default {
 </script>
 <style>
 .box-inside{
-    margin-left: 65px;
-    margin-top:90px;
+    padding-left: 65px;
+    padding-top:90px;
 }
 </style>

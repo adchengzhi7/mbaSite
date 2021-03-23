@@ -58,3 +58,12 @@ html,body{
   .rounded{
       border-radius: 0.5rem !important;
   }
+  .icon-clickable{
+    color:#c4c4c4 !important;
+  }
+  .icon-disable{
+    color:rgba(192, 192, 192, 0.4)
+  }
+  .pointer{
+    cursor: pointer;
+  }

@@ -17,6 +17,9 @@ export default {
 }
 </script>
 <style scoped>
+tbody{
+    background-color: #ffffff;
+}
 .table td, .table th {
     border-top: 0px !important;
 }

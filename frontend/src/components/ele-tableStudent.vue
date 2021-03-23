@@ -19,12 +19,37 @@
                 </tr>
             </template>
             <template #tbody>
-                <tr class="bg-shadow-hover rounded" :key="item.id" v-for="item in filterData">
-                    <th scope="row">{{item.id}}</th>
-                    <td   v-html="(item.section)"></td>
-                    <td  v-html="(item.point)"></td>
-                    <td  v-html="(item.status)"></td>
-                    <td> <router-link to="/">查看</router-link></td>
+                <tr class="bg-shadow-hover rounded " :key="item.id" v-for="item in filterData">
+                    <th scope="row" class="align-middle">{{item.id}}</th>
+                    <td class="align-middle">
+                        <div class="font-weight-bold"> {{item.section}}</div>
+                        <div class="text-muted">{{item.sectionTitle}}</div>
+                    </td>
+                    <td class="align-middle">{{splitAndJoin(item.semester)}}</td>
+                    <td class="align-middle"  v-html="(item.point)"></td>
+                    <td class="align-middle">
+                        <span v-if="item.status == 1">
+                            <button class="btn btn-outline-secondary font-weight-bold" > 待審核</button>
+                        </span>
+                        <span v-else>
+                            <button class="btn btn-outline-success font-weight-bold" > 已通過</button>
+                        </span>
+                    </td>
+                    <td class="align-middle ">
+                        <span v-if="item.status == 1" class="" >
+                            <router-link to="/"><i class="fas fa-pen icon-clickable"></i></router-link>
+                        </span>
+                        <span v-else class="icon-disable">
+                            <i class="fas fa-pen"></i>
+                        </span>
+
+                    </td>
+                </tr>
+                <tr class="bg-shadow-hover rounded text-center pointer">
+                    <td style=" padding: 0.6rem !important;" colspan="6" @click="routerTo('/')">
+                         <router-link to="/"><i class="fas fa-plus"></i> 登錄點數</router-link>
+                    
+                    </td>
                 </tr>
             </template>
         </customTable>
@@ -37,15 +62,27 @@ export default {
         customTable
     },
     methods: {
-     sortSelector(selected,isSort){
-         let vm = this;
-         if(isSort){
-              vm.sortBy = selected;
-              vm.isReverse = !vm.isReverse;
-         }else{
-              vm.sortBy = "";
+        routerTo(path){
+            let vm = this;
+            vm.$router.push(path)
+        },
+        sortSelector(selected,isSort){
+            let vm = this;
+            if(isSort){
+                vm.sortBy = selected;
+                vm.isReverse = !vm.isReverse;
+            }else{
+                vm.sortBy = "";
+            }
+        },
+        splitAndJoin(str){
+            const year = str.slice(0,3)
+            const smester = str.slice(3,4)
+           
+            return year + "/"+smester
+            
+
          }
-     }
     },
     computed:{
        
@@ -73,50 +110,14 @@ export default {
                 [
                 {key:'th01',id:"id",title:"#",isSort:true},
                 {key:'th02',id:"section",title:"項目",isSort:false},
-                {key:'th03',id:"point",title:"點數",isSort:true},
-                {key:'th04',id:"status",title:"狀態",isSort:true},
+                {key:'th03',id:"semester",title:"學期",isSort:true},
+                {key:'th04',id:"point",title:"點數",isSort:true},
+                {key:'th05',id:"status",title:"狀態",isSort:true},
                 ],
             nameList:[
-                {
-                    id:"1",
-                    section:"李政治",
-                    point:"10540592",
-                    status:"5"
-                },
-                {
-                    id:"2",
-                    section:"黃昏後",
-                    point:"106301042",
-                    status:"4"
-                },
-                {
-                    id:"3",
-                    section:"Aarry",
-                    point:"107932087",
-                    status:"1"
-                },
-                {
-                    id:"4",
-                    section:"ok",
-                    point:"112932098",
-                    status:"2"
-                },
-                {
-                    id:"5",
-                    section:"Aarry",
-                    point:"119932098",
-                    status:"4"
-                },{
-                    id:"6",
-                    section:"Aarry",
-                    point:"119932098",
-                    status:"4"
-                },{
-                    id:"7",
-                    section:"Aarry",
-                    point:"119932098",
-                    status:"4"
-                }
+                {id:"1",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1091",point:"1",status:"1"},
+                {id:"2",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1082",point:"3",status:"2"},
+                {id:"3",section:"英語檢定",sectionTitle:"TOEFL PBT",semester:"1081",point:"0",status:"2"},
             ]
         }
     },
@@ -129,9 +130,11 @@ export default {
     padding:  0rem  1.75rem !important;
 
 }
+
 .table tbody td, .table tbody th {
     padding: 1.75rem !important;
 }
+
 .table {
     border-collapse: separate;
     border-spacing: 0px 0.5rem;
