@@ -46,7 +46,7 @@
                     </td>
                 </tr>
                 <tr class="bg-shadow-hover rounded text-center pointer">
-                    <td style=" padding: 0.6rem !important;" colspan="6" @click="routerTo('/')">
+                    <td style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('/')">
                          <router-link to="/"><i class="fas fa-plus"></i> 登錄點數</router-link>
                     
                     </td>
