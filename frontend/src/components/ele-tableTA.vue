@@ -105,29 +105,6 @@ export default {
         let end = this.currentPage*this.pageSize;
         if(index >= start && index < end) return true;
       });
-            
-            // if (vm.sort == 'last') {
-            //     if(vm.isReverse ){
-            //         return filterList.sort(function(a, b) {
-            //             return b.last - a.last ? 1:-1;
-            //     });
-            //         }else{
-            //              return filterList.sort(function(a, b) {
-            //             return b.last - a.last ? -1:1;
-            //     });
-            //         }
-            // }else if (vm.sort == 'handle') {
-            //     return filterList.sort(function(a, b) {
-            //     return b.handle - a.hendle ? 1:-1;
-            //     });
-            // } else if(vm.sort == 'number'){
-            //     return filterList.sort(function(a, b) {
-            //     return b.id - a.id ? 1:-1;
-            //     });
-            // }
-            // else {
-            //     return filterList;
-            // }
         }
 
     },

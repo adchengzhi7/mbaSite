@@ -4,7 +4,6 @@
        <div class="row">
          <div class="col"></div>
          <div class="col-9">
-           <reg-selection :isTA="isTA"></reg-selection>
          </div>
          <div class="col"></div>
        </div>
@@ -13,11 +12,9 @@
 </template>
 
 <script>
-import RegSelection from"../components/ele-Regselection"
 export default {
 
   components:{
-    RegSelection
   },
   computed:{
     

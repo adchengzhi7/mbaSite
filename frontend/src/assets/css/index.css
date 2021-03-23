@@ -67,3 +67,9 @@ html,body{
   .pointer{
     cursor: pointer;
   }
+  .font-weight-boldest{
+    font-weight: 900;
+  }
+  .hover:hover{
+    color:var(--hoverBgColor) !important
+  }
