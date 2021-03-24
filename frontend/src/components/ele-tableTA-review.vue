@@ -6,11 +6,6 @@
                     <span>
                         {{filterData.length}} of {{nameList.length }}
                     </span>
-                    <span style="float:right">
-
-                        <button class="btn btn-light" @click="prevPage" :disabled="currentPage == 1" ><i class="fas fa-arrow-left"></i></button>
-                        <button class="btn btn-light" @click="nextPage" :disabled="currentPage == prevPageStatus" ><i class="fas fa-arrow-right"></i></button>
-                    </span>
                 </caption>
             </template>
             <template #thead>
@@ -29,15 +24,25 @@
             </template>
             <template #tbody>
                 <tr class="bg-shadow-hover rounded" :key="item.id" v-for="item in filterData">
-                    <th scope="row">{{item.id}}</th>
-                    <td  v-html="highlightMatches(item.name)"></td>
-                    <td  v-html="highlightMatches(item.stuId)"></td>
-                    <td  v-html="highlightMatches(item.section)"></td>
-                    <td  v-html="highlightMatches(item.semester)"></td>
-                    <td> <router-link to="/">查看</router-link></td>
+                    <th class="align-middle" scope="row">{{item.id}}</th>
+                    <td class="align-middle" v-html="highlightMatches(item.name)"></td>
+                    <td class="align-middle" v-html="highlightMatches(item.stuId)"></td>
+                    <td >
+                        <div class="font-weight-bold" v-html="highlightMatches(item.section)"></div>
+                        <div class="small text-muted" v-html="highlightMatches(item.sectionTitle)"></div>
+                    </td>
+                    <td class="align-middle" v-html="highlightMatches(splitAndJoin(item.semester))"></td>
+                    <td class="align-middle small text-muted"> {{dateShow(item.date)}}</td>
+                    <td class="align-middle"> <router-link to="/">查看</router-link></td>
+                </tr>
+                <tr  v-if="nameList.length > pageSize" >
+                    <td :colspan="thead.length+2" class="bg-shadow-hover pointer text-center" @click.prevent="loadMore">
+                        <a class="btn" @click.prevent="loadMore">查看更多</a>
+                    </td>
                 </tr>
             </template>
         </customTable>
+        
     </div>
 </template>
 <script>
@@ -48,28 +53,45 @@ export default {
         customTable
     },
     methods: {
-           sortSelector(selected,isSort){
+        sortSelector(selected,isSort){
             let vm = this;
-            if(isSort){
-                vm.sortBy = selected;
-                vm.isReverse = !vm.isReverse;
-            }else{
-                vm.sortBy = "";
-            }
+                if(isSort){
+                    vm.sortBy = selected;
+                    vm.isReverse = !vm.isReverse;
+                }else{
+                    vm.sortBy = "";
+                }
         },
         highlightMatches(text){
-      const matchExists = text.toLowerCase().includes(this.filter.toLowerCase());
-      if (!matchExists) return text;
+            const matchExists = text.toLowerCase().includes(this.filter.toLowerCase());
+            if (!matchExists) return text;
 
-      const re = new RegExp(this.filter,'ig');
-      return text.replace(re,matchedText => `<strong class="text-success">${matchedText}</strong>`)
-    },
-    nextPage:function() {
-      if((this.currentPage*this.pageSize) < this.nameList.length) this.currentPage++;
-    },
-    prevPage:function() {
-      if(this.currentPage > 1) this.currentPage--;
-    }
+            const re = new RegExp(this.filter,'ig');
+            return text.replace(re,matchedText => `<strong class="text-success">${matchedText}</strong>`)
+        },
+        loadMore:function() {
+            // if((this.currentPage*this.pageSize) < this.nameList.length) this.currentPage++;
+            this.pageSize = this.pageSize+  10
+        },
+    
+        splitAndJoin(str){
+            const year = str.slice(0,3)
+            const smester = str.slice(3,4)
+            return year + "/"+smester
+         },
+         dateShow(date){
+             const gotDate = new Date(date);
+             const today  = new Date();
+             const diffTimeStamp = today.getTime()- gotDate.getTime()
+             const diffMin = Math.floor(diffTimeStamp / (1000*60)) ;
+             const diffTime = Math.floor(diffTimeStamp / (1000*3600)) ;
+             const diffDays = Math.floor(diffTimeStamp / (1000*3600*24)) ;
+             const displayDate = gotDate.getUTCFullYear()+"年" + gotDate.getUTCMonth()+"月"+ gotDate.getUTCDate()+"日  "+gotDate.getUTCHours()+":"+gotDate.getUTCMinutes()
+             if(diffMin < 60){return diffMin+ "分鐘前" }
+             else if(diffTime < 24){ return diffTime + "小時前"}
+             else if (diffDays < 5){return diffDays+"天前"}
+             else{return displayDate}
+         }
     },
     computed:{
         prevPageStatus(){
@@ -81,11 +103,12 @@ export default {
             let vm =this;
             const filterToLower = vm.filter.toString().toLowerCase();
             const filterList=vm.nameList.filter(row => {
-                const first = row.name.toString().toLowerCase();
-                const last = row.stuId.toString().toLowerCase();
-                const handle = row.section.toString().toLowerCase();
-
-                return last.includes(filterToLower) || first.includes(filterToLower) || handle.includes(filterToLower)
+            const name = row.name.toString().toLowerCase();
+            const stuId = row.stuId.toString().toLowerCase();
+            const section = row.section.toString().toLowerCase();
+            const sectionTitle = row.sectionTitle.toString().toLowerCase();
+            const semester = row.semester.toString().toLowerCase();
+            return stuId.includes(filterToLower) || name.includes(filterToLower) || sectionTitle.includes(filterToLower) || section.includes(filterToLower) || semester.includes(filterToLower)
 
             })
             return filterList.sort(function(a, b) {
@@ -94,35 +117,34 @@ export default {
                 } else {
                 return b[vm.sortBy] - a[vm.sortBy];
                 }
-            }).filter((row, index) => {
-        let start = (this.currentPage-1)*this.pageSize;
-        let end = this.currentPage*this.pageSize;
-        if(index >= start && index < end) return true;
-      });
+                }).filter((row, index) => {
+                let start = (this.currentPage-1)*this.pageSize;
+                let end = this.currentPage*this.pageSize;
+                if(index >= start && index < end) return true;
+                });
         }
 
     },
     data() {
         return {
-            sortBy :'first',
+            sortBy :'id',
             isReverse:'false',
-            sortId:true,
-            sortLast:false,
-            sortHandle:false,
-            pageSize:5,
+            pageSize:2,
             currentPage:1,
             thead:
             [
             {key:'th01',id:"id",title:"#",isSort:true},
-            {key:'th02',id:"name",title:"姓名",isSort:true},
+            {key:'th02',id:"name",title:"姓名",isSort:false},
             {key:'th03',id:"stuId",title:"學號",isSort:true},
-            {key:'th04',id:"section",title:"項目",isSort:true},
+            {key:'th04',id:"section",title:"項目",isSort:false},
             {key:'th05',id:"semester",title:"學期",isSort:true},
             ],
              nameList:[
-                {id:"1",name:"李組長",stuId:"10540592",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1091",point:"1",status:"1"},
-                {id:"2",name:"李組長",stuId:"10540592",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1082",point:"3",status:"2"},
-                {id:"3",name:"李組長",stuId:"10540592",section:"英語檢定",sectionTitle:"TOEFL PBT",semester:"1081",point:"0",status:"2"},
+                {id:"1",name:"李組長",stuId:"10540591",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1091",date:"2021-03-24 17:10:00",point:"1",status:"1"},
+                {id:"2",name:"吳組長",stuId:"10540592",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1082",date:"2021-03-22 22:30:00",point:"3",status:"2"},
+                {id:"3",name:"成組長",stuId:"10540593",section:"英語檢定",sectionTitle:"TOEFL PBT",semester:"1081",date:"2021-02-22 22:30:00",point:"0",status:"2"},
+                {id:"4",name:"成組長",stuId:"10540593",section:"英語檢定",sectionTitle:"TOEFL PBT",semester:"1081",date:"2021-02-22 22:30:00",point:"0",status:"2"},
+
             ]
             
 
