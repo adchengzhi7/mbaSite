@@ -12,7 +12,7 @@
            </div>
   
            <div class="row">
-             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType">
+             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
                <div class="select-box bg-shadow-hover pointer ">
                   <img :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
                   <h6 class="font-weight-bold">{{item.title}}</h6>
@@ -25,16 +25,22 @@
 <script>
 export default {
     props:['isTA'],
+    methods: {
+      toRoute(item){
+        let vm = this;
+        vm.$router.push({ name: 'StudentRegType', params: { type: item.type, title:item.title,icon:item.icon} })
+      }
+    },
     data() {
         return {
              sectionType:[
-                {id:"ST01",title:"國際交換或雙聯學位",icon:"global"},
-                {id:"ST02",title:"國內外企業實習",icon:"intern"},
-                {id:"ST03",title:"國內外研習課程",icon:"confrence"},
-                {id:"ST04",title:"商業競賽",icon:"competition"},
-                {id:"ST05",title:"國際志工",icon:"volunteer"},
-                {id:"ST06",title:"企業專案研討",icon:"caseStudy"},
-                {id:"ST07",title:"英語檢定",icon:"english"},
+                {id:"ST01",title:"國際交換或雙聯學位",icon:"global",type:"global"},
+                {id:"ST02",title:"國內外企業實習",icon:"intern",type:"intern"},
+                {id:"ST03",title:"國內外研習課程",icon:"confrence",type:"confrence"},
+                {id:"ST04",title:"商業競賽",icon:"competition",type:"competition"},
+                {id:"ST05",title:"國際志工",icon:"volunteer",type:"volunteer"},
+                {id:"ST06",title:"企業專案研討",icon:"caseStudy",type:"caseStudy"},
+                {id:"ST07",title:"英語檢定",icon:"english",type:"english"},
             ],
         }
     },

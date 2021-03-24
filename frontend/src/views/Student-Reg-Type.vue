@@ -6,14 +6,20 @@
          <div class="col-8">
            <div class="d-flex mb-4">
              <div class="align-self-center">
-               <img src="../assets/icon/global.svg" alt="">
+               <img v-if="icon == 'global' " class="img-fluid" src="../assets/icon/global.svg" alt="">
+               <img v-if="icon == 'intern' " class="img-fluid" src="../assets/icon/intern.svg" alt="">
+               <img v-if="icon == 'confrence' " class="img-fluid" src="../assets/icon/confrence.svg" alt="">
+               <img v-if="icon == 'competition' " class="img-fluid" src="../assets/icon/competition.svg" alt="">
+               <img v-if="icon == 'volunteer' " class="img-fluid" src="../assets/icon/volunteer.svg" alt="">
+               <img v-if="icon == 'caseStudy' " class="img-fluid" src="../assets/icon/caseStudy.svg" alt="">
+               <img v-if="icon == 'english' " class="img-fluid" src="../assets/icon/english.svg" alt="">
              </div>
              <div class="text-left align-self-center">
-               <h3 class="font-weight-boldest m-0   ">國際交換或雙聯學位</h3>
+               <h3 class="font-weight-boldest m-0   ">{{title}}</h3>
                <div class="text-muted">請輸入完整的單位名稱</div>
              </div>
            </div>
-          <div class="text-left">
+          <div v-if="type != 'english'" class="text-left">
             <div class="row">
                 <div class="col input-col">
                     <select class="form-control" name="" id="" v-model="yearSelected">
@@ -31,14 +37,54 @@
             </div>
             <div class="row">
               <div class="col input-col">
-              <input class="form-control" type="text" v-model="a" placeholder="請輸入完整單位名稱">
+              <input class="form-control" type="text" v-model="sectionTitle" placeholder="請輸入完整單位名稱">
               </div>
             </div>
-
+            
+             <div class="row" v-if="isTA">
+              <div class="col input-col">
+                  <div class="input-group ">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="button" @click="minusPoints" >
+                        <i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                    <input class="form-control" type="number" max="2"  v-model="checkPoint" required >
+                    <div class="input-group-append">
+                      
+                      <button class="btn btn-secondary " type="button" @click="addPoints" >
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+              </div>
+            </div>
             <div class="mt-3">
-              <button class="btn btn-success btn-lg success ">提交申請</button>
+              <button class="btn btn-success btn-lg success " @click="submit">提交申請</button>
             </div>
           </div>
+
+          <div v-else class="text-left">
+            <div class="row">
+                <div class="col input-col">
+                    <select class="form-control" name="" id="" v-model="englishSelected">
+                      <option value="none" disabled selected >選擇英語檢定類別</option>
+                      <option :key="'test-'+test" v-for="test in englishTest" :value="englishTest"> {{test}} </option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="row">
+              <div class="col input-col">
+              <input class="form-control" type="text" v-model="englishPoint" placeholder="輸入英語檢定分數">
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <button class="btn btn-success btn-lg success " @click="submit">提交申請</button>
+            </div>
+          </div>
+          
          </div>
          <div class="col"></div>
          
@@ -53,12 +99,30 @@ export default {
 
   components:{
   },
+  mounted() {
+    let vm =this;
+    if(!vm.$route.params.type){
+      vm.$router.push({ name: 'StudentReg' })
+    }
+    vm.title =vm.$route.params.title;
+    vm.icon = vm.$route.params.icon;
+    vm.type= vm.$route.params.type;
+
+
+  },
   
 data() {
     return {
-      a:'',
+      title:"",
+      icon:"",
+      type:"",
+      sectionTitle:'',
       yearSelected:"",
-      semesterSelected:"1",
+      points:1,
+      semesterSelected:"none",
+      englishPoint:"",
+      englishSelected:"none",
+      englishTest:["TOEFL PBT","TOEFL CBT","TOEFL IBT","IELTS","TOEIC"],
       isTA:false,
       userData:{
         name:"李正治",
@@ -73,23 +137,34 @@ data() {
           },
         ]
       },
-     
-      section:[{
-        id:"S01",
-        title:"學分查詢",
-        icon:"fas fa-search",
-        router:"Student"
-      },
-      {
-        id:"S02",
-        title:"登錄點數",
-        icon:"far fa-plus-square",
-         router:"StudentReg"
-      }],
       
     }
   },
   computed:{
+    imageUrl(){
+      let vm = this;
+      return "../assets/icon/"+vm.icon+".svg"
+    },
+     checkPoint:{
+       get() {
+           let vm =this;
+           if(vm.points >2){
+             const error=">2";
+             alert(error)
+        }
+            return vm.points
+            
+       },
+       set(newValue){
+        let vm =this;
+        if(newValue >2){
+           vm.points=2;
+        }
+        
+       }
+    
+     
+    },
     getYear(){
       let vm =this;
       const date = new Date();
@@ -108,6 +183,28 @@ data() {
     }
   },
   methods: {
+    
+    submit(){
+      let vm =this;
+      const sectionTitle = this.sectionTitle;
+      const yearSelected = this.yearSelected;
+      const points = this.points;
+      const semesterSelected = this.semesterSelected;
+      const type =vm.$route.params.type;
+      console.log(sectionTitle,yearSelected,points,semesterSelected,type);
+
+    },
+    addPoints(){
+      let vm =this;
+      if(vm.points >=2){vm.points=2}
+      else{vm.points =  vm.points+1}
+     
+    },
+    minusPoints(){
+      let vm =this;
+      if(vm.points === 0){vm.points=0}
+      else{vm.points =  vm.points-1}
+    }
     
   },
 
