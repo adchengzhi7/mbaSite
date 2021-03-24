@@ -129,7 +129,7 @@ export default {
         return {
             sortBy :'id',
             isReverse:'false',
-            pageSize:2,
+            pageSize:10,
             currentPage:1,
             thead:
             [

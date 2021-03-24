@@ -39,7 +39,7 @@
                     <p class='text-muted m-0'>{{item.type}}</p>
                     <div>
                       <small class="text-muted">
-                      <i class="far fa-clock"></i>{{  item.date}}
+                    {{  dateShow(item.date)}}
                       </small>
                     </div>
                    </div>
@@ -54,7 +54,7 @@
              </div>
              <div class="text-center ">
                <div class="m-2">
-                 <a class="link-secondary" href="">查看更多</a>
+                 <router-link to="review">查看更多</router-link>
                </div>
              </div>
            </div>
@@ -86,13 +86,25 @@ export default {
     }
   },
   methods: {
-    
+     dateShow(date){
+             const gotDate = new Date(date);
+             const today  = new Date();
+             const diffTimeStamp = today.getTime()- gotDate.getTime()
+             const diffMin = Math.floor(diffTimeStamp / (1000*60)) ;
+             const diffTime = Math.floor(diffTimeStamp / (1000*3600)) ;
+             const diffDays = Math.floor(diffTimeStamp / (1000*3600*24)) ;
+             const displayDate = gotDate.getUTCFullYear()+"年" + gotDate.getUTCMonth()+"月"+ gotDate.getUTCDate()+"日  "+gotDate.getUTCHours()+":"+gotDate.getUTCMinutes()
+             if(diffMin < 60){return diffMin+ "分鐘前" }
+             else if(diffTime < 24){ return diffTime + "小時前"}
+             else if (diffDays < 5){return diffDays+"天前"}
+             else{return displayDate}
+         }
   },
 data() {
     return {
       filter:"",
       currentPage:1,
-      pageSize:5,
+      pageSize:10,
       userData:{
         name:"李正治",
         stuId:"105306030",
