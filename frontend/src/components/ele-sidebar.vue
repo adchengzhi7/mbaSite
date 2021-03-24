@@ -15,7 +15,7 @@
            </div>
 
            <div class="logout">
-             <div class="dropdown-divider divider"></div>
+             <div class="dropdown-divider divider" :class="{'closebar-divider':!sidebarIsExpand}"></div>
              <div >
                <div class="section"  >
              <span class="p-4">
@@ -56,12 +56,15 @@
 .divider{
   margin: 0 25px;
 }
-.logout{
-    height: 15%;
-
+.closebar-divider{
+ width:25px;
+  margin: 0px 20px;
 }
-.section-height{
-  height: 85%;
+.logout{
+    position: fixed;
+    bottom: 10px;
+     width:250px;
+
 }
 .section{
   padding:15px 0;
@@ -83,7 +86,7 @@
   height: 100%;
   position: fixed;
   top:0;
-  z-index: 2;
+  z-index: 999;
   background-color: #ffffff;
 
 }
@@ -92,7 +95,7 @@
   height: 100%;
   position: fixed;
   top:0;
-  z-index: 2;
+  z-index: 999;
   background-color: #ffffff;
 }
 a:link{

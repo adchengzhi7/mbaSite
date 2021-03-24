@@ -49,7 +49,7 @@
                     <td   v-html="highlightMatches(item.first)"></td>
                     <td  v-html="highlightMatches(item.last)"></td>
                     <td  v-html="highlightMatches(item.handle)"></td>
-                    <td> <router-link to="/">查看</router-link></td>
+                    <td> <router-link :to="{name:'TaStudentPage'}">查看</router-link></td>
                 </tr>
             </template>
         </customTable>
@@ -115,7 +115,7 @@ export default {
             sortId:true,
             sortLast:false,
             sortHandle:false,
-            pageSize:5,
+            pageSize:10,
             currentPage:1,
             nameList:[
                 {

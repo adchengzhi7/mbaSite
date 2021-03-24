@@ -1,10 +1,17 @@
 <template>
-  <div > 
-     <div class="partTop">
-       <div class="row mt-5">
-         <div class="col"></div>
-         <div class="col-8">
-           <div class="d-flex mb-4">
+    <div class="partTop">
+       <div class="row mt-5 mb-4">
+         <div class="col align-self-center">
+              <div class="align-self-center" v-if="isTA">
+                <h3 class="pointer hover" @click="$router.go(-1)">
+                    <i class="fas fa-arrow-left icon-clickable"></i>
+                </h3>
+            </div>
+         </div>
+         <div class="col-8 align-self-center">
+             
+           <div class="d-flex">
+            
              <div class="align-self-center">
                <img v-if="icon == 'global' " class="img-fluid" src="../assets/icon/global.svg" alt="">
                <img v-if="icon == 'intern' " class="img-fluid" src="../assets/icon/intern.svg" alt="">
@@ -19,7 +26,17 @@
                <div class="text-muted">請輸入完整的單位名稱</div>
              </div>
            </div>
-          <div v-if="type != 'english'" class="text-left">
+          
+          
+         </div>
+         <div class="col"></div>
+         
+
+       </div>
+       <div class="row">
+           <div class="col"></div>
+           <div class="col-8">
+               <div v-if="type != 'english'" class="text-left">
             <div class="row">
                 <div class="col input-col">
                     <select class="form-control" name="" id="" v-model="yearSelected">
@@ -76,33 +93,29 @@
             </div>
             <div class="row">
               <div class="col input-col">
-              <input class="form-control" type="text" v-model="englishPoint" placeholder="輸入英語檢定分數">
+              <input class="form-control" type="number" v-model="englishPoint" placeholder="輸入英語檢定分數">
               </div>
             </div>
             
             <div class="mt-3">
-              <button class="btn btn-success btn-lg success " @click="submit">提交申請</button>
+              <button class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
             </div>
           </div>
-          
-         </div>
-         <div class="col"></div>
-         
-
+           </div>
+           <div class="col"></div>
        </div>
      </div>
-  </div>
 </template>
-
 <script>
 export default {
 
-  components:{
-  },
+  props:["isTA","userData"],
   mounted() {
     let vm =this;
-    if(!vm.$route.params.type){
+    if(!vm.$route.params.type && !vm.isTA){
       vm.$router.push({ name: 'StudentReg' })
+    }else if(!vm.$route.params.type && vm.isTA) {
+         vm.$router.push({ name: 'TaReg' })
     }
     vm.title =vm.$route.params.title;
     vm.icon = vm.$route.params.icon;
@@ -123,20 +136,7 @@ data() {
       englishPoint:"",
       englishSelected:"none",
       englishTest:["TOEFL PBT","TOEFL CBT","TOEFL IBT","IELTS","TOEIC"],
-      isTA:false,
-      userData:{
-        name:"李正治",
-        stuId:"105306030",
-        points:[
-          {
-            type:"",
-            point:"1"
-          },{
-            type:"",
-            point:"1"
-          },
-        ]
-      },
+     
       
     }
   },
@@ -192,6 +192,16 @@ data() {
       const semesterSelected = this.semesterSelected;
       const type =vm.$route.params.type;
       console.log(sectionTitle,yearSelected,points,semesterSelected,type);
+
+    },
+
+    submitEnglish(){
+      let vm =this;
+      const englishPoint = this.englishPoint;
+      const yearSelected = this.yearSelected;
+      const englishSelected = this.englishSelected;
+      const type =vm.$route.params.type;
+      console.log(englishSelected,yearSelected,englishPoint,type);
 
     },
     addPoints(){

@@ -46,10 +46,14 @@
                     </td>
                 </tr>
                 <tr class="bg-shadow-hover rounded text-center pointer">
-                    <td style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('/')">
+                    <td v-if="!isTA" style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('StudentReg')">
                          <router-link to="/"><i class="fas fa-plus"></i> 登錄點數</router-link>
-                    
                     </td>
+                    <td v-else style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('TaReg')">
+                         <router-link to="/"><i class="fas fa-plus"></i> 登錄點數</router-link>
+                    </td>
+
+
                 </tr>
             </template>
         </customTable>
@@ -58,13 +62,14 @@
 <script>
 import customTable from "./tmp-table"
 export default {
+    props:["isTA"],
     components:{
         customTable
     },
     methods: {
         routerTo(path){
             let vm = this;
-            vm.$router.push(path)
+            vm.$router.push({name:path})
         },
         sortSelector(selected,isSort){
             let vm = this;

@@ -33,7 +33,7 @@
                     </td>
                     <td class="align-middle" v-html="highlightMatches(splitAndJoin(item.semester))"></td>
                     <td class="align-middle small text-muted"> {{dateShow(item.date)}}</td>
-                    <td class="align-middle"> <router-link to="/">查看</router-link></td>
+                    <td class="align-middle"> <router-link :to="{name:'TaStudentPage'}">查看</router-link></td>
                 </tr>
                 <tr  v-if="nameList.length > pageSize" >
                     <td :colspan="thead.length+2" class="bg-shadow-hover pointer text-center" @click.prevent="loadMore">

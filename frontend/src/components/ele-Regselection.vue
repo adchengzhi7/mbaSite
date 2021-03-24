@@ -14,7 +14,7 @@
            <div class="row">
              <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
                <div class="select-box bg-shadow-hover pointer ">
-                  <img :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
+                  <img class="img-fluid" :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
                   <h6 class="font-weight-bold">{{item.title}}</h6>
                </div>
              </div>
@@ -28,7 +28,11 @@ export default {
     methods: {
       toRoute(item){
         let vm = this;
-        vm.$router.push({ name: 'StudentRegType', params: { type: item.type, title:item.title,icon:item.icon} })
+        if(!vm.isTA){
+          vm.$router.push({ name: 'StudentRegForm', params: { type: item.type, title:item.title,icon:item.icon} })
+        }else{
+          vm.$router.push({ name: 'TaRegForm', params: { type: item.type, title:item.title,icon:item.icon} })
+        }
       }
     },
     data() {

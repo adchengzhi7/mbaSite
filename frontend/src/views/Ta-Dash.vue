@@ -25,7 +25,7 @@
               </div>
             </div>
            <div>
-             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box ">
+             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage')">
                <div class="d-flex flex-wrap">
                  <div class="col-1  ">
                   <div class="circle small p-1"></div>
@@ -79,13 +79,17 @@ export default {
       let vm = this;
 
       return vm.unReviewList.filter((row, index) => {
-        let start = (this.currentPage-1)*this.pageSize;
-        let end = this.currentPage*this.pageSize;
+        let start = (vm.currentPage-1)*vm.pageSize;
+        let end = vm.currentPage*vm.pageSize;
       if(index >= start && index < end) return true;
     })
     }
   },
   methods: {
+     routerTo(path){
+            let vm = this;
+            vm.$router.push({name:path})
+        },
      dateShow(date){
              const gotDate = new Date(date);
              const today  = new Date();

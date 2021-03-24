@@ -1,20 +1,20 @@
 <template>
   <div > 
-     <student-page :isTA="isTA" :userData="userData"></student-page>
+    <register-form :isTA="isTA" :userData="userData" ></register-form>
   </div>
 </template>
 
 <script>
-import studentPage from "../components/tmp-studentPage"
+  import registerForm from '../components/ele-registerForm'
 export default {
 
   components:{
-    studentPage,
+    registerForm
+  },
+  mounted() {
+
   },
   
-  methods: {
-    
-  },
 data() {
     return {
       isTA:false,
@@ -32,15 +32,12 @@ data() {
         ]
       },
       
-   
-      
     }
   },
+  
 
 }
 </script>
 <style scoped>
-
-
 
 </style>>

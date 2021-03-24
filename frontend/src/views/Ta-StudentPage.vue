@@ -1,6 +1,6 @@
 <template>
   <div > 
-     <student-page :isTA="isTA" :userData="userData"></student-page>
+     <student-page :userData="userData" :isTA="isTA"></student-page>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   },
 data() {
     return {
-      isTA:false,
+      isTA:true,
       userData:{
         name:"李正治",
         stuId:"105306030",
