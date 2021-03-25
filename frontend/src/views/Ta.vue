@@ -35,7 +35,7 @@ data() {
         id:"S03",
         title:"匯入名單",
         icon:"fas fa-file-import",
-        router:"Ta"
+        router:"readCsv"
       }
       ],
       
