@@ -62,8 +62,12 @@ html,body{
   .icon-clickable{
     color:#c4c4c4 !important;
   }
+  .icon-danger{
+    color:var(--danger)
+  }
   .icon-disable{
-    color:var(--disableColor)
+    color:var(--disableColor);
+    pointer-events: visibleFill;
   }
   .pointer{
     cursor: pointer;

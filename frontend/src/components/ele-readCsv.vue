@@ -12,8 +12,10 @@
     <vue-csv-map :auto-match="true"></vue-csv-map>
 </vue-csv-import>
 {{csv}}
+
     </div>
 </template>
+
 <script>
 import {VueCsvToggleHeaders, VueCsvSubmit, VueCsvMap, VueCsvInput, VueCsvErrors, VueCsvImport} from 'vue-csv-import';
 export default {
@@ -26,6 +28,9 @@ export default {
         csv:'',
 
     }
-}
+},
+methods: {
+     
+},
 }
 </script>

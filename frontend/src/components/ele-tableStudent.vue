@@ -36,12 +36,19 @@
                         </span>
                     </td>
                     <td class="align-middle ">
-                        <span v-if="item.status == 1" class="" >
-                            <router-link to="/"><i class="fas fa-pen icon-clickable"></i></router-link>
+                        <span class="m-2">
+                            <i v-if="item.status != 1 " class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
+                            <router-link v-else  to="/"><i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i></router-link>
                         </span>
-                        <span v-else class="icon-disable">
-                            <i class="fas fa-pen"></i>
+                        <span v-if="isTA">
+                            <span class="m-2" @click="showAlert('TaDash')">
+                                <i class="fas fa-check" :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
+                            </span>
+                            <span class="m-2">
+                                <i class="fas fa-times icon-danger" ></i>
+                            </span>
                         </span>
+                        
 
                     </td>
                 </tr>
@@ -67,6 +74,34 @@ export default {
         customTable
     },
     methods: {
+        async showAlert(routeName) {
+        let vm =this;
+        
+        await vm.$swal({
+            title: '<h2 class="font-weight-boldest m-0">您確定要審核通過？</h2>',
+            showCloseButton: true,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#009F40',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '確定',
+            cancelButtonText: '取消',
+         })
+         .then((result) => {
+            if (result.isConfirmed) {
+                vm.$swal({
+                title: '<h2 class="font-weight-boldest success m-0">審核通過!</h2>',
+                icon: 'success',
+                showCancelButton: false,
+                showConfirmButton:false,
+                timer:2000
+                })
+                .then(()=>{
+                    vm.$router.push({name: routeName })
+                })
+            }
+        })
+      },
         routerTo(path){
             let vm = this;
             vm.$router.push({name:path})

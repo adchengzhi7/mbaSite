@@ -151,6 +151,8 @@ data() {
       englishTest:["TOEFL PBT","TOEFL CBT","TOEFL IBT","IELTS","TOEIC"],
       englishPointBlured:false,
       englishSelectedBlured:false,
+      studentDoneMessage:'請靜待辦公室助教完成審核作業！',
+      taDoneMessage:'請前往完成審核作業！',
      
       
     }
@@ -218,6 +220,19 @@ data() {
     }
   },
   methods: {
+      async showAlert(routeName,msg) {
+        let vm =this;
+        
+        await vm.$swal({
+          title: '<h2 class="font-weight-boldest m-0">已成功提交！</h2>',
+          html: '<div class="small  text-muted"> '+ msg +' </div>',
+          icon: 'success',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer:5000
+          }),
+        await vm.$router.push({ name: routeName  })
+      },
      validate(){
        let vm =this;
        vm.selectedBlured =true;
@@ -242,6 +257,7 @@ data() {
     },
     
     submit(){
+      
       let vm =this;
       const sectionTitle = this.sectionTitle;
       const yearSelected = this.yearSelected;
@@ -251,7 +267,13 @@ data() {
       vm.validate();
       if(vm.valid){
         console.log(sectionTitle,yearSelected,points,semesterSelected,type);
+        if(!vm.isTA){
+            vm.showAlert("StudentDash",vm.studentDoneMessage)
+          }else {
+            vm.showAlert("TaDash",vm.taDoneMessage)
+          }
       }
+      
       
 
     },
@@ -264,6 +286,11 @@ data() {
        vm.validateEnglish();
       if(vm.valid){
         console.log(englishSelected,englishPoint,type);
+         if(!vm.isTA){
+            vm.showAlert("StudentDash",vm.studentDoneMessage)
+          }else {
+            vm.showAlert("TaDash",vm.taDoneMessage)
+          }
       }
 
     },
