@@ -36,65 +36,75 @@
        <div class="row">
            <div class="col"></div>
            <div class="col-8">
-               <div v-if="type != 'english'" class="text-left">
-            <div class="row">
-                <div class="col input-col">
-                    <select class="form-control" name="" id="" v-model="yearSelected">
-                      <option value="none" disabled >選擇學年</option>
-                      <option :key="'year'+year" v-for="year in getYear" :value="year"> {{year}} 學年</option>
-                    </select>
-                </div>
-                <div class="col input-col">
-                    <select class="form-control" name="" id="" v-model="semesterSelected">
-                      <option value="none" class="icon-disabled" disabled  required>選擇學期</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col input-col">
-              <input class="form-control" type="text" v-model="sectionTitle" placeholder="請輸入完整單位名稱">
-              </div>
-            </div>
-            
-             <div class="row" v-if="isTA">
-              <div class="col input-col">
-                  <div class="input-group ">
-                    <div class="input-group-append">
-                      <button class="btn btn-secondary" type="button" @click="minusPoints" >
-                        <i class="fas fa-minus"></i>
-                      </button>
-                    </div>
-                    <input class="form-control" type="number" max="2"  v-model="checkPoint" required >
-                    <div class="input-group-append">
-                      
-                      <button class="btn btn-secondary " type="button" @click="addPoints" >
-                        <i class="fas fa-plus"></i>
-                      </button>
+               <form v-if="type != 'english'" class="text-left needs-validation" v-on:submit.prevent="submit"> 
+                  <div class="row">
+                      <div class="col input-col">
+                          <select class="form-control" name="" id="" v-model="yearSelected">
+                            <option value="none" class="select-default"  disabled >選擇學年</option>
+                            <option :key="'year'+year" v-for="year in getYear" :value="year"> {{year}} 學年</option>
+                          </select>
+                          <div class="invalid-feedback">
+                            Please choose a username.
+                          </div>
+                      </div>
+                      <div class="col input-col">
+                          <select class="form-control" name="" id="" v-model="semesterSelected"  :class="{'is-invalid':isSelectedNull && selectedBlured ,'is-valid':!isSelectedNull &&selectedBlured }" @blur="selectedBlured = true">
+                            <option value="none" class=" select-default" disabled  >選擇學期</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                          </select>
+                          <div class="invalid-feedback">
+                            請選擇選擇學期
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col input-col">
+                    <input class="form-control" :class="{'is-invalid':isSectionNull && sectionBlured,'is-valid':!isSectionNull &&sectionBlured }" @blur="sectionBlured = true" type="text" v-model="sectionTitle" placeholder="請輸入完整單位名稱" >
+                          <div class="invalid-feedback">
+                            請輸入完整的單位名稱
+                          </div>
                     </div>
                   </div>
-              </div>
-            </div>
-            <div class="mt-3">
-              <button class="btn btn-success btn-lg success " @click="submit">提交申請</button>
-            </div>
-          </div>
+                  
+                  <div class="row" v-if="isTA">
+                    <div class="col input-col">
+                        <div class="input-group ">
+                          <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" @click="minusPoints" >
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+                          <input class="form-control" type="number" max="2"  v-model="checkPoint"  >
+                          <div class="input-group-append">
+                            
+                            <button class="btn btn-secondary " type="button" @click="addPoints" >
+                              <i class="fas fa-plus"></i>
+                            </button>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <button class="btn btn-success btn-lg success " @click="submit">提交申請</button>
+                  </div>
+              </form>
 
           <div v-else class="text-left">
             <div class="row">
                 <div class="col input-col">
-                    <select class="form-control" name="" id="" v-model="englishSelected">
-                      <option value="none" disabled selected >選擇英語檢定類別</option>
-                      <option :key="'test-'+test" v-for="test in englishTest" :value="englishTest"> {{test}} </option>
+                    <select class="form-control" name="" id="" v-model="englishSelected" :class="{'is-invalid':isEnglishSelectedNull && englishSelectedBlured,'is-valid':!isEnglishSelectedNull &&englishSelectedBlured }" @blur="englishSelectedBlured = true">
+                      <option value="none" disabled  >選擇英語檢定類別</option>
+                      <option :key="'test-'+test" v-for="test in englishTest" :value="test"> {{test}} </option>
                     </select>
                 </div>
                 
             </div>
             <div class="row">
               <div class="col input-col">
-              <input class="form-control" type="number" v-model="englishPoint" placeholder="輸入英語檢定分數">
+                <input class="form-control" type="number" v-model="englishPoint" :class="{'is-invalid':isEnglishPointNull && englishPointBlured,'is-valid':!isEnglishPointNull &&englishPointBlured }" @blur="englishPointBlured = true"  placeholder="輸入英語檢定分數">
               </div>
+              <div class="invalid-feedback">請輸入英語檢定分數 </div>
             </div>
             
             <div class="mt-3">
@@ -127,6 +137,9 @@ export default {
 data() {
     return {
       title:"",
+      sectionBlured:false,
+      selectedBlured:false,
+      valid:false,
       icon:"",
       type:"",
       sectionTitle:'',
@@ -136,11 +149,33 @@ data() {
       englishPoint:"",
       englishSelected:"none",
       englishTest:["TOEFL PBT","TOEFL CBT","TOEFL IBT","IELTS","TOEIC"],
+      englishPointBlured:false,
+      englishSelectedBlured:false,
      
       
     }
   },
   computed:{
+    isSectionNull(){
+      let vm = this;
+      if(vm.sectionTitle == "" || vm.sectionTitle == null ){ return true}
+      else{return false}
+    },
+    isSelectedNull(){
+      let vm = this;
+      if(vm.semesterSelected == "none" || vm.semesterSelected == null ){ return true}
+      else{return false}
+    },
+    isEnglishPointNull(){
+      let vm = this;
+      if(vm.englishPoint == "none" || vm.englishPoint == null || vm.englishPoint == 0 ){ return true}
+      else{return false}
+    },
+    isEnglishSelectedNull(){
+      let vm = this;
+      if(vm.englishSelected == "none" || vm.englishSelected == null || vm.englishSelected == ""){ return true}
+      else{return false}
+    },
     imageUrl(){
       let vm = this;
       return "../assets/icon/"+vm.icon+".svg"
@@ -183,6 +218,28 @@ data() {
     }
   },
   methods: {
+     validate(){
+       let vm =this;
+       vm.selectedBlured =true;
+       vm.sectionBlured =true;
+         if(vm.checkInputStatus(vm.semesterSelected) && vm.checkInputStatus(vm.sectionTitle)  ){
+         vm.valid = true
+       }
+       
+     },
+     validateEnglish(){
+       let vm =this;
+       vm.englishPointBlured =true;
+       vm.englishSelectedBlured =true;
+         if(vm.checkInputStatus(vm.englishPoint) && vm.checkInputStatus(vm.englishSelected)  ){
+         vm.valid = true
+       }
+       
+     },
+     checkInputStatus : function(email) {
+        if(email == "" || email == null  || email=="none" || email==0){ return false}
+        else{return true}
+    },
     
     submit(){
       let vm =this;
@@ -191,17 +248,23 @@ data() {
       const points = this.points;
       const semesterSelected = this.semesterSelected;
       const type =vm.$route.params.type;
-      console.log(sectionTitle,yearSelected,points,semesterSelected,type);
+      vm.validate();
+      if(vm.valid){
+        console.log(sectionTitle,yearSelected,points,semesterSelected,type);
+      }
+      
 
     },
 
     submitEnglish(){
       let vm =this;
       const englishPoint = this.englishPoint;
-      const yearSelected = this.yearSelected;
       const englishSelected = this.englishSelected;
       const type =vm.$route.params.type;
-      console.log(englishSelected,yearSelected,englishPoint,type);
+       vm.validateEnglish();
+      if(vm.valid){
+        console.log(englishSelected,englishPoint,type);
+      }
 
     },
     addPoints(){
@@ -241,7 +304,23 @@ select {
   font-weight: 700;
    color:var(--disableColor)
 }
+.select-default {
+  font-weight: 700 !important;
+   color:var(--disableColor) !important;
+}
 option:first-of-type {
    color:var(--disableColor)
 }
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border: 1px solid rgba(245,81,52,0.5) !important; 
+     box-shadow: 0 5px 10px rgba(245,81,52,0.05) ,
+      0 15px 40px rgba(245,81,52,0.15)  !important;
+    }
+.form-control.is-valid, .was-validated .form-control:valid {
+   border: 1px solid rgba(56, 178, 105,0.5) !important; 
+     box-shadow: 0 5px 10px rgba(56, 178, 105,0.05) ,
+      0 15px 40px rgba(56, 178, 105,0.15)  !important;
+
+}
+
 </style>>
