@@ -1,19 +1,29 @@
 <template>
   <div > 
      <student-page :isTA="isTA" :userData="userData"></student-page>
+      <h1>{{greeting}}</h1>
+      <button @click="check">test</button>
   </div>
 </template>
 
 <script>
 import studentPage from "../components/tmp-studentPage"
+import {mapActions} from 'vuex'
 export default {
-
+computed:{
+     greeting(){
+       return this.$store.state.greeting;
+     }
+  },
   components:{
     studentPage,
   },
   
   methods: {
-    
+    ...mapActions(['fetchData']),
+    check(){
+      this.fetchData();
+    }
   },
 data() {
     return {

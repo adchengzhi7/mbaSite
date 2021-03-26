@@ -21,7 +21,7 @@
                <img v-if="icon == 'caseStudy' " class="img-fluid" src="../assets/icon/caseStudy.svg" alt="">
                <img v-if="icon == 'english' " class="img-fluid" src="../assets/icon/english.svg" alt="">
              </div>
-             <div class="text-left align-self-center">
+             <div class="text-start align-self-center">
                <h3 class="font-weight-boldest m-0   ">{{title}}</h3>
                <div class="text-muted">請輸入完整的單位名稱</div>
              </div>
@@ -36,7 +36,7 @@
        <div class="row">
            <div class="col"></div>
            <div class="col-8">
-               <form v-if="type != 'english'" class="text-left needs-validation" v-on:submit.prevent="submit"> 
+               <form v-if="type != 'english'" class="text-start needs-validation" v-on:submit.prevent="submit"> 
                   <div class="row">
                       <div class="col input-col">
                           <select class="form-control" name="" id="" v-model="yearSelected">
@@ -90,7 +90,7 @@
                   </div>
               </form>
 
-          <div v-else class="text-left">
+          <div v-else class="text-start">
             <div class="row">
                 <div class="col input-col">
                     <select class="form-control" name="" id="" v-model="englishSelected" :class="{'is-invalid':isEnglishSelectedNull && englishSelectedBlured,'is-valid':!isEnglishSelectedNull &&englishSelectedBlured }" @blur="englishSelectedBlured = true">

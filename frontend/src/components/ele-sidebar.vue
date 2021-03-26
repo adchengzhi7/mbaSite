@@ -2,7 +2,7 @@
        <div scroll="no" class=" bg-shadow" :class="{'closebar':!sidebarIsExpand,'sidebar':sidebarIsExpand}" 
        @mouseleave="sidebarIsExpand=false"
        @mouseenter="sidebarIsExpand=true">
-         <div class="m-top text-left h-100 ">
+         <div class="m-top text-start h-100 ">
            <div class="section-height">
             <router-link  :key="item.id" v-for="item in section"  :to="{name:item.router}" tag="div">
               <div class="section" :class="{'section-active':currentRouteName == item.router}" >

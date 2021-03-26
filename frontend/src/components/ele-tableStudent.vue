@@ -201,6 +201,7 @@ export default {
 <style scoped>
 .table td, .table th {
     border-top: 0px !important;
+    border-bottom-width:0px !important;
     padding:  0rem  1.75rem !important;
 
 }

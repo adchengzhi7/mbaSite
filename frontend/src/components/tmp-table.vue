@@ -22,6 +22,8 @@ tbody{
 }
 .table td, .table th {
     border-top: 0px !important;
+    border-bottom-width:0px !important;
+
 }
 .table {
     border-collapse: separate;
