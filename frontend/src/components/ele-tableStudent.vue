@@ -76,7 +76,8 @@
     </div>
 </template>
 <script>
-import customTable from "./tmp-table"
+import customTable from "./tmp-table";
+
 export default {
     props:["isTA"],
     components:{
