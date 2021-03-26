@@ -65,6 +65,9 @@ html,body{
   .icon-danger{
     color:var(--danger)
   }
+  .icon-success{
+    color:var(--success)
+  }
   .icon-disable{
     color:var(--disableColor);
     pointer-events: visibleFill;

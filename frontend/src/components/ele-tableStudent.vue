@@ -36,16 +36,25 @@
                         </span>
                     </td>
                     <td class="align-middle ">
-                        <span class="m-2">
-                            <i v-if="item.status != 1 " class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
-                            <router-link v-else  to="/"><i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i></router-link>
+                        <span class="">
+                            <span v-if="item.status != 1 " class="btn">
+                                <i  class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
+                            </span>
+                            <span v-else  class="btn btn-light" >
+                                <router-link  to="/"><i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i></router-link>
+                            </span>
                         </span>
                         <span v-if="isTA">
-                            <span class="m-2" @click="showAlert('TaDash')">
-                                <i class="fas fa-check" :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
+                            <span class="" >
+                                <button class="btn btn-light" :disabled="item.status != 1 " @click="showAlert()">
+                                <i class="fas fa-check" :class="{'icon-success':item.status == 1 , 'icon-disable':item.status != 1}"></i>
+                                </button>
                             </span>
-                            <span class="m-2">
-                                <i class="fas fa-times icon-danger" ></i>
+                            <span class="" >
+                                <button class="btn btn-light"  @click="warningAlert()">
+                                    <i class="fas fa-times icon-danger" ></i>
+                                </button>
+
                             </span>
                         </span>
                         
@@ -74,7 +83,7 @@ export default {
         customTable
     },
     methods: {
-        async showAlert(routeName) {
+        async showAlert() {
         let vm =this;
         
         await vm.$swal({
@@ -83,24 +92,48 @@ export default {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#009F40',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#A0A9BA',
             confirmButtonText: '確定',
             cancelButtonText: '取消',
          })
          .then((result) => {
             if (result.isConfirmed) {
-                vm.$swal({
-                title: '<h2 class="font-weight-boldest success m-0">審核通過!</h2>',
+                vm.successAlert("審核通過!")
+                
+            }
+        })
+      },
+      async warningAlert(){
+          let vm = this;
+          await vm.$swal({
+            title: '<h2 class="font-weight-boldest m-0">您確定要刪除？</h2>',
+            showCloseButton: true,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DB3058',
+            cancelButtonColor: '#A0A9BA',
+            confirmButtonText: '刪除',
+            cancelButtonText: '取消',
+         }) .then((result) => {
+            if (result.isConfirmed) {
+                vm.successAlert("已刪除！")
+                
+            }
+        })
+      },
+      successAlert(msg){
+          let vm =this;
+          vm.$swal({
+                title: '<h2 class="font-weight-boldest success m-0">'+msg+'</h2>',
                 icon: 'success',
                 showCancelButton: false,
                 showConfirmButton:false,
                 timer:2000
                 })
-                .then(()=>{
-                    vm.$router.push({name: routeName })
-                })
-            }
-        })
+                // .then(()=>{
+                //     vm.$router.go(routeName)
+                // })
+
       },
         routerTo(path){
             let vm = this;
