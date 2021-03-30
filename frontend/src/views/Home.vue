@@ -19,6 +19,7 @@
               
             </div>
           </div>
+          <div>{{errorMsg}}</div>
           </div>
         <div class="pt-3">
 
@@ -34,6 +35,7 @@
     <div style="margin:auto">
        <img  src="../assets/mba-logo.png" alt="">
     </div>
+   
   </div>
 </template>
 
@@ -45,11 +47,17 @@ export default {
   name: "Home",
   data() {
     return {
+      info:null,
       username:null,
       password:null,
       see:false,
+      errorMsg:null,
       passType:'password',
     }
+  },
+  mounted() {
+    
+
   },
   methods: {
     showPassword(){
@@ -64,7 +72,19 @@ export default {
     },
     submit(){
       let vm =this;
-      alert(vm.password,vm.username)
+      vm.axios.post('http://localhost:3000/api/login', {
+      user: vm.username,
+      password:vm.password
+      })
+      .then(function (response) {
+        console.log(response.data[0]);
+        // Success
+        })
+      .catch(function (error) {
+        // Error
+        console.log(error);
+        vm.errorMsg="Invalid email or password"
+      })
     }
   },
   components: {},

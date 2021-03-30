@@ -1,7 +1,6 @@
 let express = require('express');
 let router = express.Router();
-let mysql = require('mysql');
-require('dotenv').config();
+// let mysql = require('mysql');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
