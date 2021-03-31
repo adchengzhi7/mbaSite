@@ -7,10 +7,10 @@
           <form class="needs-validation " v-on:submit.prevent="submit()"   >
             <div class="p-3">
           <div class="p-3 ">
-            <input class="  bg-light form-control" v-model="username" placeholder="Email" type="email" name="" id=""  required/>
+            <input class="  bg-light form-control" v-model="form.user" placeholder="Email" name="" id=""  required/>
           </div>
           <div class="input-group p-3">
-            <input class="form-control" v-model="password" placeholder="Password" :type="passType" required >
+            <input class="form-control" v-model="form.password" placeholder="Password" :type="passType" required >
             <div class="input-group-append">
               <button class="btn btn-icon" type="button" @click="showPassword">
                 <i v-if="see" class="fas fa-eye-slash"></i>
@@ -42,14 +42,17 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
+  import {mapActions} from 'vuex'
 
 export default {
   name: "Home",
   data() {
     return {
       info:null,
-      username:null,
-      password:null,
+      form:{
+        user:null,
+        password:null,
+      },
       see:false,
       errorMsg:null,
       passType:'password',
@@ -60,6 +63,9 @@ export default {
 
   },
   methods: {
+    ...mapActions({
+      signIn:'auth/signIn'
+    }),
     showPassword(){
       let vm =this;
       if(vm.passType === 'password'){
@@ -72,19 +78,8 @@ export default {
     },
     submit(){
       let vm =this;
-      vm.axios.post('http://localhost:3000/api/login', {
-      user: vm.username,
-      password:vm.password
-      })
-      .then(function (response) {
-        console.log(response.data[0]);
-        // Success
-        })
-      .catch(function (error) {
-        // Error
-        console.log(error);
-        vm.errorMsg="Invalid email or password"
-      })
+      vm.signIn(vm.form)
+     
     }
   },
   components: {},

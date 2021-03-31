@@ -108,7 +108,7 @@ module.exports={
     },
     login:(req,res)=>{
         const body= req.body;
-        getUserByStuIdAll(body.stuId,(err,results)=>{
+        getUserByStuIdAll(body.user,(err,results)=>{
             if(err){
                 console.log(err);
                 return;
@@ -122,7 +122,9 @@ module.exports={
             }
             const result = compareSync(body.password,results.usersDetails_pass);
             if(result){
-                results.password = undefined;
+                results.usersDetails_pass = undefined;
+                results.usersDetails_psId = undefined;
+
                 const jsontoken = sign({result:results},"mbaNccuMba",{
                     expiresIn:"1h"
                 });

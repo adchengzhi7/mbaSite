@@ -12,12 +12,14 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 // import './assets/css/tailwind.css'
- 
+
+axios.defaults.baseURL='http://localhost:3000'
 const myapp =createApp(App);
 myapp.use(router)
-myapp.use(store)
 myapp.use(Vuex)
 myapp.use(VueAxios, axios)
+myapp.use(store)
+myapp.provide('$axios', axios); 
 myapp.use(VueCsvImportPlugin)
 myapp.use(VueSweetalert2)
 myapp.mount('#app')

@@ -1,4 +1,5 @@
 import {createStore } from 'vuex'
+import auth from './auth'
 
 export default createStore({
     state:{
@@ -11,6 +12,7 @@ export default createStore({
     },
     actions:{
         async fetchData({commit}){
+            console.log(this.$axios);
             
             const a="okla"
 
@@ -19,5 +21,7 @@ export default createStore({
 
         }
     },
-    modules:{}
+    modules:{
+        auth,
+    }
 })
