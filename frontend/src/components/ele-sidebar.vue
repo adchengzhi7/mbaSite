@@ -14,14 +14,14 @@
             </router-link>
            </div>
 
-           <div class="logout">
+           <div class="logout pointer" @click ="signOut ">
              <div class="dropdown-divider divider" :class="{'closebar-divider':!sidebarIsExpand}"></div>
              <div >
                <div class="section"  >
              <span class="p-4">
               <i class="far fa-arrow-alt-circle-left"></i>
              </span>
-             <span v-show="sidebarIsExpand">登出</span>
+             <span  v-show="sidebarIsExpand">登出</span>
            </div>
              </div>
            </div>
@@ -29,6 +29,7 @@
        </div>
 </template>
 <script>
+  import {mapActions} from 'vuex'
     export default {
       props:['modelValue','section'],  
   computed:{
@@ -43,6 +44,19 @@
     },
     currentRouteName() {
         return this.$route.name;
+    }
+  },
+  methods: {
+    ...mapActions({
+      signOutAction:'auth/signOut'
+
+    }),
+    signOut(){
+        this.signOutAction().then(() =>{
+          this.$router.replace({
+            name:"Home"
+          })
+        })
     }
   },
       data() {

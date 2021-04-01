@@ -9,5 +9,6 @@ router.get("/:stuId",checkToken,getUserByStuId);
 router.patch("/",checkToken,updateUser);
 router.delete("/",checkToken,deleteUser);
 router.post("/login",login);
+router.post("/logout")
 
 module.exports =router;

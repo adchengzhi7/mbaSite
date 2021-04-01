@@ -15,10 +15,10 @@
        <ul class="navbar-nav me-2">
        <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              李正治
+              {{user.usersDetails_cName}}
             </a>
             <div class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end " aria-labelledby="navbarScrollingDropdown">
-              <a class="dropdown-item" href="#">登出</a>
+              <a class="dropdown-item" href="#" @click.prevent="signOut">登出</a>
             </div>
           </li>
       
@@ -33,6 +33,8 @@
 </template>
 <script>
 import avatar from "./ele-avatar"
+  import {mapGetters,mapActions} from 'vuex'
+
 export default {
   data() {
     return {
@@ -41,6 +43,24 @@ export default {
   },
   components:{
     avatar
+  },
+  methods: {
+    ...mapActions({
+      signOutAction:'auth/signOut'
+    }),
+    signOut(){
+        this.signOutAction().then(() =>{
+          this.$router.replace({
+            name:"Home"
+          })
+        })
+    }
+  },
+  computed:{
+    ...mapGetters({
+      authenticated:'auth/authenticated',
+      user:'auth/user'
+    })
   }
 }
 </script>

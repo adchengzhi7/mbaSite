@@ -11,6 +11,7 @@ import readCsv from '../views/Ta-ImportUser.vue'
 import StudentReg from '../views/Student-Reg.vue'
 import StudentRegForm from '../views/Student-Reg-Form.vue'
 import StudentDash from '../views/Student-Dash.vue'
+import store from '@/store'
 
 const routes = [
   {
@@ -23,6 +24,7 @@ const routes = [
     name: 'Ta',
     redirect:"/ta/dash",
     component:Ta,
+   
     children:[{
       path: "dash",
       name: 'TaDash',
@@ -62,6 +64,16 @@ const routes = [
     name: 'Student',
     redirect:"/student/dash",
     component:Student,
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['auth/authenticated']){
+        console.log(store.getters['auth/authenticated']);
+        return next({
+          name:'Home'
+        })
+      }else{
+        return next()
+      }
+    },
     children:[{
       path: "dash",
       name: 'StudentDash',

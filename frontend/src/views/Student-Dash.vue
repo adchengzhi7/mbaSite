@@ -1,8 +1,6 @@
 <template>
   <div > 
      <student-page :isTA="isTA" :userData="userData"></student-page>
-      <h1>{{greeting}}</h1>
-      <button @click="check">test</button>
   </div>
 </template>
 

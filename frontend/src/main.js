@@ -13,6 +13,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 // import './assets/css/tailwind.css'
 
+require("@/store/subscribers")
+store.dispatch('auth/attempt',localStorage.getItem('token'))    
+
 axios.defaults.baseURL='http://localhost:3000'
 const myapp =createApp(App);
 myapp.use(router)

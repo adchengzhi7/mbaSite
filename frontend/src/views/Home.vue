@@ -19,7 +19,9 @@
               
             </div>
           </div>
-          <div>{{errorMsg}}</div>
+          <div  class="font-weight-bold text-danger" v-if="!notFirstLogin">
+            {{ invalidUserMsg}}
+          </div>
           </div>
         <div class="pt-3">
 
@@ -42,7 +44,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-  import {mapActions} from 'vuex'
+  import {mapGetters,mapActions} from 'vuex'
 
 export default {
   name: "Home",
@@ -53,14 +55,16 @@ export default {
         user:null,
         password:null,
       },
+      notFirstLogin:true,
       see:false,
       errorMsg:null,
       passType:'password',
     }
   },
-  mounted() {
-    
-
+  computed:{
+    ...mapGetters({
+      invalidUserMsg:'auth/invalidUserMsg'
+    })
   },
   methods: {
     ...mapActions({
@@ -78,7 +82,12 @@ export default {
     },
     submit(){
       let vm =this;
-      vm.signIn(vm.form)
+      vm.notFirstLogin = false;
+      vm.signIn(vm.form).then( ()=>{
+        vm.$router.replace({
+          name:'StudentDash'
+        })
+      })
      
     }
   },

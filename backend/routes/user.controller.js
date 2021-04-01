@@ -116,31 +116,36 @@ module.exports={
             if(!results){
                 res.json({
                     success:0,
-                    message:"Invalid email or password"
+                    message:"請輸入正確的 學號 及 密碼！"
 
                 })
-            }
-            const result = compareSync(body.password,results.usersDetails_pass);
-            if(result){
-                results.usersDetails_pass = undefined;
-                results.usersDetails_psId = undefined;
-
-                const jsontoken = sign({result:results},"mbaNccuMba",{
-                    expiresIn:"1h"
-                });
-                return res.json({
-                    success:1,
-                    message:"login successfully",
-                    token:jsontoken
-                });
-
             }else{
-                return res.json({
-                    success :0,
-                    message:"Invalid email or password"
-                })
+                const result = compareSync(body.password,results.usersDetails_pass);
+                if(result){
+                    results.usersDetails_pass = undefined;
+                    results.usersDetails_psId = undefined;
+
+                    const jsontoken = sign({result:results},"mbaNccuMba",{
+                        expiresIn:"1h"
+                    });
+                    return res.json({
+                        success:1,
+                        message:"login successfully",
+                        token:jsontoken
+                    });
+
+                }else{
+                    return res.json({
+                        success :0,
+                        message:"Invalid email or password"
+                    })
+                }
             }
+            
         })
+
+    },
+    logout:(req,res)=>{
 
     }
 }
