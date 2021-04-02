@@ -17,22 +17,25 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      if(store.getters['auth/authenticated']){
+        if(store.getters['auth/authenticated'].userType == 0){return next({name:'Student'})}
+        if(store.getters['auth/authenticated'].userType == 1){return next({name:'TA'})}
+        return next()
+      }else{
+        return next()
+      }
+    },
   },
   {
     path: "/ta",
     name: 'Ta',
     redirect:"/ta/dash",
     component:Ta,
-    beforeEnter: (to, from, next) => {
-      if(!store.getters['auth/authenticated']){
-        return next({
-          name:'Home'
-        })
-      }else{
-        return next()
-      }
-    },
+    meta:{
+      needLogin:true
+    },   
     children:[{
       path: "dash",
       name: 'TaDash',
@@ -72,15 +75,9 @@ const routes = [
     name: 'Student',
     redirect:"/student/dash",
     component:Student,
-    beforeEnter: (to, from, next) => {
-      if(!store.getters['auth/authenticated']){
-        return next({
-          name:'Home'
-        })
-      }else{
-        return next()
-      }
-    },
+    meta:{
+      needLogin:true
+    },    
     children:[{
       path: "dash",
       name: 'StudentDash',
@@ -100,10 +97,24 @@ const routes = [
   },
   
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach(function(to, from, next) {
+  if (to.meta.needLogin === true) {
+    if(!store.getters['auth/authenticated'].token){
+      return next({
+        name:'Home'
+      })
+    }
+    
+
+  }
+  next();
+});
+
+
 
 export default router
