@@ -16,6 +16,9 @@ export default {
                     userType:state.userType,
                 })
         },
+        userType(state){
+            return state.userType
+        },
         user(state){
             return state.user
         },

@@ -19,7 +19,7 @@ const routes = [
     name: 'Home',
     component: Home,
     beforeEnter: (to, from, next) => {
-      if(store.getters['auth/authenticated']){
+      if(store.getters['auth/authenticated'].token){
         if(store.getters['auth/authenticated'].userType == 0){return next({name:'Student'})}
         if(store.getters['auth/authenticated'].userType == 1){return next({name:'TA'})}
         return next()

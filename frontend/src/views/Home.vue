@@ -67,7 +67,8 @@ export default {
   },
   computed:{
     ...mapGetters({
-      invalidUserMsg:'auth/invalidUserMsg'
+      invalidUserMsg:'auth/invalidUserMsg',
+      userType:'auth/userType'
     })
   },
   methods: {
@@ -92,9 +93,16 @@ export default {
     })
       vm.notFirstLogin = false;
       vm.signIn(vm.form).then( ()=>{
-        vm.$router.replace({
-          name:'StudentDash'
+        if(vm.userType == 0){
+           vm.$router.replace({
+            name:'StudentDash'
         })
+        }else{
+              vm.$router.replace({
+            name:'TaDash'
+        })
+        }
+       
       })
       vm.isLoading =false
 
