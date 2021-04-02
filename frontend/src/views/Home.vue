@@ -73,8 +73,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      signIn:'auth/signIn'
+      signIn:'auth/signIn',
+      
     }),
+   
     showPassword(){
       let vm =this;
       if(vm.passType === 'password'){

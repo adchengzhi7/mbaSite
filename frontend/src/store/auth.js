@@ -7,6 +7,7 @@ export default {
         user:null,
         invalidUserMsg:null,
         userType:null,
+        userStuId:null,
     },
     getters:{
         authenticated(state){
@@ -18,6 +19,9 @@ export default {
         },
         userType(state){
             return state.userType
+        },
+        userStuId(state){
+            return state.userStuId
         },
         user(state){
             return state.user
@@ -33,8 +37,9 @@ export default {
         SET_USER(state,user){
             state.user = user
         },
-        SET_USERTYPE(state,data){
-            state.userType = data
+        SET_USERDETAILS(state,data){
+            state.userType = data.usersDetails_type
+            state.userStuId = data.usersDetails_stuId
         },
         SET_invalidUserMsg(state,data){
             state.invalidUserMsg = data
@@ -60,7 +65,7 @@ export default {
             try {
                 let decoded = jwt_decode(token);
                 commit('SET_USER',decoded.result.usersDetails_cName)
-                commit('SET_USERTYPE',decoded.result.usersDetails_type)
+                commit('SET_USERDETAILS',decoded.result)
 
             } catch (e) {
                 commit('SET_TOKEN',null)

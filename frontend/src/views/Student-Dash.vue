@@ -1,16 +1,28 @@
 <template>
   <div > 
      <student-page :isTA="isTA" :userData="userData"></student-page>
+     <button @click="signOut"> sdsd</button>
   </div>
 </template>
 
 <script>
 import studentPage from "../components/tmp-studentPage"
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
+
 export default {
+  mounted() {
+    this.getData(this.userStuId)
+  },
+  
 computed:{
-     greeting(){
-       return this.$store.state.greeting;
+    ...mapGetters({
+      userStuId:'auth/userStuId',
+      user:'auth/user'
+      
+    }),
+     isTA(){
+       if(this.$store.state.auth.userType == 0) return false
+       else return true
      }
   },
   components:{
@@ -18,17 +30,29 @@ computed:{
   },
   
   methods: {
-    ...mapActions(['fetchData']),
-    check(){
-      this.fetchData();
+    ...mapActions({
+       loginUser:'user/getloginuser',
+      
+
+    }),
+      signOut(){
+        this.signOutAction().then(() =>{
+          this.$router.replace({
+            name:"Home"
+          })
+        })
+    },
+    getData(id){
+       this.loginUser(id);
     }
+   
   },
 data() {
     return {
-      isTA:false,
+      
       userData:{
-        name:"李正治",
-        stuId:"105306030",
+        name:this.$store.state.auth.user,
+        stuId:this.$store.state.auth.userStuId,
         points:[
           {
             type:"",
