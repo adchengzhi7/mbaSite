@@ -137,7 +137,8 @@ module.exports={
                 }else{
                     return res.json({
                         success :0,
-                        message:"Invalid email or password"
+                        message:"請輸入正確的 學號 及 密碼！"
+
                     })
                 }
             }

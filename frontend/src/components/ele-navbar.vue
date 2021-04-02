@@ -15,7 +15,7 @@
        <ul class="navbar-nav me-2">
        <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{user.usersDetails_cName}}
+              {{user}}
             </a>
             <div class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end " aria-labelledby="navbarScrollingDropdown">
               <a class="dropdown-item" href="#" @click.prevent="signOut">登出</a>

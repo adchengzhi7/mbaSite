@@ -7,7 +7,7 @@
           <form class="needs-validation " v-on:submit.prevent="submit()"   >
             <div class="p-3">
           <div class="p-3 ">
-            <input class="  bg-light form-control" v-model="form.user" placeholder="Email" name="" id=""  required/>
+            <input class="  bg-light form-control" v-model="form.user" placeholder="輸入您的學號" name="" id=""  required/>
           </div>
           <div class="input-group p-3">
             <input class="form-control" v-model="form.password" placeholder="Password" :type="passType" required >
@@ -25,7 +25,10 @@
           </div>
         <div class="pt-3">
 
-        <button  type="submit"  class="btn  btn-lg btn-success ">登入</button>
+        <button type="submit"  class="btn  btn-lg btn-success ">
+          登入
+          <loading v-show="isLoading"></loading>
+          </button>
         </div>
         </form>
         
@@ -43,7 +46,7 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import loading from '@/components/ele-loadingSmall'
   import {mapGetters,mapActions} from 'vuex'
 
 export default {
@@ -55,6 +58,7 @@ export default {
         user:null,
         password:null,
       },
+      isLoading:false,
       notFirstLogin:true,
       see:false,
       errorMsg:null,
@@ -80,18 +84,26 @@ export default {
         vm.see = !vm.see
       }
     },
-    submit(){
+   async submit(){
       let vm =this;
+      vm.isLoading =true
+      await new Promise(resolve => {
+      setTimeout(resolve, 500)
+    })
       vm.notFirstLogin = false;
       vm.signIn(vm.form).then( ()=>{
         vm.$router.replace({
           name:'StudentDash'
         })
       })
+      vm.isLoading =false
+
      
     }
   },
-  components: {},
+  components: {
+    loading
+  },
 };
 </script>
 <style scoped>

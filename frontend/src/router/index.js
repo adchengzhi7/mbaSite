@@ -24,7 +24,15 @@ const routes = [
     name: 'Ta',
     redirect:"/ta/dash",
     component:Ta,
-   
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['auth/authenticated']){
+        return next({
+          name:'Home'
+        })
+      }else{
+        return next()
+      }
+    },
     children:[{
       path: "dash",
       name: 'TaDash',
@@ -66,7 +74,6 @@ const routes = [
     component:Student,
     beforeEnter: (to, from, next) => {
       if(!store.getters['auth/authenticated']){
-        console.log(store.getters['auth/authenticated']);
         return next({
           name:'Home'
         })

@@ -32,19 +32,23 @@ export default {
     actions:{
         async signIn ({dispatch},credentials){
             let response = await axios.post('/users/login',credentials)
-            return dispatch('attempt', response.data)
+            dispatch('errorMsg',response.data)
+            return dispatch('attempt', response.data.token)
         },
-        async attempt({commit,state},data){
-            if(data.token){
-                commit('SET_TOKEN',data.token)
+        errorMsg({commit},data){
+            return  commit('SET_invalidUserMsg',data.message)
+        },
+        async attempt({commit,state},token){
+            if(token){
+                commit('SET_TOKEN',token)
             }
             if(!state.token){
-                commit('SET_invalidUserMsg',data.message)
+                return
 
             }
             try {
-                let decoded = jwt_decode(data.token);
-                commit('SET_USER',decoded.result)
+                let decoded = jwt_decode(token);
+                commit('SET_USER',decoded.result.usersDetails_cName)
             } catch (e) {
                 commit('SET_TOKEN',null)
                 commit('SET_USER',null)
