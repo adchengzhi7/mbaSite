@@ -30,7 +30,7 @@
        </div>
        
        
-       <div v-if="userData.points.length == 0" class="row mt-5" >
+       <div v-if="userPointsLength == 0" class="row mt-5" >
          <div class="col-2"></div>
          <div class="col content-box" >
            <div style="margin:auto">
@@ -61,6 +61,8 @@
 <script>
 import avatar from "../components/ele-avatar"
 import tables from "../components/ele-tableStudent"
+import { mapGetters} from 'vuex'
+
 export default {
     props:["isTA","userData"],
     data() {
@@ -73,11 +75,24 @@ export default {
     avatar,
     tables
   },
+  
   computed:{
-    totalPoint(){
+   ...mapGetters({
+      userPoints:'userPoint/userPoints',
+      userPointsLength:'userPoint/userPointsLength'
+    }),
+   
+ 
+     totalPoint(){
       let vm =this;
-      const pointArray=Object.values(vm.userData.points).map(item => parseInt(item.point));
+      if(vm.userPoints){
+      const pointArray=Object.values(vm.userPoints).map(item => 
+        item.points_credit
+      );
       return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
+       }
+
+      return this.$store.state.auth.userStuId
       ;
     },
     totalPointToPrecent(){
@@ -87,6 +102,7 @@ export default {
       
     }
   },
+ 
     
 }
 </script>

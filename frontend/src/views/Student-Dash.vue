@@ -1,7 +1,6 @@
 <template>
   <div > 
-     <student-page :isTA="isTA" :userData="userData"></student-page>
-     <button @click="signOut"> sdsd</button>
+     <student-page :isTA="isTA" :userData="userData"  ></student-page>
   </div>
 </template>
 
@@ -10,14 +9,14 @@ import studentPage from "../components/tmp-studentPage"
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
-  mounted() {
-    this.getData(this.userStuId)
-  },
+  
   
 computed:{
     ...mapGetters({
       userStuId:'auth/userStuId',
-      user:'auth/user'
+      user:'auth/user',
+      userPoints:'userPoint/userPoints'
+
       
     }),
      isTA(){
@@ -28,44 +27,24 @@ computed:{
   components:{
     studentPage,
   },
-  
   methods: {
     ...mapActions({
-       loginUser:'user/getloginuser',
-      
-
+       getUserPoint:'userPoint/getUserPoint',
     }),
-      signOut(){
-        this.signOutAction().then(() =>{
-          this.$router.replace({
-            name:"Home"
-          })
-        })
-    },
-    getData(id){
-       this.loginUser(id);
+    getPointsData(id){
+       let vm = this;
+       vm.points = this.getUserPoint(id);
     }
-   
+  },
+   mounted() {
+    this.getPointsData(this.$store.state.auth.userStuId)
   },
 data() {
     return {
-      
       userData:{
         name:this.$store.state.auth.user,
         stuId:this.$store.state.auth.userStuId,
-        points:[
-          {
-            type:"",
-            point:"1"
-          },{
-            type:"",
-            point:"1"
-          },
-        ]
       },
-      
-   
-      
     }
   },
 
