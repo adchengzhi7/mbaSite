@@ -126,7 +126,7 @@ module.exports={
                     results.usersDetails_psId = undefined;
 
                     const jsontoken = sign({result:results},"mbaNccuMba",{
-                        expiresIn:"1m"
+                        expiresIn:"1h"
                     });
                     return res.json({
                         success:1,
