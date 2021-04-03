@@ -1,6 +1,6 @@
 <template>
   <div > 
-     <student-page :isTA="isTA" :userData="userData"  ></student-page>
+     <student-page :key="ConfirmGetUserId" :isTA="isTA" :userData="userData"  ></student-page>
   
   </div>
 </template>
@@ -23,6 +23,13 @@ computed:{
      isTA(){
        if(this.$store.state.auth.userType == 0) return false
        else return true
+     },
+     ConfirmGetUserId(){
+      if(this.$store.state.auth.userStuId){
+           return this.getPointsData(this.$store.state.auth.userStuId)
+
+          }
+          return null
      }
   },
   components:{
@@ -31,14 +38,25 @@ computed:{
   methods: {
     ...mapActions({
        getUserPoint:'userPoint/getUserPoint',
+      signOutAction:'auth/signOut'
+
     }),
     getPointsData(id){
        let vm = this;
-       vm.points = this.getUserPoint(id);
+         vm.points = this.getUserPoint(id)
+         .catch(function(e){
+           vm.signOutAction().then(() =>{
+             vm.$router.replace({
+               name:"Home"
+          })
+          })
+          console.log(e);
+          })
+         
     }
   },
    mounted() {
-       this.getPointsData('105306032')
+     
      
   },
 data() {

@@ -21,9 +21,19 @@ import auth from './auth'
     },
     actions:{
         async getUserPoint  ({dispatch},credentials){
-            let response = await axios.get('/points/'+credentials,{ 
+            let response = await 
+            axios.get('/points/'+credentials,{ 
                 headers:{'Authorization':'Bearer ' +auth.state.token }
-            })
+             })
+             .then(function (response) {
+                 if(response.data.success ==0){
+                    throw "invalid Token";
+                 }
+                 return response;
+              })
+              .catch(function (error) {
+                   throw error;
+              });
         return dispatch('getUserPointCommit', response.data)
 
 

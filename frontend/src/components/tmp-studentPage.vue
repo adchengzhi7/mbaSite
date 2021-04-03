@@ -3,7 +3,7 @@
         <div class="partTop">
        <div class="row">
         <div class="col"></div>
-        <div class="col-8">
+        <div class="col-8 row">
             <div class="col">
                 <div class="d-flex justify-content-center ">
                 <avatar :image="avatarImg" size="lg"></avatar>
