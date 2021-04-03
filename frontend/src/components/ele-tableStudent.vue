@@ -19,11 +19,10 @@
                 </tr>
             </template>
             <template #tbody>
-                <tr class="bg-shadow-hover rounded " :key="item.id" v-for="item in filterData">
-                    <th scope="row" class="align-middle">{{item.id}}</th>
+                <tr class="bg-shadow-hover rounded " :key="index" v-for="(item,index) in filterData">
                     <td class="align-middle">
                         <div class="font-weight-bold"> {{item.section}}</div>
-                        <div class="text-muted">{{item.sectionTitle}}</div>
+                        <div class="text-muted">{{item.section_title}}</div>
                     </td>
                     <td class="align-middle">{{splitAndJoin(item.semester)}}</td>
                     <td class="align-middle"  v-html="(item.point)"></td>
@@ -77,6 +76,7 @@
 </template>
 <script>
 import customTable from "./tmp-table";
+import { mapGetters} from 'vuex'
 
 export default {
     props:["isTA"],
@@ -159,18 +159,24 @@ export default {
          }
     },
     computed:{
+        ...mapGetters({
+      userPoints:'userPoint/userPoints',
+      userPointsLength:'userPoint/userPointsLength'
+    }),
        
         filterData(){
             let vm =this;
-            return vm.nameList.sort(function(a, b) {
-                if (!vm.isReverse) {
-                return a[vm.sortBy] - b[vm.sortBy];
-                } else {
+            if(vm.userPoints){
+                return vm.userPoints.sort(function(a, b) {
+                    if (!vm.isReverse) {
+                    return a[vm.sortBy] - b[vm.sortBy];
+                    } else {
 
-                return b[vm.sortBy] - a[vm.sortBy];
-                }
-            });
-            
+                    return b[vm.sortBy] - a[vm.sortBy];
+                    }
+                });
+            }
+            return vm.nameList
            
         }
 
@@ -182,16 +188,14 @@ export default {
             isReverse:false,
             thead:
                 [
-                {key:'th01',id:"id",title:"#",isSort:true},
                 {key:'th02',id:"section",title:"項目",isSort:false},
                 {key:'th03',id:"semester",title:"學期",isSort:true},
                 {key:'th04',id:"point",title:"點數",isSort:true},
                 {key:'th05',id:"status",title:"狀態",isSort:true},
                 ],
+                
             nameList:[
-                {id:"1",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1091",point:"1",status:"1"},
-                {id:"2",section:"國際交換或雙聯學位",sectionTitle:"SKEMA Business School",semester:"1082",point:"3",status:"2"},
-                {id:"3",section:"英語檢定",sectionTitle:"TOEFL PBT",semester:"1081",point:"0",status:"2"},
+                {id:"1",section:"",section_title:"",semester:"",point:"",status:""},
             ]
         }
     },

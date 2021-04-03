@@ -18,7 +18,7 @@
             <div class="avatar-box p-3 ">
                 <div class="d-flex flex-wrap pb-3 ">
                 <div >已確認點數</div>
-                <div class="ml-auto" >{{totalPoint}}/3</div>
+                <div class="ms-auto" >{{totalPoint}}/3</div>
                 </div>
                 <div class="progress">
                 <div class="progress-bar success" role="progressbar" :style="{'width':totalPointToPrecent }" :aria-valuenow="totalPointToPrecent" aria-valuemin="0" aria-valuemax="100"></div>
@@ -30,7 +30,7 @@
        </div>
        
        
-       <div v-if="userPointsLength == 0" class="row mt-5" >
+       <div v-if="pointsLength == 0" class="row mt-5" >
          <div class="col-2"></div>
          <div class="col content-box" >
            <div style="margin:auto">
@@ -79,21 +79,31 @@ export default {
   computed:{
    ...mapGetters({
       userPoints:'userPoint/userPoints',
-      userPointsLength:'userPoint/userPointsLength'
     }),
    
- 
-     totalPoint(){
-      let vm =this;
+    pointsLength(){
+      let vm =this; 
       if(vm.userPoints){
-      const pointArray=Object.values(vm.userPoints).map(item => 
-        item.points_credit
-      );
-      return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
+        return vm.userPoints.length;
        }
+      return 0;
 
-      return this.$store.state.auth.userStuId
-      ;
+    },
+     totalPoint(){
+      let vm =this; 
+      if(vm.userPoints){
+        const pointArray=Object.values(vm.userPoints).map(
+          function(item) {
+            if(item.status ==2){
+              return item.point
+            }
+            return 0
+          }
+            
+        );
+        return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
+       }
+      return 0;
     },
     totalPointToPrecent(){
       let vm =this;

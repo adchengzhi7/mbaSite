@@ -4,22 +4,16 @@ import auth from './auth'
     namespaced:true,
     state:{
         userPoints:null,
-        userPointsLength:0,
     },
     getters:{
         userPoints(state){
             return state.userPoints
 
         },
-        userPointsLength(state){
-            return state.userPointsLength
-
-        },
     },
     mutations:{
         SET_USERPOINTS(state,data){
             state.userPoints = data.data;
-            state.userPointsLength = data.data.length;
 
         }
         

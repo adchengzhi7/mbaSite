@@ -1,6 +1,7 @@
 <template>
   <div > 
      <student-page :isTA="isTA" :userData="userData"  ></student-page>
+  
   </div>
 </template>
 
@@ -37,7 +38,8 @@ computed:{
     }
   },
    mounted() {
-    this.getPointsData(this.$store.state.auth.userStuId)
+       this.getPointsData('105306032')
+     
   },
 data() {
     return {

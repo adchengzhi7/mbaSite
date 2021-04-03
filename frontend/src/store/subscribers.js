@@ -6,6 +6,7 @@ store.subscribe((mutations =>{
         case 'auth/SET_TOKEN':
             if(mutations.payload){
                 localStorage.setItem('token',mutations.payload)
+                
             }else{
                 localStorage.removeItem('token')
 
