@@ -33,7 +33,6 @@ export default {
 data() {
     return {
       isTA:false,
-      userId:this.$store.state.auth.userId,
      
       section:[{
         id:"S01",

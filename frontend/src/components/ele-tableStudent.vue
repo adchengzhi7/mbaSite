@@ -22,7 +22,11 @@
                 <tr class="bg-shadow-hover rounded " :key="index" v-for="(item,index) in filterData">
                     <td class="align-middle">
                         <div class="font-weight-bold"> {{item.section}}</div>
-                        <div class="text-muted">{{item.section_title}}</div>
+                        <div class="text-muted">
+                            <span>{{item.section_title}}</span>
+                            <span v-if ="item.englishCredit!= null" > -{{item.englishCredit}}分</span>
+
+                        </div>
                     </td>
                     <td class="align-middle">{{splitAndJoin(item.semester)}}</td>
                     <td class="align-middle"  v-html="(item.point)"></td>
@@ -136,11 +140,11 @@ export default {
                 // })
 
       },
-        routerTo(path){
-            let vm = this;
-            vm.$router.push({name:path})
+      routerTo(path){
+          let vm = this;
+          vm.$router.push({name:path})
         },
-        sortSelector(selected,isSort){
+          sortSelector(selected,isSort){
             let vm = this;
             if(isSort){
                 vm.sortBy = selected;
@@ -150,18 +154,17 @@ export default {
             }
         },
         splitAndJoin(str){
-            const year = str.slice(0,3)
-            const smester = str.slice(3,4)
-           
-            return year + "/"+smester
-            
-
+            if(str != "00"){
+                const year = str.slice(0,3)
+                const smester = str.slice(3,4)
+                return year + "/"+smester
+            }
+            return "-"
          }
     },
     computed:{
         ...mapGetters({
       userPoints:'userPoint/userPoints',
-      userPointsLength:'userPoint/userPointsLength'
     }),
        
         filterData(){
@@ -184,7 +187,7 @@ export default {
     data() {
         return {
             filter:"",
-            sortBy :'id',
+            sortBy :'semester',
             isReverse:false,
             thead:
                 [

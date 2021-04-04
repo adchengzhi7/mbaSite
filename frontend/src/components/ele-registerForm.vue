@@ -86,7 +86,7 @@
                     </div>
                   </div>
                   <div class="mt-3">
-                    <button class="btn btn-success btn-lg success " @click="submit">提交申請</button>
+                    <button class="btn btn-success btn-lg success " >提交申請</button>
                   </div>
               </form>
 
@@ -117,6 +117,7 @@
      </div>
 </template>
 <script>
+import {mapActions} from 'vuex'
 export default {
 
   props:["isTA"],
@@ -222,6 +223,10 @@ data() {
     }
   },
   methods: {
+    ...mapActions({
+       insertUserPoint:'userPoint/insertUserPoint',
+    }),
+
       async showAlert(routeName,msg) {
         let vm =this;
         
@@ -261,21 +266,29 @@ data() {
     submit(){
       
       let vm =this;
-      const sectionTitle = vm.sectionTitle;
-      const yearSelected = vm.yearSelected;
-      const points = vm.points;
-      const semesterSelected = vm.semesterSelected;
-      const type =vm.$route.params.type;
-      const status = 1;
-      const stuId = vm.stuId;
+      const pointList = {
+        sectionTitle:vm.sectionTitle,
+        yearSelected : vm.yearSelected,
+        points : vm.points,
+        semesterSelected : vm.semesterSelected,
+        type :vm.$route.params.type,
+        status : 1,
+        stuId : vm.stuId,
+        englishCredit: null
+      }
       vm.validate();
       if(vm.valid){
-        console.log(sectionTitle,yearSelected,points,semesterSelected,type,status,stuId);
-        if(!vm.isTA){
-            vm.showAlert("StudentDash",vm.studentDoneMessage)
-          }else {
-            vm.showAlert("TaDash",vm.taDoneMessage)
+        vm.insertUserPoint(pointList).then((res)=>{
+          if(res.data.success == 1){
+            if(!vm.isTA){
+              vm.showAlert("StudentDash",vm.studentDoneMessage)
+            }else {
+              vm.showAlert("TaDash",vm.taDoneMessage)
+            }
+          }else{
+            //show error modal
           }
+        })
       }
       
       
@@ -284,21 +297,32 @@ data() {
 
     submitEnglish(){
       let vm =this;
-      const englishPoint = this.englishPoint;
-      const englishSelected = this.englishSelected;
-      const type =vm.$route.params.type;
-      const status = 1;
-      const stuId = vm.stuId;
-       vm.validateEnglish();
-      if(vm.valid){
-        console.log(englishSelected,englishPoint,type,status,stuId);
-         if(!vm.isTA){
-            vm.showAlert("StudentDash",vm.studentDoneMessage)
-          }else {
-            vm.showAlert("TaDash",vm.taDoneMessage)
-          }
-      }
+      const pointList = {
+        sectionTitle:vm.englishSelected,
+        yearSelected : 0,
+        points : 0,
+        semesterSelected : 0,
+        type :vm.$route.params.type,
+        status : 1,
+        stuId : vm.stuId,
+        englishCredit: vm.englishPoint
 
+      }
+     
+       vm.validateEnglish();
+       if(vm.valid){
+        vm.insertUserPoint(pointList).then((res)=>{
+          if(res.data.success == 1){
+            if(!vm.isTA){
+              vm.showAlert("StudentDash",vm.studentDoneMessage)
+            }else {
+              vm.showAlert("TaDash",vm.taDoneMessage)
+            }
+          }else{
+            //show error modal
+          }
+        })
+      }
     },
     addPoints(){
       let vm =this;

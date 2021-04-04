@@ -41,6 +41,16 @@ import auth from './auth'
         },
         getUserPointCommit({commit},data){
             return commit('SET_USERPOINTS',data)
+        },
+        async insertUserPoint({dispatch},credentials){
+            let response = await axios.post('/points/',credentials,{
+                    headers:{'Authorization':'Bearer ' +auth.state.token }
+            }).then(
+                dispatch('getUserPoint', credentials.stuId)
+            )
+            return response;
+
+            
 
         }
        
