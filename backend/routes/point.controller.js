@@ -1,4 +1,4 @@
-const{getPointByStuId,createPoint} =require("../routes/point.service")
+const{getPointByStuId,createPoint,getUnReviewPoint} =require("../routes/point.service")
 const { json } = require("express");
 
 module.exports={
@@ -18,6 +18,20 @@ module.exports={
                 data:result
             })
         })
+    },
+    getUnReviewPoint:(req,res)=>{
+        getUnReviewPoint((err,results)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            return res.json({
+                success:1,
+                data:results
+            })
+        })
+
+        
     },
     getPointByStuId:(req,res)=>{
         const stuId = req.params.stuId;

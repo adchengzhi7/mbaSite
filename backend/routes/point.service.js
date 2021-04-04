@@ -38,4 +38,20 @@ module.exports={
         )
 
     },
+
+    getUnReviewPoint:(callBack)=>{
+        pool.query(
+            "SELECT pt.pointsType_descp AS section, p.points_type AS type, p.points_title AS sectionTitle,concat(p.points_regYear, p.points_regSemester) AS semester,p.points_regTime AS date ,p.points_englishCredit AS englishCredit ,p.points_stuid AS stuId,u.usersDetails_cName AS name FROM points AS p  INNER JOIN users_details AS u ON p.points_stuid = u.usersDetails_stuId INNER JOIN points_type AS pt ON p.points_type = pt.pointsType_id  WHERE points_status = 1 ",
+            [],
+            (error,results)=>{
+                if(error){
+                    return callBack(error);
+                }
+                return callBack(null,results);
+            }
+        )
+
+    },
+
+
 }

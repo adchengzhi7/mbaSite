@@ -46,13 +46,21 @@
     </div>
 </template>
 <script>
-import customTable from "./tmp-table"
+import customTable from "./tmp-table";
+import {mapGetters ,mapActions} from "vuex";
+
 export default {
     props:["filter"],
     components:{
         customTable
     },
+    mounted() {
+        this.getUnreviewPoint()
+    },
     methods: {
+        ...mapActions({
+            getUnreviewPoint:'userPoint/getUnreviewPoint'
+        }),
         sortSelector(selected,isSort){
             let vm = this;
                 if(isSort){
@@ -94,6 +102,9 @@ export default {
          }
     },
     computed:{
+        ...mapGetters({
+            unreviewPoints:'userPoint/unreviewPoints'
+        }),
         prevPageStatus(){
             let vm =this;
             const totalPage =vm.nameList.length/vm.pageSize

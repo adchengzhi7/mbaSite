@@ -4,10 +4,15 @@ import auth from './auth'
     namespaced:true,
     state:{
         userPoints:null,
+        unreviewPoints:null,
     },
     getters:{
         userPoints(state){
             return state.userPoints
+
+        },
+        unreviewPoints(state){
+            return state.unreviewPoints
 
         },
     },
@@ -15,7 +20,12 @@ import auth from './auth'
         SET_USERPOINTS(state,data){
             state.userPoints = data.data;
 
-        }
+        },
+        SET_UNREVIEWPOINTLIST(state,data){
+            state.unreviewPoints = data.data;
+
+        },
+        
         
         
     },
@@ -53,8 +63,31 @@ import auth from './auth'
 
             
 
-        }
+        },
        
+        async getUnreviewPoint  ({dispatch}){
+            let response = await 
+            axios.get('/points/unreview/',{ 
+                headers:{'Authorization':'Bearer ' +auth.state.token }
+             })
+             .then(function (response) {
+                 if(response.data.success ==0){
+                    throw "invalid Token";
+                 }
+                 return response;
+              })
+              .catch(function (error) {
+                   throw error;
+              });
+              console.log(response.data);
+        return dispatch('unReviewPointListCommit', response.data)
+
+
+
+        },
+        unReviewPointListCommit({commit},data){
+            return commit('SET_UNREVIEWPOINTLIST',data)
+        },
         
     },
     modules:{

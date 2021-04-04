@@ -78,7 +78,6 @@ const routes = [
     component:Student,
     meta:{
       needLogin:true,
-      studentAccess:true
     },    
     children:[{
       path: "dash",
@@ -116,9 +115,7 @@ router.beforeEach(function(to, from, next) {
     if(store.getters['auth/authenticated'].userType != 1){return next({name:'Home'})}
     
   }
-  if(to.meta.studentAccess === true){
-    if(store.getters['auth/authenticated'].userType == 0){return next({name:'Student'})}
-  }
+
 
   next();
 });
