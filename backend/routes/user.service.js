@@ -21,9 +21,9 @@ module.exports={
             }
         )
     },
-    getUser:(callBack)=>{
+    getStudent:(callBack)=>{
         pool.query(
-            'SELECT usersDetails_stuId,usersDetails_psId,usersDetails_cName,usersDetails_type FROM users_details',
+            'SELECT usersDetails_stuId AS stuId ,usersDetails_cName AS cName , IFNULL((SELECT SUM(`points_credit`) FROM points WHERE points_status >= 1 AND points_stuid=usersDetails_stuId),0)AS totalPoint FROM users_details WHERE usersDetails_type=0 ',
             [],
             (error,results)=>{
                 if(error){

@@ -6,7 +6,7 @@ module.exports={
             token = token.slice(7);
             verify(token,"mbaNccuMba",(err,decoded)=>{
                 if(err){
-                    res.status(500).json({
+                    res.json({
                         success:0,
                         message:"Invalid Token"
                     })

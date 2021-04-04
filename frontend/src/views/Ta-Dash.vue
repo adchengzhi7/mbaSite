@@ -14,7 +14,7 @@
        <div class="row ">
          <div class="col"></div>
          <div class="col-6">
-            <tables :filter= "filter"></tables>
+            <tables :filter= "filter" :studentList="studentList"></tables>
          </div>
          <div class="col-4">
            <div class="d-flex flex-wrap">
@@ -43,7 +43,7 @@
                       </small>
                     </div>
                    </div>
-                   <div class="ml-auto align-self-center">
+                   <div class="ms-auto align-self-center">
                       <button class="btn btn-outline-secondary font-weight-bold">待審核</button>
                    </div>
                     
@@ -67,6 +67,7 @@
 
 <script>
 import tables from "../components/ele-tableTA"
+import {mapGetters,mapActions} from "vuex"
 
 export default {
 
@@ -75,6 +76,9 @@ export default {
   },
 
   computed:{
+    ...mapGetters({
+      studentList:'student/studentList'
+    }),
     unReviewListLimited(){
       let vm = this;
 
@@ -86,6 +90,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getStudentList:'student/getStudentList'
+    }),
+    
      routerTo(path,user){
             let vm = this;
             vm.$router.push({ name: path, params: {name:user.user.name,stuId:user.user.stuId} })
@@ -147,6 +155,9 @@ data() {
       avatarImg:"http://placehold.it/64x64",
       
     }
+  },
+  mounted() {
+    this.getStudentList()
   },
 
 }

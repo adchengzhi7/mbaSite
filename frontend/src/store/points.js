@@ -31,7 +31,8 @@ import auth from './auth'
                  }
                  return response;
               })
-              .catch(function (error) {
+              .catch(function (response,error) {
+                  console.log(response);
                    throw error;
               });
         return dispatch('getUserPointCommit', response.data)

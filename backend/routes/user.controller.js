@@ -1,7 +1,7 @@
 const{ 
     create,
     getUserByStuId,
-    getUser,
+    getStudent,
     updateUser,
     deleteUser,
     getUserByStuIdAll
@@ -50,8 +50,8 @@ module.exports={
         })
 
     },
-    getUser:(req,res)=>{
-        getUser((err,results)=>{
+    getStudent:(req,res)=>{
+        getStudent((err,results)=>{
             if(err){
                 console.log(err);
                 return;
