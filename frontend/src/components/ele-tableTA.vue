@@ -17,10 +17,7 @@
                   <tr>
                     <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
                         <span :class="{'title-green':sortBy =='id'}">
-                            #
-                            <i v-if="sortBy =='id' && isReverse== false" class="fas fa-sort-down"></i>
-                            <i v-else-if="sortBy == 'id' && isReverse== true" class="fas fa-sort-up"></i>
-                            <i v-else class="fas fa-sort"></i>
+                            
                         </span>
 
                     </th>
@@ -44,8 +41,8 @@
                 </tr>
             </template>
             <template #tbody>
-                <tr class="bg-shadow-hover rounded" :key="item.id" v-for="item in filterData">
-                    <th scope="row">{{item.id}}</th>
+                <tr class="bg-shadow-hover rounded" :key="'THT'+index" v-for="(item,index) in filterData">
+                    <th scope="row">{{}}</th>
                     <td   v-html="highlightMatches(item.cName)"></td>
                     <td  v-html="highlightMatches(item.stuId)"></td>
                     <td  v-html="highlightMatches(item.totalPoint)"></td>
@@ -131,48 +128,7 @@ export default {
             sorttotalPoint:false,
             pageSize:10,
             currentPage:1,
-            // studentList:[
-            //     {
-            //         id:"1",
-            //         cName:"李政治",
-            //         stuId:"10540592",
-            //         totalPoint:"5"
-            //     },
-            //     {
-            //         id:"2",
-            //         cName:"黃昏後",
-            //         stuId:"106301042",
-            //         totalPoint:"4"
-            //     },
-            //     {
-            //         id:"3",
-            //         cName:"Aarry",
-            //         stuId:"107932087",
-            //         totalPoint:"1"
-            //     },
-            //     {
-            //         id:"4",
-            //         cName:"ok",
-            //         stuId:"112932098",
-            //         totalPoint:"2"
-            //     },
-            //     {
-            //         id:"5",
-            //         cName:"Aarry",
-            //         stuId:"119932098",
-            //         totalPoint:"4"
-            //     },{
-            //         id:"6",
-            //         cName:"Aarry",
-            //         stuId:"119932098",
-            //         totalPoint:"4"
-            //     },{
-            //         id:"7",
-            //         cName:"Aarry",
-            //         stuId:"119932098",
-            //         totalPoint:"4"
-            //     }
-            // ]
+           
         }
     },
     

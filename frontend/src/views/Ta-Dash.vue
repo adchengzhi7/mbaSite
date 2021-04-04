@@ -25,7 +25,7 @@
               </div>
             </div>
            <div>
-             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage',item)">
+             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage',item.user.stuId)">
                <div class="d-flex flex-wrap">
                  <div class="col-1  ">
                   <div class="circle small p-1"></div>
@@ -95,9 +95,9 @@ export default {
       getStudentList:'student/getStudentList'
     }),
     
-     routerTo(path,user){
+     routerTo(path,stuId){
             let vm = this;
-            vm.$router.push({ name: path, params: {name:user.user.name,stuId:user.user.stuId} })
+            vm.$router.push({ name: path, query: {stuId:stuId } })
 
         },
      dateShow(date){
