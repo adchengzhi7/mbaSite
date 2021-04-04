@@ -4,7 +4,7 @@
        <div class="row">
          <div class="col"></div>
          <div class="col-9">
-           <reg-selection :isTA="isTA"></reg-selection>
+           <reg-selection :isTA="isTA" :userId="userId"></reg-selection>
          </div>
          <div class="col"></div>
        </div>
@@ -14,12 +14,17 @@
 
 <script>
 import RegSelection from"../components/ele-Regselection"
+import {mapGetters} from 'vuex'
+
 export default {
 
   components:{
     RegSelection
   },
   computed:{
+    ...mapGetters({
+      userStuId:'auth/userStuId',
+    }),
     
   },
   methods: {
@@ -28,19 +33,7 @@ export default {
 data() {
     return {
       isTA:false,
-      userData:{
-        name:"李正治",
-        stuId:"105306030",
-        points:[
-          {
-            type:"",
-            point:"1"
-          },{
-            type:"",
-            point:"1"
-          },
-        ]
-      },
+      userId:this.$store.state.auth.userStuId,
      
       section:[{
         id:"S01",

@@ -12,7 +12,7 @@
            </div>
   
            <div class="row">
-             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
+             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item,userId)">
                <div class="select-box bg-shadow-hover pointer ">
                   <img class="img-fluid" :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
                   <h6 class="font-weight-bold">{{item.title}}</h6>
@@ -24,27 +24,27 @@
 </template>
 <script>
 export default {
-    props:['isTA'],
+    props:['isTA','userId'],
     methods: {
-      toRoute(item){
+      toRoute(item,stuId){
         let vm = this;
         if(!vm.isTA){
-          vm.$router.push({ name: 'StudentRegForm', params: { type: item.type, title:item.title,icon:item.icon} })
+          vm.$router.push({ name: 'StudentRegForm', params: { type: item.type, title:item.title,icon:item.icon,stuId:stuId} })
         }else{
-          vm.$router.push({ name: 'TaRegForm', params: { type: item.type, title:item.title,icon:item.icon} })
+          vm.$router.push({ name: 'TaRegForm', params: { type: item.type, title:item.title,icon:item.icon,stuId:stuId} })
         }
       }
     },
     data() {
         return {
              sectionType:[
-                {id:"ST01",title:"國際交換或雙聯學位",icon:"global",type:"global"},
-                {id:"ST02",title:"國內外企業實習",icon:"intern",type:"intern"},
-                {id:"ST03",title:"國內外研習課程",icon:"confrence",type:"confrence"},
-                {id:"ST04",title:"商業競賽",icon:"competition",type:"competition"},
-                {id:"ST05",title:"國際志工",icon:"volunteer",type:"volunteer"},
-                {id:"ST06",title:"企業專案研討",icon:"caseStudy",type:"caseStudy"},
-                {id:"ST07",title:"英語檢定",icon:"english",type:"english"},
+                {id:"ST01",title:"國際交換或雙聯學位",icon:"global",type:"1"},
+                {id:"ST02",title:"國內外企業實習",icon:"intern",type:"2"},
+                {id:"ST03",title:"國內外研習課程",icon:"confrence",type:"3"},
+                {id:"ST04",title:"商業競賽",icon:"competition",type:"4"},
+                {id:"ST05",title:"國際志工",icon:"volunteer",type:"5"},
+                {id:"ST06",title:"企業專案研討",icon:"caseStudy",type:"6"},
+                {id:"ST07",title:"英語檢定",icon:"english",type:"7"},
             ],
         }
     },

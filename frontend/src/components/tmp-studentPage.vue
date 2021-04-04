@@ -61,10 +61,9 @@
 <script>
 import avatar from "../components/ele-avatar"
 import tables from "../components/ele-tableStudent"
-import { mapGetters} from 'vuex'
 
 export default {
-    props:["isTA","userData"],
+    props:["isTA","userData","userPoints"],
     data() {
         return {
             finalPoints:0,
@@ -77,9 +76,7 @@ export default {
   },
   
   computed:{
-   ...mapGetters({
-      userPoints:'userPoint/userPoints',
-    }),
+   
    
     pointsLength(){
       let vm =this; 
@@ -91,7 +88,7 @@ export default {
     },
      totalPoint(){
       let vm =this; 
-      if(vm.userPoints){
+      if(vm.userPoints){  
         const pointArray=Object.values(vm.userPoints).map(
           function(item) {
             if(item.status ==2){
@@ -101,7 +98,10 @@ export default {
           }
             
         );
-        return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
+        try{
+
+          return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
+        }catch(e){console.log(e);}
        }
       return 0;
     },

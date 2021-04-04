@@ -36,22 +36,22 @@
        <div class="row">
            <div class="col"></div>
            <div class="col-8">
-               <form v-if="type != 'english'" class="text-start needs-validation" v-on:submit.prevent="submit"> 
+               <form v-if="type != 7 " class="text-start needs-validation" v-on:submit.prevent="submit"> 
                   <div class="row">
                       <div class="col input-col">
-                          <select class="form-control" name="" id="" v-model="yearSelected">
-                            <option value="none" class="select-default"  disabled >選擇學年</option>
-                            <option :key="'year'+year" v-for="year in getYear" :value="year"> {{year}} 學年</option>
+                          <select class="form-control" name="" id="year" v-model="yearSelected">
+                            <option value="none" class="select-default" id="0" disabled >選擇學年</option>
+                            <option :id="'year'+year" :key="'year'+year" v-for="year in getYear" :value="year"> {{year}} 學年</option>
                           </select>
                           <div class="invalid-feedback">
-                            Please choose a username.
+                            請選擇選擇學年
                           </div>
                       </div>
                       <div class="col input-col">
-                          <select class="form-control" name="" id="" v-model="semesterSelected"  :class="{'is-invalid':isSelectedNull && selectedBlured ,'is-valid':!isSelectedNull &&selectedBlured }" @blur="selectedBlured = true">
-                            <option value="none" class=" select-default" disabled  >選擇學期</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                          <select class="form-control" name="" id="semester" v-model="semesterSelected"  :class="{'is-invalid':isSelectedNull && selectedBlured ,'is-valid':!isSelectedNull &&selectedBlured }" @blur="selectedBlured = true">
+                            <option id="semester0"  value="none" class=" select-default" disabled  >選擇學期</option>
+                            <option id="semester1"  value="1">1</option>
+                            <option id="semester2" value="2">2</option>
                           </select>
                           <div class="invalid-feedback">
                             請選擇選擇學期
@@ -119,7 +119,7 @@
 <script>
 export default {
 
-  props:["isTA","userData"],
+  props:["isTA"],
   mounted() {
     let vm =this;
     if(!vm.$route.params.type && !vm.isTA){
@@ -130,6 +130,7 @@ export default {
     vm.title =vm.$route.params.title;
     vm.icon = vm.$route.params.icon;
     vm.type= vm.$route.params.type;
+    vm.stuId= vm.$route.params.stuId;
 
 
   },
@@ -137,6 +138,7 @@ export default {
 data() {
     return {
       title:"",
+      stuId:"",
       sectionBlured:false,
       selectedBlured:false,
       valid:false,
@@ -259,14 +261,16 @@ data() {
     submit(){
       
       let vm =this;
-      const sectionTitle = this.sectionTitle;
-      const yearSelected = this.yearSelected;
-      const points = this.points;
-      const semesterSelected = this.semesterSelected;
+      const sectionTitle = vm.sectionTitle;
+      const yearSelected = vm.yearSelected;
+      const points = vm.points;
+      const semesterSelected = vm.semesterSelected;
       const type =vm.$route.params.type;
+      const status = 1;
+      const stuId = vm.stuId;
       vm.validate();
       if(vm.valid){
-        console.log(sectionTitle,yearSelected,points,semesterSelected,type);
+        console.log(sectionTitle,yearSelected,points,semesterSelected,type,status,stuId);
         if(!vm.isTA){
             vm.showAlert("StudentDash",vm.studentDoneMessage)
           }else {
@@ -283,9 +287,11 @@ data() {
       const englishPoint = this.englishPoint;
       const englishSelected = this.englishSelected;
       const type =vm.$route.params.type;
+      const status = 1;
+      const stuId = vm.stuId;
        vm.validateEnglish();
       if(vm.valid){
-        console.log(englishSelected,englishPoint,type);
+        console.log(englishSelected,englishPoint,type,status,stuId);
          if(!vm.isTA){
             vm.showAlert("StudentDash",vm.studentDoneMessage)
           }else {

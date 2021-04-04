@@ -25,7 +25,7 @@
               </div>
             </div>
            <div>
-             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage')">
+             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage',item)">
                <div class="d-flex flex-wrap">
                  <div class="col-1  ">
                   <div class="circle small p-1"></div>
@@ -86,9 +86,10 @@ export default {
     }
   },
   methods: {
-     routerTo(path){
+     routerTo(path,user){
             let vm = this;
-            vm.$router.push({name:path})
+            vm.$router.push({ name: path, params: {name:user.user.name,stuId:user.user.stuId} })
+
         },
      dateShow(date){
              const gotDate = new Date(date);
@@ -136,7 +137,7 @@ data() {
         id:"UR1",
         user:{
            name:"李正治",
-          stuId:"105306030",
+          stuId:"105306032",
         },
         type:"國際交換或雙聯學位",
         date:"2021-02-22  22:30:00"

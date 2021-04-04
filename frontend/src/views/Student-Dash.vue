@@ -1,6 +1,6 @@
 <template>
   <div > 
-     <student-page :key="ConfirmGetUserId" :isTA="isTA" :userData="userData"  ></student-page>
+     <student-page :key="ConfirmGetUserId" :isTA="isTA" :userData="userData" :userPoints="userPoints" ></student-page>
   
   </div>
 </template>
