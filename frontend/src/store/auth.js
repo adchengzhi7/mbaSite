@@ -7,7 +7,7 @@ export default {
         user:null,
         invalidUserMsg:null,
         userType:null,
-        userStuId:null,
+        userId:null,
     },
     getters:{
         authenticated(state){
@@ -20,8 +20,8 @@ export default {
         userType(state){
             return state.userType
         },
-        userStuId(state){
-            return state.userStuId
+        userId(state){
+            return state.userId
         },
         user(state){
             return state.user
@@ -39,7 +39,7 @@ export default {
         },
         SET_USERDETAILS(state,data){
             state.userType = data.usersDetails_type
-            state.userStuId = data.usersDetails_stuId
+            state.userId = data.usersDetails_stuId
         },
         SET_invalidUserMsg(state,data){
             state.invalidUserMsg = data

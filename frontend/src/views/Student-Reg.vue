@@ -23,7 +23,7 @@ export default {
   },
   computed:{
     ...mapGetters({
-      userStuId:'auth/userStuId',
+      userId:'auth/userId',
     }),
     
   },
@@ -33,7 +33,7 @@ export default {
 data() {
     return {
       isTA:false,
-      userId:this.$store.state.auth.userStuId,
+      userId:this.$store.state.auth.userId,
      
       section:[{
         id:"S01",

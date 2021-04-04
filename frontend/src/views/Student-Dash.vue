@@ -14,7 +14,7 @@ export default {
   
 computed:{
     ...mapGetters({
-      userStuId:'auth/userStuId',
+      userId:'auth/userId',
       user:'auth/user',
       userPoints:'userPoint/userPoints'
 
@@ -25,8 +25,8 @@ computed:{
        else return true
      },
      ConfirmGetUserId(){
-      if(this.$store.state.auth.userStuId){
-           return this.getPointsData(this.$store.state.auth.userStuId)
+      if(this.$store.state.auth.userId){
+           return this.getPointsData(this.$store.state.auth.userId)
 
           }
           return null
@@ -63,7 +63,7 @@ data() {
     return {
       userData:{
         name:this.$store.state.auth.user,
-        stuId:this.$store.state.auth.userStuId,
+        stuId:this.$store.state.auth.userId,
       },
     }
   },
