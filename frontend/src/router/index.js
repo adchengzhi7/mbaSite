@@ -21,7 +21,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if(store.getters['auth/authenticated'].token){
         if(store.getters['auth/authenticated'].userType == 0){return next({name:'Student'})}
-        if(store.getters['auth/authenticated'].userType == 1){return next({name:'TA'})}
+        if(store.getters['auth/authenticated'].userType == 1){return next({name:'TaDash'})}
         return next()
       }else{
         return next()
@@ -34,12 +34,13 @@ const routes = [
     redirect:"/ta/dash",
     component:Ta,
     meta:{
-      needLogin:true
+      needLogin:true,
+      adminAccess:true
     },   
     children:[{
       path: "dash",
       name: 'TaDash',
-      component:TaDash
+      component:TaDash,
     },
     {
       path: "review",
@@ -76,7 +77,8 @@ const routes = [
     redirect:"/student/dash",
     component:Student,
     meta:{
-      needLogin:true
+      needLogin:true,
+      studentAccess:true
     },    
     children:[{
       path: "dash",
@@ -109,9 +111,15 @@ router.beforeEach(function(to, from, next) {
         name:'Home'
       })
     }
-    
-
   }
+  if(to.meta.adminAccess === true){
+    if(store.getters['auth/authenticated'].userType != 1){return next({name:'Home'})}
+    
+  }
+  if(to.meta.studentAccess === true){
+    if(store.getters['auth/authenticated'].userType == 0){return next({name:'Student'})}
+  }
+
   next();
 });
 

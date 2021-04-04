@@ -49,7 +49,7 @@
                     <td   v-html="highlightMatches(item.cName)"></td>
                     <td  v-html="highlightMatches(item.stuId)"></td>
                     <td  v-html="highlightMatches(item.totalPoint)"></td>
-                    <td> <router-link :to="{name:'TaStudentPage'}">查看</router-link></td>
+                    <td> <router-link :to="{name:'TaStudentPage',query: { stuId: item.stuId }}">查看</router-link></td>
                 </tr>
             </template>
         </customTable>

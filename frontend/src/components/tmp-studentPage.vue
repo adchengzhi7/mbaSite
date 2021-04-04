@@ -101,7 +101,10 @@ export default {
         try{
 
           return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
-        }catch(e){console.log(e);}
+        }catch(e){
+          console.log(e);
+          return vm.finalPoints=0;
+          }
        }
       return 0;
     },
@@ -113,6 +116,7 @@ export default {
     }
   },
  
+
     
 }
 </script>

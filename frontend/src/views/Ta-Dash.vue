@@ -77,7 +77,8 @@ export default {
 
   computed:{
     ...mapGetters({
-      studentList:'student/studentList'
+      studentList:'student/studentList',
+      authenticated:'auth/authenticated'
     }),
     unReviewListLimited(){
       let vm = this;
@@ -118,19 +119,6 @@ data() {
       filter:"",
       currentPage:1,
       pageSize:10,
-      userData:{
-        name:"李正治",
-        stuId:"105306030",
-        points:[
-          {
-            type:"",
-            point:"1"
-          },{
-            type:"",
-            point:"1"
-          },
-        ]
-      },
       unReviewList:[{
         id:"UR0",
         user:{

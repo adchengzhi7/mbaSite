@@ -13,11 +13,12 @@ export default {
   components:{
     studentPage,
   },
+
   mounted() {
     let vm =this;
     try{
-      vm.userData.stuId= vm.$route.params.stuId;
-      vm.userData.name= vm.$route.params.name;
+     
+      vm.getStudentDataById(vm.$route.query.stuId);
     }catch(e){
       console.log(e);
     }
@@ -26,7 +27,8 @@ export default {
   computed:{
     ...mapGetters({
       user:'auth/user',
-      userPoints:'userPoint/userPoints'
+      userPoints:'userPoint/userPoints',
+      studentData:'student/studentData'
 
       
     }),
@@ -35,18 +37,32 @@ export default {
        else return true
      },
      ConfirmGetUserId(){
-      if(this.$route.params.stuId){
-           return this.getPointsData(this.$route.params.stuId)
-
+      if(this.$route.query.stuId){
+           return this.getPointsData(this.$route.query.stuId)
           }
-          return null
+            return null
+     },
+     userData(){ 
+       let vm =this;
+      let userData ={
+         stuId : vm.$route.query.stuId,
+         name : null,
+       } 
+      if(vm.$store.state.student.studentData){
+        userData.name = vm.studentData.cName
+      }
+       
+       return userData
+
      }
+     
   },
   
   methods: {
      ...mapActions({
        getUserPoint:'userPoint/getUserPoint',
-      signOutAction:'auth/signOut'
+      signOutAction:'auth/signOut',
+      getStudentDataById:"student/getStudentDataById"
 
     }),
      getPointsData(id){
@@ -66,10 +82,7 @@ export default {
   },
 data() {
     return {
-       userData:{
-        name:"",
-        stuId:"",
-      },
+       
       
    
       

@@ -36,7 +36,7 @@ module.exports={
     },
     getUserByStuId:(id,callBack)=>{
         pool.query(
-            'SELECT usersDetails_psId,usersDetails_cName,usersDetails_type FROM users_details WHERE usersDetails_stuId=?',
+            'SELECT usersDetails_psId AS psId ,usersDetails_cName AS cName ,usersDetails_type AS type FROM users_details WHERE usersDetails_stuId=?',
             [id],
             (error,results)=>{
                 if(error){
