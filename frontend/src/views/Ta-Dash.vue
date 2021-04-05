@@ -19,13 +19,13 @@
          <div class="col-4">
            <div class="d-flex flex-wrap">
              <h5 class="font-weight-bold">待審核清單</h5>
-             <div >
-              <span class="danger float-left badge badge-pill badge-danger ">{{unReviewList.length}}</span>
+             <div v-if="unreviewPoints" >
+              <span class="danger float-left badge badge-pill badge-danger ">{{unreviewPoints.length}}</span>
 
               </div>
             </div>
            <div>
-             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage',item.user.stuId)">
+             <div :key="item.id" v-for="item in unReviewListLimited" class="bg-shadow-hover review-box  pointer" @click="routerTo('TaStudentPage',item.stuId)">
                <div class="d-flex flex-wrap">
                  <div class="col-1  ">
                   <div class="circle small p-1"></div>
@@ -33,10 +33,10 @@
                  <div class="col pl-0 d-flex flex-wrap">
                    <div>
                       <div class="h5 d-flex flex-wrap m-0">
-                      <div class="font-weight-bold ">{{item.user.name}}</div>
-                      <div class="text-muted ">  {{  item.user.stuId}}</div>
+                      <div class="font-weight-bold ">{{item.name}}</div>
+                      <div class="text-muted ">  {{  item.stuId}}</div>
                     </div>
-                    <p class='text-muted m-0'>{{item.type}}</p>
+                    <p class='text-muted m-0'>{{item.section}}</p>
                     <div>
                       <small class="text-muted">
                     {{  dateShow(item.date)}}
@@ -78,21 +78,31 @@ export default {
   computed:{
     ...mapGetters({
       studentList:'student/studentList',
-      authenticated:'auth/authenticated'
+      authenticated:'auth/authenticated',
+      unreviewPoints:'userPoint/unreviewPoints'
     }),
     unReviewListLimited(){
       let vm = this;
+      const unreviewPoints = vm.unreviewPoints;
+      if(unreviewPoints){
+        const arrayList =unreviewPoints.map((item)=>{
+              return Object(item)
+          })
+        return arrayList.filter((row, index) => {
+          let start = (vm.currentPage-1)*vm.pageSize;
+          let end = vm.currentPage*vm.pageSize;
+        if(index >= start && index < end) return true;
+      })
+      }return []
 
-      return vm.unReviewList.filter((row, index) => {
-        let start = (vm.currentPage-1)*vm.pageSize;
-        let end = vm.currentPage*vm.pageSize;
-      if(index >= start && index < end) return true;
-    })
     }
   },
   methods: {
+    
     ...mapActions({
-      getStudentList:'student/getStudentList'
+      getStudentList:'student/getStudentList',
+      getUnreviewPoint:'userPoint/getUnreviewPoint'
+
     }),
     
      routerTo(path,stuId){
@@ -118,7 +128,7 @@ data() {
     return {
       filter:"",
       currentPage:1,
-      pageSize:10,
+      pageSize:5,
       unReviewList:[{
         id:"UR0",
         user:{
@@ -146,6 +156,7 @@ data() {
   },
   mounted() {
     this.getStudentList()
+    this.getUnreviewPoint()
   },
 
 }
