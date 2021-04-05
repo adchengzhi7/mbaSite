@@ -72,20 +72,19 @@
                   
                   <div class="row" v-if="isTA">
                     <div class="col input-col">
+                      
                         <div class="input-group ">
-                          <div class="input-group-append">
                             <button class="btn btn-secondary" type="button" @click="minusPoints" >
                               <i class="fas fa-minus"></i>
                             </button>
-                          </div>
-                          <input class="form-control" type="number" max="2"  v-model="checkPoint"  >
-                          <div class="input-group-append">
-                            
+                            <input class="form-control" :class="{'is-invalid':isNumberTooLarge && numberBlured,'is-valid':!isNumberTooLarge &&numberBlured }" @blur="numberBlured = true" type="number" max="2"  v-model="checkPoint"  >
                             <button class="btn btn-secondary " type="button" @click="addPoints" >
                               <i class="fas fa-plus"></i>
                             </button>
-                          </div>
                         </div>
+                         <div class="invalid-feedback">
+                            點數不可大於2
+                          </div>
                     </div>
                   </div>
                   <div class="mt-3">
@@ -155,6 +154,7 @@ data() {
       stuId:"",
       sectionBlured:false,
       selectedBlured:false,
+      numberBlured:false,
       valid:false,
       icon:"",
       type:"",
@@ -180,6 +180,11 @@ data() {
     isSectionNull(){
       let vm = this;
       if(vm.sectionTitle == "" || vm.sectionTitle == null ){ return true}
+      else{return false}
+    },
+    isNumberTooLarge(){
+      let vm = this;
+      if(vm.points>2){ return true}
       else{return false}
     },
     isSelectedNull(){
@@ -260,7 +265,8 @@ data() {
        let vm =this;
        vm.selectedBlured =true;
        vm.sectionBlured =true;
-         if(vm.checkInputStatus(vm.semesterSelected) && vm.checkInputStatus(vm.sectionTitle)  ){
+       vm.numberBlured =true;
+         if(vm.checkInputStatus(vm.semesterSelected) && vm.checkInputStatus(vm.sectionTitle) && vm.checkPointStatus(vm.points)){
          vm.valid = true
        }
        
@@ -275,7 +281,11 @@ data() {
        
      },
      checkInputStatus : function(email) {
-        if(email == "" || email == null  || email=="none" || email==0){ return false}
+        if(email == "" || email == null  || email=="none" || email==0 ){ return false}
+        else{return true}
+    },
+    checkPointStatus : function(point) {
+        if(point >2){ return false}
         else{return true}
     },
     
@@ -302,7 +312,7 @@ data() {
               vm.showAlert("TaDash",vm.taDoneMessage)
             }
           }else{
-            //show error modal
+            alert("unvalid")
           }
         })
       }
