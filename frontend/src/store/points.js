@@ -79,7 +79,6 @@ import auth from './auth'
               .catch(function (error) {
                    throw error;
               });
-              console.log(response.data);
         return dispatch('unReviewPointListCommit', response.data)
 
 

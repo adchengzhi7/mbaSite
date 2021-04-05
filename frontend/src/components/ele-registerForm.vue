@@ -36,6 +36,9 @@
        <div class="row">
            <div class="col"></div>
            <div class="col-8">
+              <div class="text-muted">
+                {{currentRegPointUser}}
+              </div>
                <form v-if="type != 7 " class="text-start needs-validation" v-on:submit.prevent="submit"> 
                   <div class="row">
                       <div class="col input-col">
@@ -90,48 +93,58 @@
                   </div>
               </form>
 
-          <div v-else class="text-start">
-            <div class="row">
-                <div class="col input-col">
-                    <select class="form-control" name="" id="" v-model="englishSelected" :class="{'is-invalid':isEnglishSelectedNull && englishSelectedBlured,'is-valid':!isEnglishSelectedNull &&englishSelectedBlured }" @blur="englishSelectedBlured = true">
-                      <option value="none" disabled  >選擇英語檢定類別</option>
-                      <option :key="'test-'+test" v-for="test in englishTest" :value="test"> {{test}} </option>
-                    </select>
+              <div v-else class="text-start">
+                <div class="row">
+                    <div class="col input-col">
+                        <select class="form-control" name="" id="" v-model="englishSelected" :class="{'is-invalid':isEnglishSelectedNull && englishSelectedBlured,'is-valid':!isEnglishSelectedNull &&englishSelectedBlured }" @blur="englishSelectedBlured = true">
+                          <option value="none" disabled  >選擇英語檢定類別</option>
+                          <option :key="'test-'+test" v-for="test in englishTest" :value="test"> {{test}} </option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                  <div class="col input-col">
+                    <input class="form-control" type="number" v-model="englishPoint" :class="{'is-invalid':isEnglishPointNull && englishPointBlured,'is-valid':!isEnglishPointNull &&englishPointBlured }" @blur="englishPointBlured = true"  placeholder="輸入英語檢定分數">
+                  </div>
+                  <div class="invalid-feedback">請輸入英語檢定分數 </div>
                 </div>
                 
-            </div>
-            <div class="row">
-              <div class="col input-col">
-                <input class="form-control" type="number" v-model="englishPoint" :class="{'is-invalid':isEnglishPointNull && englishPointBlured,'is-valid':!isEnglishPointNull &&englishPointBlured }" @blur="englishPointBlured = true"  placeholder="輸入英語檢定分數">
+                <div class="mt-3">
+                  <button class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
+                </div>
               </div>
-              <div class="invalid-feedback">請輸入英語檢定分數 </div>
-            </div>
-            
-            <div class="mt-3">
-              <button class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
-            </div>
-          </div>
            </div>
            <div class="col"></div>
        </div>
      </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import {mapActions,mapGetters} from 'vuex'
 export default {
 
   props:["isTA"],
   mounted() {
     let vm =this;
+    if(!vm.currentRegPointUser && vm.isTA){
+      vm.$router.push({ name: 'TaDash' })
+    }
+    if(!vm.currentRegPointUser && !vm.isTA){
+      vm.$router.push({ name: 'StudentDash' })
+    }
+    
+
     if(!vm.$route.params.type && !vm.isTA){
       vm.$router.push({ name: 'StudentReg' })
-    }else if(!vm.$route.params.type && vm.isTA) {
+    }
+    
+    if(!vm.$route.params.type && vm.isTA) {
          vm.$router.push({ name: 'TaReg' })
     }
+
     vm.title =vm.$route.params.title;
     vm.icon = vm.$route.params.icon;
     vm.type= vm.$route.params.type;
-    vm.stuId= vm.$route.params.stuId;
 
 
   },
@@ -161,6 +174,9 @@ data() {
     }
   },
   computed:{
+    ...mapGetters({
+      currentRegPointUser:'currentRegPointUser'
+    }),
     isSectionNull(){
       let vm = this;
       if(vm.sectionTitle == "" || vm.sectionTitle == null ){ return true}
@@ -273,7 +289,7 @@ data() {
         semesterSelected : vm.semesterSelected,
         type :vm.$route.params.type,
         status : 1,
-        stuId : vm.stuId,
+        stuId : vm.currentRegPointUser,
         englishCredit: null
       }
       vm.validate();
@@ -304,7 +320,7 @@ data() {
         semesterSelected : 0,
         type :vm.$route.params.type,
         status : 1,
-        stuId : vm.stuId,
+        stuId : vm.currentRegPointUser,
         englishCredit: vm.englishPoint
 
       }

@@ -17,7 +17,7 @@
                   <tr>
                     <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
                         <span :class="{'title-green':sortBy =='id'}">
-                            
+
                         </span>
 
                     </th>
@@ -101,18 +101,19 @@ export default {
                 return stuId.includes(filterToLower) || cName.includes(filterToLower) 
                 || totalPoint.includes(filterToLower)
 
-            })
-            return filterList.sort(function(a, b) {
-                if (!vm.isReverse) {
-                return a[vm.sortBy] - b[vm.sortBy];
-                } else {
-                return b[vm.sortBy] - a[vm.sortBy];
-                }
-            }).filter((row, index) => {
-        let start = (this.currentPage-1)*this.pageSize;
-        let end = this.currentPage*this.pageSize;
-        if(index >= start && index < end) return true;
-      });
+                })
+                return filterList.sort(function(a, b) {
+                        if (!vm.isReverse) {
+                        return a[vm.sortBy] - b[vm.sortBy];
+                        } else {
+                        return b[vm.sortBy] - a[vm.sortBy];
+                        }
+                    })
+                .filter((row, index) => {
+                    let start = (this.currentPage-1)*this.pageSize;
+                    let end = this.currentPage*this.pageSize;
+                    if(index >= start && index < end) return true;
+            });
         }
             return null
             }

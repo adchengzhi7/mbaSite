@@ -5,22 +5,22 @@ import student from './student'
 
 export default createStore({
     state:{
-        greeting:"greeting"
+        currentRegPointUser:null,
+
+    },
+    getters:{
+        currentRegPointUser(state){
+            return state.currentRegPointUser
+        }
     },
     mutations:{
-        setgreeting(state,payload){
-            state.greeting = payload;
+        SET_CURRENTREGPOINTUSER(state,payload){
+            state.currentRegPointUser = payload;
         }
     },
     actions:{
-        async fetchData({commit}){
-            console.log(this.$axios);
-            
-            const a="okla"
-
-            commit('setgreeting',a)
-          
-
+        regStudentIs({commit},data){
+            commit('SET_CURRENTREGPOINTUSER',data)
         }
     },
     modules:{

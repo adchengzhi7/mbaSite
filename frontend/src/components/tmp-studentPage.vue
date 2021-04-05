@@ -51,7 +51,7 @@
          <div class="col"></div>
          <div class="col-8">
 
-         <tables :isTA="isTA"></tables>
+         <tables :isTA="isTA" :stuId="userData.stuId"></tables>
          </div>
          <div class="col"></div>
        </div>

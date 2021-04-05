@@ -65,10 +65,10 @@
                     </td>
                 </tr>
                 <tr class="bg-shadow-hover rounded text-center pointer">
-                    <td v-if="!isTA" style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('StudentReg')">
+                    <td v-if="!isTA" style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('StudentReg',stuId)">
                          <router-link to="/"><i class="fas fa-plus"></i> 登錄點數</router-link>
                     </td>
-                    <td v-else style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('TaReg')">
+                    <td v-else style=" padding: 0.6rem !important;" :colspan="thead.length+1" @click="routerTo('TaReg',stuId)">
                          <router-link to="/"><i class="fas fa-plus"></i> 登錄點數</router-link>
                     </td>
 
@@ -80,15 +80,19 @@
 </template>
 <script>
 import customTable from "./tmp-table";
-import { mapGetters} from 'vuex'
+import { mapGetters,mapActions} from 'vuex'
 
 export default {
-    props:["isTA"],
+    props:["isTA","stuId"],
     components:{
         customTable
     },
     methods: {
-        async showAlert() {
+        ...mapActions({
+            regStudentIs:'regStudentIs'
+        }),
+      
+      async showAlert() {
         let vm =this;
         
         await vm.$swal({
@@ -140,8 +144,9 @@ export default {
                 // })
 
       },
-      routerTo(path){
+      routerTo(path,id){
           let vm = this;
+          vm.regStudentIs(id);
           vm.$router.push({name:path})
         },
           sortSelector(selected,isSort){

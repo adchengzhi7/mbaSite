@@ -12,7 +12,7 @@
            </div>
   
            <div class="row">
-             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item,userId)">
+             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
                <div class="select-box bg-shadow-hover pointer ">
                   <img class="img-fluid" :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
                   <h6 class="font-weight-bold">{{item.title}}</h6>
@@ -23,15 +23,31 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
-    props:['isTA','userId'],
+    props:['isTA'],
+    mounted() {
+      let vm =this;
+      if(!vm.currentRegPointUser && vm.isTA){
+        vm.$router.push({ name: 'TaDash' })
+      }
+      if(!vm.currentRegPointUser && !vm.isTA){
+        vm.$router.push({ name: 'StudentDash' })
+      }
+    },
+    computed:{
+    ...mapGetters({
+          currentRegPointUser:'currentRegPointUser'
+        }),
+    },
     methods: {
-      toRoute(item,stuId){
+      toRoute(item){
         let vm = this;
         if(!vm.isTA){
-          vm.$router.push({ name: 'StudentRegForm', params: { type: item.type, title:item.title,icon:item.icon,stuId:stuId} })
+          vm.$router.push({ name: 'StudentRegForm', params: { type: item.type, title:item.title,icon:item.icon} })
         }else{
-          vm.$router.push({ name: 'TaRegForm', params: { type: item.type, title:item.title,icon:item.icon,stuId:stuId} })
+          vm.$router.push({ name: 'TaRegForm', params: { type: item.type, title:item.title,icon:item.icon} })
         }
       }
     },
