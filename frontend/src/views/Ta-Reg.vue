@@ -4,7 +4,7 @@
        <div class="row">
          <div class="col"></div>
          <div class="col-9">
-           <reg-selection :isTA="isTA" :userId="selectedUser"></reg-selection>
+           <reg-selection :isTA="isTA"></reg-selection>
          </div>
          <div class="col"></div>
        </div>
