@@ -41,7 +41,8 @@
          <div class="col content-box text-center" >
            <h2 class="font-weight-bold">尚未登錄點數</h2>
            <p>點擊按鈕開始登錄點數吧！</p>
-           <button class="btn btn-success success"> <i class="fas fa-plus"></i>  登錄點數</button>
+           <button v-if="isTA" class="btn btn-success success" @click="routerTo('TaReg',userData.stuId)"> <i class="fas fa-plus"></i>  登錄點數</button>
+           <button v-else class="btn btn-success success" @click="routerTo('StudentReg',userData.stuId)"> <i class="fas fa-plus"></i>  登錄點數</button>
          </div>
          <div class="col-2"></div>
 
@@ -61,6 +62,7 @@
 <script>
 import avatar from "../components/ele-avatar"
 import tables from "../components/ele-tableStudent"
+import {mapActions} from "vuex"
 
 export default {
     props:["isTA","userData","userPoints"],
@@ -76,8 +78,6 @@ export default {
   },
   
   computed:{
-   
-   
     pointsLength(){
       let vm =this; 
       if(vm.userPoints){
@@ -114,6 +114,16 @@ export default {
       return pointPercent.toString()+"%";
       
     }
+  },
+  methods: {
+     ...mapActions({
+          regStudentIs:'regStudentIs'
+      }),
+    routerTo(path,id){
+      let vm = this;
+      vm.regStudentIs(id);
+      vm.$router.push({name:path})
+    },
   },
  
 
