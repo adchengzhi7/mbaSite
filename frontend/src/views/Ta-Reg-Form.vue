@@ -1,22 +1,50 @@
 <template>
   <div > 
-    <register-form :isTA="isTA"  ></register-form>
+    <register-form :isTA="isTA" :currentRegPointUser="currentRegPointUser" :pointType="pointType"  ></register-form>
   </div>
 </template>
 
 <script>
-  import registerForm from '../components/ele-registerForm'
+  import registerForm from '../components/ele-registerFormMix'
+import {mapGetters} from 'vuex'
+
 export default {
 
   components:{
     registerForm
   },
-  mounted() {
+  computed:{
+    ...mapGetters({
+          currentRegPointUser:'currentRegPointUser'
+        }),
+    },
+   mounted() {
+      let vm =this;
+      if(!vm.currentRegPointUser && vm.isTA){
+        vm.$router.push({ name: 'TaDash' })
+      }
+      if(!vm.currentRegPointUser && !vm.isTA){
+        vm.$router.push({ name: 'StudentDash' })
+      }
+      if(!vm.$route.params.type && !vm.isTA){
+      vm.$router.push({ name: 'StudentReg' })
+      }
+      if(!vm.$route.params.type && vm.isTA) {
+          vm.$router.push({ name: 'TaReg' })
+      }
+      vm.pointType.title =vm.$route.params.title;
+      vm.pointType.icon = vm.$route.params.icon;
+      vm.pointType.type= vm.$route.params.type;
 
-  },
+    },
   
 data() {
     return {
+      pointType:{
+        title:"",
+        icon:"",
+        type:"",
+      },
       isTA:true,
       
     }

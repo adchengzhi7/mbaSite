@@ -13,16 +13,16 @@
            <div class="d-flex">
             
              <div class="align-self-center">
-               <img v-if="pointType.icon == 'global' " class="img-fluid" src="../assets/icon/global.svg" alt="">
-               <img v-if="pointType.icon == 'intern' " class="img-fluid" src="../assets/icon/intern.svg" alt="">
-               <img v-if="pointType.icon == 'confrence' " class="img-fluid" src="../assets/icon/confrence.svg" alt="">
-               <img v-if="pointType.icon == 'competition' " class="img-fluid" src="../assets/icon/competition.svg" alt="">
-               <img v-if="pointType.icon == 'volunteer' " class="img-fluid" src="../assets/icon/volunteer.svg" alt="">
-               <img v-if="pointType.icon == 'caseStudy' " class="img-fluid" src="../assets/icon/caseStudy.svg" alt="">
-               <img v-if="pointType.icon == 'english' " class="img-fluid" src="../assets/icon/english.svg" alt="">
+               <img v-if="icon == 'global' " class="img-fluid" src="../assets/icon/global.svg" alt="">
+               <img v-if="icon == 'intern' " class="img-fluid" src="../assets/icon/intern.svg" alt="">
+               <img v-if="icon == 'confrence' " class="img-fluid" src="../assets/icon/confrence.svg" alt="">
+               <img v-if="icon == 'competition' " class="img-fluid" src="../assets/icon/competition.svg" alt="">
+               <img v-if="icon == 'volunteer' " class="img-fluid" src="../assets/icon/volunteer.svg" alt="">
+               <img v-if="icon == 'caseStudy' " class="img-fluid" src="../assets/icon/caseStudy.svg" alt="">
+               <img v-if="icon == 'english' " class="img-fluid" src="../assets/icon/english.svg" alt="">
              </div>
              <div class="text-start align-self-center">
-               <h3 v-if="pointType" class="font-weight-boldest m-0   ">{{pointType.title}}</h3>
+               <h3 class="font-weight-boldest m-0   ">{{title}}</h3>
                <div class="text-muted">請輸入完整的單位名稱</div>
              </div>
            </div>
@@ -39,7 +39,7 @@
               <div class="text-muted">
                 {{currentRegPointUser}}
               </div>
-               <form v-if="pointType.type != 7 " class="text-start needs-validation" v-on:submit.prevent="submit"> 
+               <form v-if="type != 7 " class="text-start needs-validation" v-on:submit.prevent="submit"> 
                   <div class="row">
                       <div class="col input-col">
                           <select class="form-control" name="" id="year" v-model="yearSelected">
@@ -119,10 +119,35 @@
      </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import {mapActions,mapGetters} from 'vuex'
 export default {
 
-  props:["isTA","currentRegPointUser","pointType"],
+  props:["isTA"],
+  mounted() {
+    let vm =this;
+    if(!vm.currentRegPointUser && vm.isTA){
+      vm.$router.push({ name: 'TaDash' })
+    }
+    if(!vm.currentRegPointUser && !vm.isTA){
+      vm.$router.push({ name: 'StudentDash' })
+    }
+    
+
+    if(!vm.$route.params.type && !vm.isTA){
+      vm.$router.push({ name: 'StudentReg' })
+    }
+    
+    if(!vm.$route.params.type && vm.isTA) {
+         vm.$router.push({ name: 'TaReg' })
+    }
+
+    vm.title =vm.$route.params.title;
+    vm.icon = vm.$route.params.icon;
+    vm.type= vm.$route.params.type;
+
+
+  },
+  
 data() {
     return {
       title:"",
@@ -149,7 +174,9 @@ data() {
     }
   },
   computed:{
-    
+    ...mapGetters({
+      currentRegPointUser:'currentRegPointUser'
+    }),
     isSectionNull(){
       let vm = this;
       if(vm.sectionTitle == "" || vm.sectionTitle == null ){ return true}
@@ -267,7 +294,7 @@ data() {
         yearSelected : vm.yearSelected,
         points : vm.points,
         semesterSelected : vm.semesterSelected,
-        type :vm.pointType.type,
+        type :vm.$route.params.type,
         status : 1,
         stuId : vm.currentRegPointUser,
         englishCredit: null
@@ -298,7 +325,7 @@ data() {
         yearSelected : 0,
         points : 0,
         semesterSelected : 0,
-        type :vm.pointType.type,
+        type :vm.$route.params.type,
         status : 1,
         stuId : vm.currentRegPointUser,
         englishCredit: vm.englishPoint

@@ -37,9 +37,9 @@ export default {
       }
     },
     computed:{
-    ...mapGetters({
-          currentRegPointUser:'currentRegPointUser'
-        }),
+ ...mapGetters({
+      currentRegPointUser:'currentRegPointUser'
+    }),
     },
     methods: {
       toRoute(item){
