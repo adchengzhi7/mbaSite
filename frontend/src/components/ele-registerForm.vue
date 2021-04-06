@@ -346,7 +346,7 @@ export default {
       }
      
        vm.validateEnglish();
-       if(vm.valid){
+       if(vm.valid && !vm.isEdit){
         vm.insertUserPoint(pointList).then((res)=>{
           if(res.data.success == 1){
             if(!vm.isTA){
@@ -356,6 +356,21 @@ export default {
             }
           }else{
             //show error modal
+          }
+        })
+      }
+       if(vm.valid && vm.isEdit){
+        pointList.pointsId = vm.pointData.pointId;
+        vm.updatePointByPointId(pointList).then((res)=>{
+          console.log(res);
+          if(res.data.success == 1){
+            if(!vm.isTA){
+              vm.showAlert("StudentDash",vm.editMessage)
+            }else {
+              vm.showAlert("TaDash",vm.editMessage)
+            }
+          }else{
+            alert("unvalid")
           }
         })
       }

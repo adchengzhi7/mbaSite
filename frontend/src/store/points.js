@@ -6,6 +6,7 @@ import auth from './auth'
         userPoints:null,
         unreviewPoints:null,
         pointById:null,
+        updateSts:false,
     },
     getters:{
         userPoints(state){
@@ -30,6 +31,9 @@ import auth from './auth'
         },
         SET_GETBYIDPOINT(state,data){
             state.pointById = data.data[0];
+        },
+        SET_UPDATESTS(state,data){
+            state.updateSts = data;
         }
         
         
@@ -116,14 +120,12 @@ import auth from './auth'
         async updatePointByPointId({dispatch},data){
         let response = await axios.patch('/points/edit/',data,{
             headers:{'Authorization':'Bearer ' +auth.state.token }
-            }).then(()=>{
-                dispatch('getUserPoint', data.stuId)
-                dispatch('getPointByPointId', data.pointsId)
-            }
-            )
-        return response;
-
-
+            })
+            dispatch('updateStsCommit', true)
+            return response;
+        },
+        updateStsCommit({commit},data){
+           commit('SET_UPDATESTS',data)
         },
         
     },
