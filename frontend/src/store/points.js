@@ -107,12 +107,23 @@ import auth from './auth'
               .catch(function (error) {
                    throw error;
               });
-              console.log(response.data.data[0]);
         return dispatch('getPointByPointIdCommit', response.data)
 
         },
         getPointByPointIdCommit({commit},data){
             return commit('SET_GETBYIDPOINT',data)
+        },
+        async updatePointByPointId({dispatch},data){
+        let response = await axios.patch('/points/edit/',data,{
+            headers:{'Authorization':'Bearer ' +auth.state.token }
+            }).then(()=>{
+                dispatch('getUserPoint', data.stuId)
+                dispatch('getPointByPointId', data.pointsId)
+            }
+            )
+        return response;
+
+
         },
         
     },

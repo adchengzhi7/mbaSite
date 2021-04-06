@@ -1,7 +1,8 @@
 const{ getPointByPointId, 
     getPointByStuId,
     createPoint,
-    getUnReviewPoint
+    getUnReviewPoint,
+    updatePoint
 } =require("../routes/point.service")
 const { json } = require("express");
 
@@ -76,6 +77,25 @@ module.exports={
             })
         })
 
+    },
+    updatePoint:(req,res) =>{
+        const body = req.body;
+        updatePoint(body,(err,result)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(!result){
+                return res.json({
+                success:0,
+                message:"Failed to update PointDATA"
+                })
+            }
+            return res.json({
+                success:1,
+                message:"updated successfully"
+            })
+        })
     },
    
     

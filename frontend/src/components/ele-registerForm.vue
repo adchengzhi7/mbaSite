@@ -147,6 +147,7 @@ export default {
         englishSelectedBlured:false,
         studentDoneMessage:'請靜待辦公室助教完成審核作業！',
         taDoneMessage:'請前往完成審核作業！',
+        editMessage:'資料已更新成功',
         isEdit:false,
       
         
@@ -161,7 +162,6 @@ export default {
         if(vm.pointData){
           vm.isEdit = true;
           vm.sectionTitle= vm.pointData.sectionTitle;
-          console.log(vm.pointData);
           vm.yearSelected= vm.pointData.yearSelected;
           vm.points= vm.pointData.points;
           vm.semesterSelected= vm.pointData.semesterSelected;
@@ -240,6 +240,7 @@ export default {
   methods: {
     ...mapActions({
        insertUserPoint:'userPoint/insertUserPoint',
+       updatePointByPointId:'userPoint/updatePointByPointId'
     }),
      
       async showAlert(routeName,msg) {
@@ -312,18 +313,18 @@ export default {
       }
 
       if(vm.valid && vm.isEdit){
-        console.log("update Data");
-        // vm.insertUserPoint(pointList).then((res)=>{
-        //   if(res.data.success == 1){
-        //     if(!vm.isTA){
-        //       vm.showAlert("StudentDash",vm.studentDoneMessage)
-        //     }else {
-        //       vm.showAlert("TaDash",vm.taDoneMessage)
-        //     }
-        //   }else{
-        //     alert("unvalid")
-        //   }
-        // })
+        pointList.pointsId = vm.pointData.pointId;
+        vm.updatePointByPointId(pointList).then((res)=>{
+          if(res.data.success == 1){
+            if(!vm.isTA){
+              vm.showAlert("StudentDash",vm.editMessage)
+            }else {
+              vm.showAlert("TaDash",vm.editMessage)
+            }
+          }else{
+            alert("unvalid")
+          }
+        })
       }
       
       

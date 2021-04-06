@@ -1,6 +1,6 @@
 <template>
   <div > 
-    <register-form :isTA="isTA" :currentRegPointUser="currentRegPointUser" :pointType="pointType" :pointData="pointData" ></register-form>
+    <register-form :isTA="isTA" :currentRegPointUser="currentRegPointUser" :pointType="pointType" :pointData="pointData" :sycnDataToComp="sycnDataToComp" ></register-form>
   </div>
 </template>
 
@@ -18,6 +18,29 @@ export default {
           currentRegPointUser:'currentRegPointUser',
           pointById:'userPoint/pointById'
         }),
+         sycnDataToComp(){
+        let vm = this;
+         if(vm.pointById){
+        vm.pointType.title =vm.$store.state.userPoint.pointById.section;
+        vm.pointType.icon = vm.$store.state.userPoint.pointById.icon;
+        vm.pointType.type= vm.$store.state.userPoint.pointById.type;
+
+        vm.pointData.sectionTitle= vm.$store.state.userPoint.pointById.sectionTitle;
+        vm.pointData.yearSelected= vm.$store.state.userPoint.pointById.yearSelected;
+        vm.pointData.points= vm.$store.state.userPoint.pointById.point;
+        vm.pointData.semesterSelected= vm.$store.state.userPoint.pointById.semesterSelected;
+        vm.pointData.type= vm.$store.state.userPoint.pointById.type;
+        vm.pointData.status= vm.$store.state.userPoint.pointById.status;
+        vm.pointData.stuId= vm.$store.state.userPoint.pointById.stuId;
+        vm.pointData.englishCredit= vm.$store.state.userPoint.pointById.englishCredit;
+        vm.pointData.pointId= vm.$store.state.userPoint.pointById.pointId;
+        return true
+      }
+        return false
+
+
+
+      }
     },
    mounted() {
       let vm =this;
@@ -31,9 +54,7 @@ export default {
       if(pointsId){
         vm.getPointByPointId(pointsId);
       }
-      if(vm.pointById){
-        vm.sycnDataToComp();
-      }
+     
       
 
     },
@@ -41,22 +62,7 @@ export default {
     ...mapActions({
       getPointByPointId:'userPoint/getPointByPointId',
     }),
-      sycnDataToComp(){
-        let vm = this;
-        vm.pointType.title =vm.pointById.section;
-        vm.pointType.icon = vm.pointById.icon;
-        vm.pointType.type= vm.pointById.type;
-
-        vm.pointData.sectionTitle= vm.pointById.sectionTitle;
-        vm.pointData.yearSelected= vm.pointById.yearSelected;
-        vm.pointData.points= vm.pointById.point;
-        vm.pointData.semesterSelected= vm.pointById.semesterSelected;
-        vm.pointData.type= vm.pointById.type;
-        vm.pointData.status= vm.pointById.status;
-        vm.pointData.stuId= vm.pointById.stuId;
-        vm.pointData.englishCredit= vm.pointById.englishCredit;
-
-      }
+     
     },
   
 data() {
@@ -74,8 +80,8 @@ data() {
         type :null,
         status : null,
         stuId : null,
-        englishCredit: null
-
+        englishCredit: null,
+        pointId:null
       },
       isTA:true,
       
