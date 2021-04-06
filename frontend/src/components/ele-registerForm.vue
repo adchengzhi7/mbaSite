@@ -162,6 +162,7 @@ export default {
         if(vm.pointData){
           vm.isEdit = true;
           vm.sectionTitle= vm.pointData.sectionTitle;
+          vm.englishSelected= vm.pointData.sectionTitle;
           vm.yearSelected= vm.pointData.yearSelected;
           vm.points= vm.pointData.points;
           vm.semesterSelected= vm.pointData.semesterSelected;

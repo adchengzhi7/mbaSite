@@ -18,9 +18,9 @@ export default {
           currentRegPointUser:'currentRegPointUser',
           pointById:'userPoint/pointById'
         }),
-         sycnDataToComp(){
+        sycnDataToComp(){
         let vm = this;
-         if(vm.pointById){
+        if(vm.pointById){
         vm.pointType.title =vm.$store.state.userPoint.pointById.section;
         vm.pointType.icon = vm.$store.state.userPoint.pointById.icon;
         vm.pointType.type= vm.$store.state.userPoint.pointById.type;
