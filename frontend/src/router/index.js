@@ -7,6 +7,7 @@ import TaReview from '../views/Ta-Review.vue'
 import TaReg from '../views/Ta-Reg.vue'
 import TaStudentPage from '../views/Ta-StudentPage.vue'
 import TaRegForm from '../views/Ta-Reg-Form.vue'
+import TaRegFormEdit from '../views/Ta-Reg-EditForm.vue'
 import readCsv from '../views/Ta-ImportUser.vue'
 import StudentReg from '../views/Student-Reg.vue'
 import StudentRegForm from '../views/Student-Reg-Form.vue'
@@ -61,6 +62,11 @@ const routes = [
       path:"registerForm",
       name:"TaRegForm",
       component:TaRegForm
+    },
+    {
+      path:"registerFormEdit",
+      name:"TaRegFormEdit",
+      component:TaRegFormEdit
     },
     {
       path:"readCsv",

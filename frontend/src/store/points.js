@@ -5,6 +5,7 @@ import auth from './auth'
     state:{
         userPoints:null,
         unreviewPoints:null,
+        pointById:null,
     },
     getters:{
         userPoints(state){
@@ -13,7 +14,9 @@ import auth from './auth'
         },
         unreviewPoints(state){
             return state.unreviewPoints
-
+        },
+        pointById(state){
+            return state.pointById
         },
     },
     mutations:{
@@ -25,6 +28,9 @@ import auth from './auth'
             state.unreviewPoints = data.data;
 
         },
+        SET_GETBYIDPOINT(state,data){
+            state.pointById = data.data[0];
+        }
         
         
         
@@ -86,6 +92,27 @@ import auth from './auth'
         },
         unReviewPointListCommit({commit},data){
             return commit('SET_UNREVIEWPOINTLIST',data)
+        },
+        async getPointByPointId({dispatch},data){
+            let response = await 
+            axios.get('/points/edit/'+data,{ 
+                headers:{'Authorization':'Bearer ' +auth.state.token }
+             })
+             .then(function (response) {
+                 if(response.data.success ==0){
+                    throw "invalid Token";
+                 }
+                 return response;
+              })
+              .catch(function (error) {
+                   throw error;
+              });
+              console.log(response.data.data[0]);
+        return dispatch('getPointByPointIdCommit', response.data)
+
+        },
+        getPointByPointIdCommit({commit},data){
+            return commit('SET_GETBYIDPOINT',data)
         },
         
     },

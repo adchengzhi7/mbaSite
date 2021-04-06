@@ -1,7 +1,31 @@
-const{getPointByStuId,createPoint,getUnReviewPoint} =require("../routes/point.service")
+const{ getPointByPointId, 
+    getPointByStuId,
+    createPoint,
+    getUnReviewPoint
+} =require("../routes/point.service")
 const { json } = require("express");
 
 module.exports={
+    getPointByPointId:(req,res)=>{
+        const pointsId = req.params.pointsId;
+        getPointByPointId(pointsId,(err,results)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(!results){
+                return res.json({
+                    success:0,
+                    message:"Record not Found"
+                });
+            }
+            return res.json({
+                success:1,
+                data:results
+            })
+        })
+
+    },
     createPoint:(req,res) =>{
         const body = req.body;
        
@@ -53,5 +77,6 @@ module.exports={
         })
 
     },
+   
     
 }

@@ -40,11 +40,11 @@
                     </td>
                     <td class="align-middle ">
                         <span class="">
-                            <span v-if="item.status != 1 " class="btn">
-                                <i  class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
+                            <span v-if="item.status != 1 " class="btn"  >
+                                    <i  class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                             </span>
-                            <span v-else  class="btn btn-light" >
-                                <router-link  to="/"><i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i></router-link>
+                            <span v-else  class="btn btn-light"  @click="routerToWithParam('TaRegFormEdit',stuId,item.pointId)">
+                                <i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                             </span>
                         </span>
                         <span v-if="isTA">
@@ -148,6 +148,11 @@ export default {
           let vm = this;
           vm.regStudentIs(id);
           vm.$router.push({name:path})
+        },
+        routerToWithParam(path,id,param){
+          let vm = this;
+          vm.regStudentIs(id);
+          vm.$router.push({name:path,query: { pointsId:param }})
         },
           sortSelector(selected,isSort){
             let vm = this;

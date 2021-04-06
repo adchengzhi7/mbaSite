@@ -2,7 +2,7 @@
     <div class="partTop">
        <div class="row mt-5 mb-4">
          <div class="col align-self-center">
-              <div class="align-self-center" v-if="isTA">
+              <div class="align-self-center" v-if="isTA" :isEdit="editDataByUser">
                 <h3 class="pointer hover" @click="$router.go(-1)">
                     <i class="fas fa-arrow-left icon-clickable"></i>
                 </h3>
@@ -88,7 +88,8 @@
                     </div>
                   </div>
                   <div class="mt-3">
-                    <button class="btn btn-success btn-lg success " >提交申請</button>
+                    <button v-if="!isEdit" class="btn btn-success btn-lg success " >提交申請</button>
+                    <button v-else class="btn btn-success btn-lg success " >保存變更</button>
                   </div>
               </form>
 
@@ -110,7 +111,8 @@
                 </div>
                 
                 <div class="mt-3">
-                  <button class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
+                  <button v-if="!isEdit" class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
+                  <button v-else class="btn btn-success btn-lg success " @click="submitEnglish">保存變更</button>
                 </div>
               </div>
            </div>
@@ -122,34 +124,56 @@
 import {mapActions} from 'vuex'
 export default {
 
-  props:["isTA","currentRegPointUser","pointType"],
-data() {
-    return {
-      title:"",
-      stuId:"",
-      sectionBlured:false,
-      selectedBlured:false,
-      numberBlured:false,
-      valid:false,
-      icon:"",
-      type:"",
-      sectionTitle:'',
-      yearSelected:"",
-      points:1,
-      semesterSelected:"none",
-      englishPoint:"",
-      englishSelected:"none",
-      englishTest:["TOEFL PBT","TOEFL CBT","TOEFL IBT","IELTS","TOEIC"],
-      englishPointBlured:false,
-      englishSelectedBlured:false,
-      studentDoneMessage:'請靜待辦公室助教完成審核作業！',
-      taDoneMessage:'請前往完成審核作業！',
-     
+  props:["isTA","currentRegPointUser","pointType","pointData"],
+  data() {
+      return {
+        title:"",
+        stuId:"",
+        sectionBlured:false,
+        selectedBlured:false,
+        numberBlured:false,
+        valid:false,
+        icon:"",
+        type:"",
+        sectionTitle:'',
+        yearSelected:"",
+        points:1,
+        status:1,
+        semesterSelected:"none",
+        englishPoint:"",
+        englishSelected:"none",
+        englishTest:["TOEFL PBT","TOEFL CBT","TOEFL IBT","IELTS","TOEIC"],
+        englishPointBlured:false,
+        englishSelectedBlured:false,
+        studentDoneMessage:'請靜待辦公室助教完成審核作業！',
+        taDoneMessage:'請前往完成審核作業！',
+        isEdit:false,
       
-    }
+        
+      }
+    },
+  mounted() {
+     
   },
   computed:{
-    
+     editDataByUser(){
+        let vm=this;
+        if(vm.pointData){
+          vm.isEdit = true;
+          vm.sectionTitle= vm.pointData.sectionTitle;
+          console.log(vm.pointData);
+          vm.yearSelected= vm.pointData.yearSelected;
+          vm.points= vm.pointData.points;
+          vm.semesterSelected= vm.pointData.semesterSelected;
+          vm.type= vm.pointData.type;
+          vm.status= vm.pointData.status;
+          vm.stuId= vm.pointData.stuId;
+          vm.englishPoint= vm.pointData.englishCredit;
+          return true
+        }
+        return false
+        
+      },
     isSectionNull(){
       let vm = this;
       if(vm.sectionTitle == "" || vm.sectionTitle == null ){ return true}
@@ -217,7 +241,7 @@ data() {
     ...mapActions({
        insertUserPoint:'userPoint/insertUserPoint',
     }),
-
+     
       async showAlert(routeName,msg) {
         let vm =this;
         
@@ -268,12 +292,12 @@ data() {
         points : vm.points,
         semesterSelected : vm.semesterSelected,
         type :vm.pointType.type,
-        status : 1,
+        status : vm.status,
         stuId : vm.currentRegPointUser,
         englishCredit: null
       }
       vm.validate();
-      if(vm.valid){
+      if(vm.valid && !vm.isEdit){
         vm.insertUserPoint(pointList).then((res)=>{
           if(res.data.success == 1){
             if(!vm.isTA){
@@ -285,6 +309,21 @@ data() {
             alert("unvalid")
           }
         })
+      }
+
+      if(vm.valid && vm.isEdit){
+        console.log("update Data");
+        // vm.insertUserPoint(pointList).then((res)=>{
+        //   if(res.data.success == 1){
+        //     if(!vm.isTA){
+        //       vm.showAlert("StudentDash",vm.studentDoneMessage)
+        //     }else {
+        //       vm.showAlert("TaDash",vm.taDoneMessage)
+        //     }
+        //   }else{
+        //     alert("unvalid")
+        //   }
+        // })
       }
       
       
@@ -299,7 +338,7 @@ data() {
         points : 0,
         semesterSelected : 0,
         type :vm.pointType.type,
-        status : 1,
+        status : vm.status,
         stuId : vm.currentRegPointUser,
         englishCredit: vm.englishPoint
 
