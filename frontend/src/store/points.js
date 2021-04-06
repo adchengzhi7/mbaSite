@@ -7,6 +7,7 @@ import auth from './auth'
         unreviewPoints:null,
         pointById:null,
         updateSts:false,
+        approveSts:false,
     },
     getters:{
         userPoints(state){
@@ -34,6 +35,9 @@ import auth from './auth'
         },
         SET_UPDATESTS(state,data){
             state.updateSts = data;
+        },
+        SET_APPROVESTS(state,data){
+            state.approveSts = data;
         }
         
         
@@ -55,7 +59,7 @@ import auth from './auth'
                   console.log(response);
                    throw error;
               });
-        return dispatch('getUserPointCommit', response.data)
+         dispatch('getUserPointCommit', response.data)
 
 
 
@@ -89,7 +93,7 @@ import auth from './auth'
               .catch(function (error) {
                    throw error;
               });
-        return dispatch('unReviewPointListCommit', response.data)
+        dispatch('unReviewPointListCommit', response.data)
 
 
 
@@ -126,6 +130,24 @@ import auth from './auth'
         },
         updateStsCommit({commit},data){
            commit('SET_UPDATESTS',data)
+        },
+        async approvePointId({dispatch},data){
+            console.log(data);
+            let response = await axios.patch('/points/approve/',data,{
+                headers:{'Authorization':'Bearer ' +auth.state.token }
+                })
+                dispatch('getUserPoint', data.stuId)
+                dispatch('getUnreviewPoint')
+                return response;
+        },
+        async deletePointId({dispatch},data){
+            console.log(data);
+            let response = await axios.patch('/points/delete/',data,{
+                headers:{'Authorization':'Bearer ' +auth.state.token }
+                })
+                dispatch('getUserPoint', data.stuId)
+                dispatch('getUnreviewPoint')
+                return response;
         },
         
     },

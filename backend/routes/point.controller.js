@@ -2,7 +2,8 @@ const{ getPointByPointId,
     getPointByStuId,
     createPoint,
     getUnReviewPoint,
-    updatePoint
+    updatePoint,
+    chgPointStatus
 } =require("../routes/point.service")
 const { json } = require("express");
 
@@ -93,10 +94,52 @@ module.exports={
             }
             return res.json({
                 success:1,
-                message:"updated successfully"
+                message:"PointDATA updated successfully"
             })
         })
     },
+    approvePoint:(req,res)=>{
+        const body = req.body;
+        body.status=2;
+        chgPointStatus(body,(err,result)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(!result){
+                return res.json({
+                success:0,
+                message:"Failed to update PointSTS"
+
+                })
+            }
+            return res.json({
+                success:1,
+                message:"PointSTS updated successfully"
+            })
+        })
+    },
+    deletePoint:(req,res)=>{
+        const body = req.body;
+        body.status=3;
+        chgPointStatus(body,(err,result)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            if(!result){
+                return res.json({
+                success:0,
+                message:"Failed to delete PointSTS"
+
+                })
+            }
+            return res.json({
+                success:1,
+                message:"PointSTS delete successfully"
+            })
+        })
+    }
    
     
 }

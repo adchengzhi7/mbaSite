@@ -49,12 +49,12 @@
                         </span>
                         <span v-if="isTA">
                             <span class="" >
-                                <button class="btn btn-light" :disabled="item.status != 1 " @click="showAlert()">
+                                <button class="btn btn-light" :disabled="item.status != 1 " @click="showAlert({pointId:item.pointId,status:item.status,stuId:stuId})">
                                 <i class="fas fa-check" :class="{'icon-success':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                                 </button>
                             </span>
                             <span class="" >
-                                <button class="btn btn-light"  @click="warningAlert()">
+                                <button class="btn btn-light"  @click="warningAlert({pointId:item.pointId,status:item.status,stuId:stuId})">
                                     <i class="fas fa-times icon-danger" ></i>
                                 </button>
 
@@ -89,10 +89,13 @@ export default {
     },
     methods: {
         ...mapActions({
-            regStudentIs:'regStudentIs'
+            regStudentIs:'regStudentIs',
+            approvePointId:'userPoint/approvePointId',
+            deletePointId:'userPoint/deletePointId'
+            
         }),
       
-      async showAlert() {
+      async showAlert(object) {
         let vm =this;
         
         await vm.$swal({
@@ -107,12 +110,16 @@ export default {
          })
          .then((result) => {
             if (result.isConfirmed) {
-                vm.successAlert("審核通過!")
+                vm.approvePointId(object).then(()=>{
+                    vm.successAlert("審核通過!")
+                }).catch((e)=>{
+                    console.log(e);
+                })
                 
             }
         })
       },
-      async warningAlert(){
+      async warningAlert(object){
           let vm = this;
           await vm.$swal({
             title: '<h2 class="font-weight-boldest m-0">您確定要刪除？</h2>',
@@ -125,8 +132,11 @@ export default {
             cancelButtonText: '取消',
          }) .then((result) => {
             if (result.isConfirmed) {
-                vm.successAlert("已刪除！")
-                
+                  vm.deletePointId(object).then(()=>{
+                    vm.successAlert("已刪除！!")
+                }).catch((e)=>{
+                    console.log(e);
+                })
             }
         })
       },
