@@ -11,6 +11,7 @@ import TaRegFormEdit from '../views/Ta-Reg-EditForm.vue'
 import readCsv from '../views/Ta-ImportUser.vue'
 import StudentReg from '../views/Student-Reg.vue'
 import StudentRegForm from '../views/Student-Reg-Form.vue'
+import StudentRegFormEdit from '../views/Student-Reg-EditForm.vue'
 import StudentDash from '../views/Student-Dash.vue'
 import store from '@/store'
 
@@ -94,6 +95,11 @@ const routes = [
       path: "register",
       name: 'StudentReg',
       component:StudentReg,
+    },
+    {
+      path:"registerFormEdit",
+      name:"StudentRegFormEdit",
+      component:StudentRegFormEdit
     },
     {
       path:"registerForm",

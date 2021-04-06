@@ -43,7 +43,7 @@
                             <span v-if="item.status != 1 " class="btn"  >
                                     <i  class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                             </span>
-                            <span v-else  class="btn btn-light"  @click="routerToWithParam('TaRegFormEdit',stuId,item.pointId)">
+                            <span v-else  class="btn btn-light"  @click="routerToWithParam(stuId,item.pointId)">
                                 <i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                             </span>
                         </span>
@@ -149,10 +149,17 @@ export default {
           vm.regStudentIs(id);
           vm.$router.push({name:path})
         },
-        routerToWithParam(path,id,param){
+        routerToWithParam(id,param){
+          let path = null;
           let vm = this;
           vm.regStudentIs(id);
-          vm.$router.push({name:path,query: { pointsId:param }})
+          if(!vm.isTA){
+              path="StudentRegFormEdit";
+              vm.$router.push({name:path,query: { pointsId:param }})
+          }else{
+              path="TaRegFormEdit";
+              vm.$router.push({name:path,query: { pointsId:param }})
+          }
         },
           sortSelector(selected,isSort){
             let vm = this;
