@@ -5,6 +5,7 @@ import auth from './auth'
     state:{
         studentList:null,
         studentData:null,
+        newStudentList:null,
     },
     getters:{
         studentList(state){
@@ -15,6 +16,9 @@ import auth from './auth'
             return state.studentData
 
         },
+        newStudentList(state){
+            return state.newStudentList
+        }
     },
     mutations:{
         SET_STUDENTLIST(state,data){
@@ -24,6 +28,9 @@ import auth from './auth'
         SET_STUDENTDATA(state,data){
             state.studentData = data.data;
 
+        },
+        SET_NEWSTUDENTLIST(state,data){
+            state.newStudentList = data;
         }
         
         
@@ -67,6 +74,9 @@ import auth from './auth'
                    throw error;
               });
         return commit('SET_STUDENTDATA', response.data)
+        },
+        newStudent({commit},data){
+            commit('SET_NEWSTUDENTLIST',data)
         }
        
         
