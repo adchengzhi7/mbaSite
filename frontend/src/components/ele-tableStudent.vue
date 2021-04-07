@@ -47,13 +47,13 @@
                                 <i class="fas fa-pen " :class="{'icon-clickable':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                             </span>
                         </span>
-                        <span v-if="isTA">
-                            <span class="" >
+                        <span >
+                            <span v-if="isTA" >
                                 <button class="btn btn-light" :disabled="item.status != 1 " @click="showAlert({pointId:item.pointId,status:item.status,stuId:stuId})">
                                 <i class="fas fa-check" :class="{'icon-success':item.status == 1 , 'icon-disable':item.status != 1}"></i>
                                 </button>
                             </span>
-                            <span class="" >
+                            <span v-if="(item.status == 1 && !isTA) || isTA" >
                                 <button class="btn btn-light"  @click="warningAlert({pointId:item.pointId,status:item.status,stuId:stuId})">
                                     <i class="fas fa-times icon-danger" ></i>
                                 </button>
