@@ -1,28 +1,30 @@
 const pool= require("../config/db")
+const {genSaltSync,hashSync,compareSync} = require("bcrypt") 
+
 
 module.exports={
-   create:(data)=>{
-        return new Promise((resolve,reject) => {
-            pool.query(
-                `INSERT INTO users_details (usersDetails_stuId,usersDetails_psId,usersDetails_cName,usersDetails_type,usersDetails_pass,usersDetails_email)
-                VALUES (?,?,?,?,?,?)`,
-            [
-                data.studentid,
-                data.personalid,
-                data.name,
-                data.type,
-                data.password,
-                data.email
-            ],
-            (error,results)=>{
-                if(results){
-                    return resolve(results)
+   create: (data)=>{
+    let sql =  `INSERT INTO users_details (usersDetails_stuId,usersDetails_psId,usersDetails_cName,usersDetails_type,usersDetails_pass,usersDetails_email)
+    VALUES (?,?,?,?,?,?)`;
+    let values =[
+        data.studentid,
+        data.personalid,
+        data.name,
+        data.type,
+        data.password,
+        data.email
+    ];
+        return new Promise(( resolve, reject ) => {
+            pool.query(sql, values, ( err, rows) => {
+                if ( err ) {
+                  reject( err )
+                } else {
+                  resolve( rows )
                 }
-                    return reject(error)
-                })
-        });
-
+              })
+        })
     },
+   
     getStudent:(callBack)=>{
         pool.query(
             'SELECT usersDetails_stuId AS stuId ,usersDetails_cName AS cName , IFNULL((SELECT SUM(`points_credit`) FROM points WHERE points_status >= 1 AND points_stuid=usersDetails_stuId AND points_status != 3),0)AS totalPoint FROM users_details WHERE usersDetails_type=0',

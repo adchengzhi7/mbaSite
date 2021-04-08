@@ -12,22 +12,38 @@ const {sign} = require("jsonwebtoken");
 const { json, response } = require("express");
 
 module.exports={
-    createUser:(req,res) =>{
+    createUser:(req,res ) =>{
         const body = req.body;
         const salt =genSaltSync(10)
         if(body.length>1){
-            const result =body.map(element => {
-                const newPassword=element.personalid;
-                element.password =hashSync(newPassword,salt);
-                element.type=0;
-              create(element).then((success) => {
-                return(success)
-              }, (fail) => {
-                return(fail.code)
-              })    
+
             
-            });
-            return res.send(result)
+            const mapLoop = async _ => {
+              
+                const promises = body.map(async ele => {
+                    
+                    const newPassword=ele.personalid;
+                    ele.password =hashSync(newPassword,salt);
+                    ele.type=0;
+
+                    try{
+                        const a = await create(ele)
+                        return { success: 1,code:a}
+
+                    }catch(e){
+                        return{ success: 0,code:e.code}
+                    }
+
+
+                })
+              
+                const numFruits = await Promise.all(promises)
+                return  res.send(numFruits);
+
+              }
+              mapLoop()
+           
+            
 
         }else{
             body.password =hashSync(body.password,salt);
