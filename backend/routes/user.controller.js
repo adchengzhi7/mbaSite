@@ -9,26 +9,41 @@ const{
 
 const {genSaltSync,hashSync,compareSync} = require("bcrypt") 
 const {sign} = require("jsonwebtoken");
-const { json } = require("express");
+const { json, response } = require("express");
 
 module.exports={
     createUser:(req,res) =>{
         const body = req.body;
         const salt =genSaltSync(10)
-        body.password =hashSync(body.password,salt);
-        create(body,(err,result)=>{
-            if(err){
-                console.log(err);
-                return res.status(500).json({
-                    success:0,
-                    message:"Database connection error"
+        if(body.length>1){
+            const result =body.map(element => {
+                const newPassword=element.personalid;
+                element.password =hashSync(newPassword,salt);
+                element.type=0;
+              create(element).then((success) => {
+                return(success)
+              }, (fail) => {
+                return(fail.code)
+              })    
+            
+            });
+            return res.send(result)
+
+        }else{
+            body.password =hashSync(body.password,salt);
+            create(body,(err,result)=>{
+                if(err){
+                    return res.status(500).json({
+                        success:0,
+                        message:"Database connection error"
+                    })
+                }
+                return res.status(200).json({
+                    success:1,
+                    data:result
                 })
-            }
-            return res.status(200).json({
-                success:1,
-                data:result
             })
-        })
+        }
     },
     getUserByStuId:(req,res)=>{
         const stuId = req.params.stuId;

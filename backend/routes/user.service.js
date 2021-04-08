@@ -1,25 +1,27 @@
 const pool= require("../config/db")
 
 module.exports={
-    create:(data,callBack)=>{
-        pool.query(
-                `INSERT INTO users_details (usersDetails_stuId,usersDetails_psId,usersDetails_cName,usersDetails_type,usersDetails_pass)
-                VALUES (?,?,?,?,?)`,
+   create:(data)=>{
+        return new Promise((resolve,reject) => {
+            pool.query(
+                `INSERT INTO users_details (usersDetails_stuId,usersDetails_psId,usersDetails_cName,usersDetails_type,usersDetails_pass,usersDetails_email)
+                VALUES (?,?,?,?,?,?)`,
             [
-                data.stuId,
-                data.psId,
-                data.cName,
+                data.studentid,
+                data.personalid,
+                data.name,
                 data.type,
                 data.password,
+                data.email
             ],
-            (error,results) =>{
-                if(error){
-                    console.log(error);
-                   return callBack(error);
+            (error,results)=>{
+                if(results){
+                    return resolve(results)
                 }
-                return callBack(null,results)
-            }
-        )
+                    return reject(error)
+                })
+        });
+
     },
     getStudent:(callBack)=>{
         pool.query(

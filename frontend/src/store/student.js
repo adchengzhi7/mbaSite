@@ -77,7 +77,27 @@ import auth from './auth'
         },
         newStudent({commit},data){
             commit('SET_NEWSTUDENTLIST',data)
-        }
+        },
+        setNewStudentNull({commit}){
+            commit('SET_NEWSTUDENTLIST',null)
+        },
+        async insertStudentasList({commit},data){
+            let response = await 
+            axios.post('/users/',data,{ 
+                headers:{'Authorization':'Bearer ' +auth.state.token }
+             })
+             .then(function (response) {
+                 if(response.data.success ==0){
+                    throw (response.data.message);
+                 }
+                 return response;
+              })
+              .catch(function (error) {
+                   throw error;
+              });
+            console.log(response);
+            console.log(commit);
+        },
        
         
     },

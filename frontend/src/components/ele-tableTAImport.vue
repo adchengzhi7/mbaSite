@@ -1,18 +1,7 @@
 <template>
     <div>
         <customTable>
-            <template #caption>
-                <caption>
-                    <span v-if ="studentList">
-                      {{studentList.length }}
-                    </span>
-                    <span style="float:right">
-
-                        <button class="btn btn-light" @click="prevPage" :disabled="currentPage == 1" ><i class="fas fa-arrow-left"></i></button>
-                        <button class="btn btn-light" @click="nextPage" :disabled="currentPage == prevPageStatus" ><i class="fas fa-arrow-right"></i></button>
-                    </span>
-                </caption>
-            </template>
+            
             <template #thead>
                   <tr>
                     <th @click ="sortBy = 'id',isReverse = !isReverse"  scope="col">
@@ -64,23 +53,9 @@ export default {
     },
     methods: {
        
-    nextPage:function() {
-      if((this.currentPage*this.pageSize) < this.studentList.length) this.currentPage++;
-    },
-    prevPage:function() {
-      if(this.currentPage > 1) this.currentPage--;
-    }
+   
     },
     computed:{
-        prevPageStatus(){
-            let vm =this;
-            if(vm.studentList){
-                const totalPage =vm.studentList.length/vm.pageSize
-                return Math.ceil(totalPage)
-            }
-            return 0
-        },
-      
 
 
     },
@@ -91,8 +66,6 @@ export default {
             sortId:true,
             sortstuId:false,
             sorttotalPoint:false,
-            pageSize:10,
-            currentPage:1,
            
         }
     },

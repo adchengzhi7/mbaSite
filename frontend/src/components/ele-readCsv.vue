@@ -1,17 +1,18 @@
 <template>
     <div class="p-5">
-        <input type="file" @change="test"  accept=".csv">
+        <input type="file" @change="getCsvData"  accept=".csv">
         <div class="text-muted"> 共 {{countCsv}} 比資料
         </div>
         <div v-if="iserror" class="text-danger">
             {{error}}
         </div>
+        <div v-if="countCsv !=0" class="btn btn-success success" @click="addUser">匯入名單</div>
     </div>
 </template>
 
 <script>
 
-import {mapActions} from 'vuex'
+import {mapActions,mapGetters} from 'vuex'
 import {csv} from "csvtojson";  
 
 export default {
@@ -26,6 +27,9 @@ export default {
     }
 },
 computed:{
+    ...mapGetters({
+        newStudentList:'student/newStudentList'
+    }),
     countCsv(){
         let vm =this;
         let length =vm.jsonData.length;
@@ -33,7 +37,7 @@ computed:{
             vm.newStudent(vm.jsonData)
             return  length
         }else{
-           
+            vm.setNewStudentNull()
             return 0
         } 
             
@@ -41,9 +45,11 @@ computed:{
 },
 methods: {
 ...mapActions({
-    newStudent:'student/newStudent'
+    newStudent:'student/newStudent',
+    setNewStudentNull:'student/setNewStudentNull',
+    insertStudentasList:'student/insertStudentasList'
 }),
-    async test(input){
+    async getCsvData(input){
         let vm =this;
         if(input.target.files && input.target.files[0]){
         let tmppath = URL.createObjectURL(input.target.files[0]);
@@ -52,11 +58,18 @@ methods: {
         const jsonArray = await csv().fromString(text);
         vm.jsonData = jsonArray;
         if(jsonArray.length === 0){
+            vm.setNewStudentNull();
              vm.iserror= true;
         }
 
         }
     },
+    async addUser(){
+        let vm = this;
+        const userList = vm.newStudentList;
+        vm.insertStudentasList(userList)
+        
+    }
 },
 }
 </script>
