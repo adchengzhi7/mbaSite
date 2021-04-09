@@ -6,6 +6,8 @@ import auth from './auth'
         studentList:null,
         studentData:null,
         newStudentList:null,
+        isInsertingStudent:null,
+        loadingPrecentage:0,
     },
     getters:{
         studentList(state){
@@ -18,6 +20,12 @@ import auth from './auth'
         },
         newStudentList(state){
             return state.newStudentList
+        },
+        isInsertingStudent(state){
+            return state.isInsertingStudent
+        },
+        loadingPrecentage(state){
+            return state.loadingPrecentage
         }
     },
     mutations:{
@@ -31,6 +39,12 @@ import auth from './auth'
         },
         SET_NEWSTUDENTLIST(state,data){
             state.newStudentList = data;
+        },
+        SET_STUDENTSTS(state,data){
+            state.isInsertingStudent = data;
+        },
+        SET_LOADINGPERCENTAGE(state,data){
+            state.loadingPrecentage = data;
         }
         
         
@@ -75,29 +89,59 @@ import auth from './auth'
               });
         return commit('SET_STUDENTDATA', response.data)
         },
-        newStudent({commit},data){
+        newStudent({commit,dispatch},data){
             commit('SET_NEWSTUDENTLIST',data)
+            dispatch("setProgressNull");
+
         },
-        setNewStudentNull({commit}){
+        setNewStudentNull({commit,dispatch}){
             commit('SET_NEWSTUDENTLIST',null)
+            dispatch("setProgressNull");
         },
-        async insertStudentasList({commit},data){
-            let response = await 
-            axios.post('/users/',data,{ 
-                headers:{'Authorization':'Bearer ' +auth.state.token }
-             })
+        async insertStudentasList({dispatch},data){
+            dispatch("progressBarPrecent")
+            dispatch("isInsertingStudent",true)
+            await axios.post('/users/',data,{ 
+                headers:{'Authorization':'Bearer ' +auth.state.token },
+             },)
              .then(function (response) {
-                 if(response.data.success ==0){
-                    throw (response.data.message);
-                 }
-                 return response;
+                 dispatch("newStudent",response.data)
+                 return response.status;
               })
               .catch(function (error) {
                    throw error;
+              })    
+              .finally( function(){
+                dispatch("isInsertingStudent",false);
+                return "完成"
+
               });
-            console.log(response);
-            console.log(commit);
+              
         },
+        isInsertingStudent({commit},data){
+            commit("SET_STUDENTSTS",data)
+            
+        },
+        progressBarPrecent({commit,state}){
+            let timerId, percent=0;
+            timerId = setInterval(function() {
+
+                // increment progress bar
+                percent += 20;
+                commit("SET_LOADINGPERCENTAGE",percent)
+                // complete
+                if (percent >= 100 || state.isInsertingStudent== false ) {
+                  clearInterval(timerId);
+                    percent = 100;
+                    commit("SET_LOADINGPERCENTAGE",percent)
+                }   
+            
+              }, 200);
+        },
+        setProgressNull({commit}){
+            commit("SET_LOADINGPERCENTAGE",0)
+        },
+        
        
         
     },

@@ -28,10 +28,14 @@ module.exports={
 
                     try{
                         const a = await create(ele)
-                        return { success: 1,code:a}
+                        ele.success =1;
+                        ele.stsMsg = a;
+                        return ele
 
                     }catch(e){
-                        return{ success: 0,code:e.code}
+                        ele.success =0;
+                        ele.stsMsg = e.code;
+                        return ele
                     }
 
 

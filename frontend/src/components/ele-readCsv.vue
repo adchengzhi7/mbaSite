@@ -6,6 +6,9 @@
         <div v-if="iserror" class="text-danger">
             {{error}}
         </div>
+        <div v-if="loadingPrecentage == 100" class="text-success">
+            {{isDone}}
+        </div>
         <div v-if="countCsv !=0" class="btn btn-success success" @click="addUser">匯入名單</div>
     </div>
 </template>
@@ -21,6 +24,7 @@ export default {
     },
     data() {
     return {
+        isDone:'',
         jsonData:[],
         iserror:false,
         error:"檔案資料格式錯誤",
@@ -28,7 +32,8 @@ export default {
 },
 computed:{
     ...mapGetters({
-        newStudentList:'student/newStudentList'
+        newStudentList:'student/newStudentList',
+        loadingPrecentage:'student/loadingPrecentage'
     }),
     countCsv(){
         let vm =this;
@@ -68,6 +73,11 @@ methods: {
         let vm = this;
         const userList = vm.newStudentList;
         vm.insertStudentasList(userList)
+        .catch((err)=>{
+            throw err
+        }).then(
+            vm.isDone ="匯入完成"
+        )
         
     }
 },
