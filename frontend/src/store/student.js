@@ -106,14 +106,12 @@ import auth from './auth'
              },)
              .then(function (response) {
                  dispatch("newStudent",response.data)
-                 return response.status;
               })
               .catch(function (error) {
                    throw error;
               })    
               .finally( function(){
                 dispatch("isInsertingStudent",false);
-                return "完成"
 
               });
               
