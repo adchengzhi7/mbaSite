@@ -8,6 +8,7 @@ export default {
         invalidUserMsg:null,
         userType:null,
         userId:null,
+        isInvalidToken:null,
     },
     getters:{
         authenticated(state){
@@ -28,6 +29,9 @@ export default {
         },
         invalidUserMsg(state){
             return state.invalidUserMsg
+        },
+        isInvalidToken(state){
+            return state.isInvalidToken
         }
     },
     mutations:{
@@ -43,6 +47,9 @@ export default {
         },
         SET_invalidUserMsg(state,data){
             state.invalidUserMsg = data
+        },
+        SET_ISINVALIDTOKEN(state,data){
+            state.isInvalidToken =data;
         }
     },
     actions:{
@@ -76,7 +83,20 @@ export default {
             commit('SET_TOKEN',null)
             commit('SET_USER',null)
             localStorage.removeItem('token')
-            }
+        },
+        async checkTokenInvalid({commit},state){
+            await axios.get('/users/check',{ 
+                headers:{'Authorization':'Bearer ' + state.token }
+             })
+            .then((res)=> {
+                commit('SET_ISINVALIDTOKEN',false)
+                console.log(res);
+            })
+            .catch((error)=>{
+                commit('SET_ISINVALIDTOKEN',true)
+                console.log(error);
+            })
+        }
         
     },
     modules:{

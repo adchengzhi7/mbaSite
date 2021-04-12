@@ -1,13 +1,13 @@
 <template >
 <nav class="navbar  fixed-top navbar-expand-lg navbar-light bg-light bg-shadow">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <a class="navbar-brand" href="#">
       <img class="img-fluid" src="../assets/mba-logo.png" width="30" height="30" alt="">
       <span class="ms-2 me-2 theme">特色學習登錄</span>
     </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
      <ul class="navbar-nav me-auto mb-2 mb-lg-0 "></ul>
      <div class="d-flex">
@@ -46,7 +46,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      signOutAction:'auth/signOut'
+      signOutAction:'auth/signOut',
+      checkTokenInvalid:'auth/checkTokenInvalid'
     }),
     signOut(){
         this.signOutAction().then(() =>{
@@ -54,14 +55,30 @@ export default {
             name:"Home"
           })
         })
+    },
+    async checkIsLogin(){
+      let vm = this;
+      await vm.checkTokenInvalid().then( ()=>{
+        if(vm.isInvalidToken == true){
+          vm.signOutAction()
+        }
+
+      }
+      )
+
+
     }
   },
   computed:{
     ...mapGetters({
       authenticated:'auth/authenticated',
-      user:'auth/user'
+      user:'auth/user',
+      isInvalidToken:'auth/isInvalidToken'
     })
-  }
+  },
+  mounted() {
+    this.checkIsLogin()
+  },
 }
 </script>
 <style scoped>
