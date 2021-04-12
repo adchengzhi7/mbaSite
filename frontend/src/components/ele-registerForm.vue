@@ -157,6 +157,7 @@ export default {
      
   },
   computed:{
+    
      editDataByUser(){
         let vm=this;
         if(vm.pointData){
@@ -243,10 +244,13 @@ export default {
        insertUserPoint:'userPoint/insertUserPoint',
        updatePointByPointId:'userPoint/updatePointByPointId'
     }),
-     
-      async showAlert(routeName,msg) {
+    currentTime(){
+      const date = new Date(+new Date() + 8 * 3600 * 1000)
+      const insertTime =  date.toISOString().slice(0, 19).replace('T', ' ');
+      return insertTime 
+    },
+    async showAlert(routeName,msg) {
         let vm =this;
-        
         await vm.$swal({
           title: '<h2 class="font-weight-boldest m-0">已成功提交！</h2>',
           html: '<div class="small  text-muted"> '+ msg +' </div>',
@@ -288,6 +292,7 @@ export default {
     submit(){
       
       let vm =this;
+      let insertDate = vm.currentTime();
       const pointList = {
         sectionTitle:vm.sectionTitle,
         yearSelected : vm.yearSelected,
@@ -296,7 +301,8 @@ export default {
         type :vm.pointType.type,
         status : vm.status,
         stuId : vm.currentRegPointUser,
-        englishCredit: null
+        englishCredit: null,
+        insertDate:insertDate,
       }
       vm.validate();
       if(vm.valid && !vm.isEdit){

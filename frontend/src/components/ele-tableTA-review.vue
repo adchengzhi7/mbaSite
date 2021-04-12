@@ -99,8 +99,8 @@ export default {
             return "-"
          },
          dateShow(date){
-             const gotDate = new Date(date);
-             const today  = new Date();
+             let gotDate =new Date(date);
+             let today = new Date()
              const diffTimeStamp = today.getTime()- gotDate.getTime()
              const diffMin = Math.floor(diffTimeStamp / (1000*60)) ;
              const diffTime = Math.floor(diffTimeStamp / (1000*3600)) ;

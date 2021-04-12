@@ -3,8 +3,8 @@ const pool= require("../config/db")
 module.exports={
     createPoint:(data,callBack)=>{
         pool.query(
-                `INSERT INTO points (points_type,points_title,points_regYear,points_regSemester,points_credit,points_status,points_stuid,points_englishCredit)
-                VALUES (?,?,?,?,?,?,?,?)`,
+                `INSERT INTO points (points_type,points_title,points_regYear,points_regSemester,points_credit,points_status,points_stuid,points_englishCredit,points_regTime)
+                VALUES (?,?,?,?,?,?,?,?,?)`,
             [
                 data.type,
                 data.sectionTitle,
@@ -14,6 +14,8 @@ module.exports={
                 data.status,
                 data.stuId,
                 data.englishCredit,
+                data.insertDate,
+                
             ],
             (error,results) =>{
                 if(error){
@@ -40,7 +42,7 @@ module.exports={
 
     getUnReviewPoint:(callBack)=>{
         pool.query(
-            "SELECT pt.pointsType_descp AS section, p.points_type AS type, p.points_title AS sectionTitle,concat(p.points_regYear, p.points_regSemester) AS semester,p.points_regTime AS date ,p.points_englishCredit AS englishCredit ,p.points_stuid AS stuId,u.usersDetails_cName AS name FROM points AS p  INNER JOIN users_details AS u ON p.points_stuid = u.usersDetails_stuId INNER JOIN points_type AS pt ON p.points_type = pt.pointsType_id  WHERE points_status = 1 ",
+            "SELECT pt.pointsType_descp AS section, p.points_type AS type, p.points_title AS sectionTitle,concat(p.points_regYear, p.points_regSemester) AS semester,p.points_regTime AS date ,p.points_englishCredit AS englishCredit ,p.points_stuid AS stuId,u.usersDetails_cName AS name FROM points AS p  INNER JOIN users_details AS u ON p.points_stuid = u.usersDetails_stuId INNER JOIN points_type AS pt ON p.points_type = pt.pointsType_id  WHERE points_status = 1 ORDER BY p.points_regTime DESC",
             [],
             (error,results)=>{
                 if(error){
