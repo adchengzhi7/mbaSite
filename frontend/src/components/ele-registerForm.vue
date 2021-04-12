@@ -36,8 +36,9 @@
        <div class="row">
            <div class="col"></div>
            <div class="col-8">
-              <div class="text-muted">
-                {{currentRegPointUser}}
+
+              <div class="text-muted mb-3 h6 text-start" >
+               學號： {{currentRegPointUser}}
               </div>
                <form v-if="pointType.type != 7 " class="text-start needs-validation" v-on:submit.prevent="submit"> 
                   <div class="row">
@@ -249,7 +250,11 @@ export default {
       const insertTime =  date.toISOString().slice(0, 19).replace('T', ' ');
       return insertTime 
     },
-    async showAlert(routeName,msg) {
+    async showAlert(routeName,msg,id) {
+      let param={ name: routeName }
+      if(id != null ){
+        param={ name: routeName,query:{stuId:id }  }
+      }
         let vm =this;
         await vm.$swal({
           title: '<h2 class="font-weight-boldest m-0">已成功提交！</h2>',
@@ -259,7 +264,7 @@ export default {
           showConfirmButton: false,
           timer:5000
           }),
-        await vm.$router.push({ name: routeName  })
+        await vm.$router.replace(param)
       },
      validate(){
        let vm =this;
@@ -309,9 +314,9 @@ export default {
         vm.insertUserPoint(pointList).then((res)=>{
           if(res.data.success == 1){
             if(!vm.isTA){
-              vm.showAlert("StudentDash",vm.studentDoneMessage)
+              vm.showAlert("StudentDash",vm.studentDoneMessage,null)
             }else {
-              vm.showAlert("TaDash",vm.taDoneMessage)
+              vm.showAlert("TaStudentPage",vm.taDoneMessage,vm.currentRegPointUser)
             }
           }else{
             alert("unvalid")
@@ -324,9 +329,9 @@ export default {
         vm.updatePointByPointId(pointList).then((res)=>{
           if(res.data.success == 1){
             if(!vm.isTA){
-              vm.showAlert("StudentDash",vm.editMessage)
+              vm.showAlert("StudentDash",vm.editMessage,null)
             }else {
-              vm.showAlert("TaDash",vm.editMessage)
+              vm.showAlert("TaStudentPage",vm.taDoneMessage,vm.currentRegPointUser)
             }
           }else{
             alert("unvalid")
@@ -359,9 +364,9 @@ export default {
         vm.insertUserPoint(pointList).then((res)=>{
           if(res.data.success == 1){
             if(!vm.isTA){
-              vm.showAlert("StudentDash",vm.studentDoneMessage)
+              vm.showAlert("StudentDash",vm.studentDoneMessage,null)
             }else {
-              vm.showAlert("TaDash",vm.taDoneMessage)
+              vm.showAlert("TaStudentPage",vm.taDoneMessage,vm.currentRegPointUser)
             }
           }else{
             //show error modal
@@ -374,9 +379,10 @@ export default {
           console.log(res);
           if(res.data.success == 1){
             if(!vm.isTA){
-              vm.showAlert("StudentDash",vm.editMessage)
+              vm.showAlert("StudentDash",vm.editMessage,null)
             }else {
-              vm.showAlert("TaDash",vm.editMessage)
+              vm.showAlert("TaStudentPage",vm.taDoneMessage,vm.currentRegPointUser)
+
             }
           }else{
             alert("unvalid")
