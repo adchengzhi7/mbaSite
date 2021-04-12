@@ -6,22 +6,22 @@
         <div class="h1 title-green fw-bolder ">特色學習登錄</div>
           <form class="needs-validation " v-on:submit.prevent="submit()"   >
             <div class="p-3">
-          <div class="p-3 ">
-            <input class="  bg-light form-control" v-model="form.user" placeholder="輸入您的學號" name="" id=""  required/>
-          </div>
-          <div class="input-group p-3">
-            <input class="form-control" v-model="form.password" placeholder="Password" :type="passType" required >
-            <div class="input-group-append">
-              <button class="btn btn-icon" type="button" @click="showPassword">
-                <i v-if="see" class="fas fa-eye-slash"></i>
-                <i v-else class="fas fa-eye"></i>
-              </button>
-              
-            </div>
-          </div>
-          <div  class="font-weight-bold text-danger" v-if="!notFirstLogin">
-            {{ invalidUserMsg}}
-          </div>
+              <div class=" p-xl-3 p-md-3  p-sm-2 p-2  ">
+                <input class="  bg-light form-control" v-model="form.user" placeholder="輸入您的學號" name="" id=""  required/>
+              </div>
+              <div class="input-group p-xl-3 p-md-3  p-sm-2 p-2 ">
+                <input class="form-control" v-model="form.password" placeholder="Password" :type="passType" required >
+                <div class="input-group-append">
+                  <button class="btn btn-icon" type="button" @click="showPassword">
+                    <i v-if="see" class="fas fa-eye-slash"></i>
+                    <i v-else class="fas fa-eye"></i>
+                  </button>
+                  
+                </div>
+              </div>
+              <div  class="font-weight-bold text-danger" v-if="!notFirstLogin">
+                {{ invalidUserMsg}}
+              </div>
           </div>
         <div class="pt-3">
 
