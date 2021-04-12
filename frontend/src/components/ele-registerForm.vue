@@ -340,6 +340,7 @@ export default {
 
     submitEnglish(){
       let vm =this;
+      let insertDate = vm.currentTime();
       const pointList = {
         sectionTitle:vm.englishSelected,
         yearSelected : 0,
@@ -348,7 +349,8 @@ export default {
         type :vm.pointType.type,
         status : vm.status,
         stuId : vm.currentRegPointUser,
-        englishCredit: vm.englishPoint
+        englishCredit: vm.englishPoint,
+        insertDate:insertDate,
 
       }
      
