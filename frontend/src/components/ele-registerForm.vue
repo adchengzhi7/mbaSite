@@ -1,14 +1,14 @@
 <template>
     <div class="partTop">
        <div class="row mt-5 mb-4">
-         <div class="col align-self-center">
+         <div class="col d-none d-sm-block d-xl-block align-self-center">
               <div class="align-self-center" v-if="isTA" :isEdit="editDataByUser">
                 <h3 class="pointer hover" @click="$router.go(-1)">
                     <i class="fas fa-arrow-left icon-clickable"></i>
                 </h3>
             </div>
          </div>
-         <div class="col-8 align-self-center">
+         <div class="me-3 ms-3 col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 align-self-center">
              
            <div class="d-flex">
             
@@ -29,13 +29,13 @@
           
           
          </div>
-         <div class="col"></div>
+         <div class="col d-none d-sm-block d-xl-block"></div>
          
 
        </div>
        <div class="row">
-           <div class="col"></div>
-           <div class="col-8">
+           <div class="col d-none d-sm-block d-xl-block"></div>
+           <div class="me-3 ms-3 col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12">
 
               <div class="text-muted mb-3 h6 text-start" >
                學號： {{currentRegPointUser}}
@@ -117,7 +117,7 @@
                 </div>
               </div>
            </div>
-           <div class="col"></div>
+           <div class="col d-none d-sm-block d-xl-block"></div>
        </div>
      </div>
 </template>

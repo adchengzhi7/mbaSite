@@ -2,10 +2,10 @@
     <div>
         <div class="partTop">
        <div class="row">
-        <div class="col"></div>
-        <div class="col-8 row">
-            <div class="col">
-                <div class="d-flex justify-content-center ">
+        <div class="col d-none d-sm-block d-xl-block "></div>
+        <div class="col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 row">
+            <div class="col-12 col-md-6">
+                <div class="d-flex  justify-content-center ">
                 <avatar :image="avatarImg" size="lg"></avatar>
                 <div class=" avatar-box">
                     <h4 class="font-weight-bold m-0">{{userData.name}}</h4>
@@ -14,19 +14,19 @@
                 </div>
             </div>
 
-            <div class="col">
-            <div class="avatar-box p-3 ">
-                <div class="d-flex flex-wrap pb-3 ">
-                <div >已確認點數</div>
-                <div class="ms-auto" >{{totalPoint}}/3</div>
-                </div>
-                <div class="progress">
-                <div class="progress-bar success" role="progressbar" :style="{'width':totalPointToPrecent }" :aria-valuenow="totalPointToPrecent" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
+            <div class="col-12 col-md-6 ">
+              <div class="avatar-box p-3 ">
+                  <div class="d-flex flex-wrap pb-3 ">
+                  <div >已確認點數</div>
+                  <div class="ms-auto" >{{totalPoint}}/3</div>
+                  </div>
+                  <div class="progress">
+                  <div class="progress-bar success" role="progressbar" :style="{'width':totalPointToPrecent }" :aria-valuenow="totalPointToPrecent" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
             </div>
         </div>
-        <div class="col"></div>
+        <div class="col d-none d-sm-block d-xl-block"></div>
        </div>
        
        
@@ -49,12 +49,12 @@
 
        </div>
        <div v-else class="row mt-5">
-         <div class="col"></div>
-         <div class="col-8">
+         <div class="d-none col d-md-block d-xl-block"></div>
+         <div class="col-12 col-xl-9 col-md-9 overflow-auto ">
 
          <tables :isTA="isTA" :stuId="userData.stuId"></tables>
          </div>
-         <div class="col"></div>
+         <div class="col d-none d-sm-block d-xl-block"></div>
        </div>
      </div>
     </div>

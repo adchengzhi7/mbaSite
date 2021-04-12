@@ -26,6 +26,7 @@ computed:{
      },
      ConfirmGetUserId(){
       if(this.$store.state.auth.userId){
+          this.regStudentIs(this.$store.state.auth.userId)
            return this.getPointsData(this.$store.state.auth.userId)
 
           }
@@ -38,6 +39,7 @@ computed:{
   methods: {
     ...mapActions({
        getUserPoint:'userPoint/getUserPoint',
+        regStudentIs:'regStudentIs',
       signOutAction:'auth/signOut'
 
     }),
@@ -56,6 +58,7 @@ computed:{
     }
   },
    mounted() {
+     
      
      
   },

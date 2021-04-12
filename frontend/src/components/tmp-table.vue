@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="table">
+        <table class="table table-responsive">
             <slot name="caption"></slot>
             <thead>
                 <slot name="thead"></slot>

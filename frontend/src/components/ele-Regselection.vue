@@ -12,7 +12,7 @@
            </div>
   
            <div class="row">
-             <div class="col-4 p-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
+             <div class="col-12 col-sm-6 p-1 col-md-4 p-md-4 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
                <div class="select-box bg-shadow-hover pointer ">
                   <img class="img-fluid" :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
                   <h6 class="font-weight-bold">{{item.title}}</h6>
@@ -70,11 +70,48 @@ export default {
 <style scoped>
 .select-box{
   border-radius: 1.5rem !important;
-  padding:30px 30px
+  padding:15px
 }
 .select-box:hover{
     background-color:var(--hoverBgColor);
 
+}
+.img-fluid{
+   max-width: 50%;
+ }
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+ .img-fluid{
+   max-width: 50%;
+ }
+  
+ }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+   .select-box{
+  border-radius: 1.5rem !important;
+  padding:30px
+}
+.img-fluid{
+   max-width: 100%;
+ }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .select-box{
+  border-radius: 1.5rem !important;
+  padding:30px
+}
+ }
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+   .select-box{
+  border-radius: 1.5rem !important;
+  padding:30px
+}
 }
 
 </style>

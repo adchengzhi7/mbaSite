@@ -5,7 +5,7 @@
          <div class="m-top text-start h-100 ">
            <div class="section-height">
             <router-link  :key="item.id" v-for="item in section"  :to="{name:item.router}" tag="div">
-              <div class="section" :class="{'section-active':currentRouteName == item.router}" >
+              <div class="section" :class="{'section-active':currentRouteName == item.router}"  >
                 <span class="p-4">
                 <i :class="item.icon"></i>
                 </span>
