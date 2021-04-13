@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="partTop">
-       <div class="row">
+       <div class="row m-0">
         <div class="col d-none d-sm-block d-xl-block "></div>
         <div class="col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 row">
             <div class="col-12 col-md-6">
@@ -14,8 +14,8 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 ">
-              <div class="avatar-box p-3 ">
+            <div class="col-12 col-md-6 mt-3 mt-md-0 ">
+              <div class="avatar-box p-0 p-md-3 ">
                   <div class="d-flex flex-wrap pb-3 ">
                   <div >已確認點數</div>
                   <div class="ms-auto" >{{totalPoint}}/3</div>
@@ -30,7 +30,7 @@
        </div>
        
        
-       <div v-if="pointsLength == 0" class="row mt-5" >
+       <div v-if="pointsLength == 0" class="row mt-2 mt-md-5 " >
          <div class="col-2"></div>
          <div class="col content-box" >
            <div style="margin:auto">
@@ -50,7 +50,7 @@
        </div>
        <div v-else class="row mt-5">
          <div class="d-none col d-md-block d-xl-block"></div>
-         <div class="col-12 col-xl-9 col-md-9 overflow-auto ">
+         <div class="p-0 p-sm-3 col-12 col-xl-9 col-md-9 overflow-auto ">
 
          <tables :isTA="isTA" :stuId="userData.stuId"></tables>
          </div>
@@ -76,7 +76,8 @@ export default {
     avatar,
     tables
   },
-  
+  mounted() {
+  },
   computed:{
     pointsLength(){
       let vm =this; 

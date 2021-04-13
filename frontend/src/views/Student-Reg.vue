@@ -1,7 +1,7 @@
 <template>
   <div > 
      <div class="partTop">
-       <div class="row">
+       <div class="row m-0">
          <div class="col"></div>
          <div class="col-9">
            <reg-selection :isTA="isTA" ></reg-selection>

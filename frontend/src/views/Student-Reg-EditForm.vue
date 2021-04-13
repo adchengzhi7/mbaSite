@@ -83,7 +83,7 @@ data() {
         englishCredit: null,
         pointId:null
       },
-      isTA:true,
+      isTA:false,
       
     }
   },

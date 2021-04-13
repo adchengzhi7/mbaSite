@@ -1,6 +1,6 @@
 <template>
     <div class="partTop">
-       <div class="row mt-5 mb-4">
+       <div class="row m-0 mt-3 mb-2  mt-md-5 mb-md-4">
          <div class="col d-none d-sm-block d-xl-block align-self-center">
               <div class="align-self-center" v-if="isTA" :isEdit="editDataByUser">
                 <h3 class="pointer hover" @click="$router.go(-1)">
@@ -8,7 +8,7 @@
                 </h3>
             </div>
          </div>
-         <div class="me-3 ms-3 col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 align-self-center">
+         <div class="col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 align-self-center">
              
            <div class="d-flex">
             
@@ -33,15 +33,14 @@
          
 
        </div>
-       <div class="row">
+       <div class="row m-0">
            <div class="col d-none d-sm-block d-xl-block"></div>
-           <div class="me-3 ms-3 col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12">
-
-              <div class="text-muted mb-3 h6 text-start" >
-               學號： {{currentRegPointUser}}
-              </div>
+           <div class=" col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12">
                <form v-if="pointType.type != 7 " class="text-start needs-validation" v-on:submit.prevent="submit"> 
-                  <div class="row">
+                  <div class="row m-0">
+                       <div class="text-muted mb-3 h6 text-start" >
+                        學號： {{currentRegPointUser}}
+                      </div>
                       <div class="col input-col">
                           <select class="form-control" name="" id="year" v-model="yearSelected">
                             <option value="none" class="select-default" id="0" disabled >選擇學年</option>
@@ -62,7 +61,7 @@
                           </div>
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row m-0">
                     <div class="col input-col">
                     <input class="form-control" :class="{'is-invalid':isSectionNull && sectionBlured,'is-valid':!isSectionNull &&sectionBlured }" @blur="sectionBlured = true" type="text" v-model="sectionTitle" placeholder="請輸入完整單位名稱" >
                           <div class="invalid-feedback">
@@ -71,8 +70,8 @@
                     </div>
                   </div>
                   
-                  <div class="row" v-if="isTA">
-                    <div class="col input-col">
+                  <div class="row m-0" >
+                    <div class="col input-col" v-if="isTA">
                       
                         <div class="input-group ">
                             <button class="btn btn-secondary" type="button" @click="minusPoints" >
@@ -87,15 +86,18 @@
                             點數不可大於2
                           </div>
                     </div>
-                  </div>
-                  <div class="mt-3">
-                    <button v-if="!isEdit" class="btn btn-success btn-lg success " >提交申請</button>
-                    <button v-else class="btn btn-success btn-lg success " >保存變更</button>
+                    <div class="mt-3" :class="{'d-grid gap-2':isDisplaySmall==true}">
+                      <button v-if="!isEdit" class="btn btn-success btn-lg success " >提交申請</button>
+                      <button v-else class="btn btn-success btn-lg success " >保存變更</button>
+                    </div>
                   </div>
               </form>
 
               <div v-else class="text-start">
-                <div class="row">
+                <div class="row m-0">
+                    <div class="text-muted mb-3 h6 text-start" >
+                      學號： {{currentRegPointUser}}
+                    </div>
                     <div class="col input-col">
                         <select class="form-control" name="" id="" v-model="englishSelected" :class="{'is-invalid':isEnglishSelectedNull && englishSelectedBlured,'is-valid':!isEnglishSelectedNull &&englishSelectedBlured }" @blur="englishSelectedBlured = true">
                           <option value="none" disabled  >選擇英語檢定類別</option>
@@ -104,17 +106,17 @@
                     </div>
                     
                 </div>
-                <div class="row">
+                <div class="row m-0">
                   <div class="col input-col">
                     <input class="form-control" type="number" v-model="englishPoint" :class="{'is-invalid':isEnglishPointNull && englishPointBlured,'is-valid':!isEnglishPointNull &&englishPointBlured }" @blur="englishPointBlured = true"  placeholder="輸入英語檢定分數">
                   </div>
                   <div class="invalid-feedback">請輸入英語檢定分數 </div>
+                  <div class="mt-3" :class="{'d-grid gap-2':isDisplaySmall==true}">
+                    <button v-if="!isEdit" class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
+                    <button v-else class="btn btn-success btn-lg success " @click="submitEnglish">保存變更</button>
+                  </div>
                 </div>
                 
-                <div class="mt-3">
-                  <button v-if="!isEdit" class="btn btn-success btn-lg success " @click="submitEnglish">提交申請</button>
-                  <button v-else class="btn btn-success btn-lg success " @click="submitEnglish">保存變更</button>
-                </div>
               </div>
            </div>
            <div class="col d-none d-sm-block d-xl-block"></div>
@@ -122,7 +124,7 @@
      </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 export default {
 
   props:["isTA","currentRegPointUser","pointType","pointData"],
@@ -155,10 +157,20 @@ export default {
       }
     },
   mounted() {
-     
   },
   computed:{
-    
+     ...mapGetters({
+        windowWidth:'windowWidth'
+    }),
+    isDisplaySmall() {
+        let vm = this;
+        vm.getWidth();
+        if (vm.windowWidth > 768) {
+            return false;
+        } else {
+            return true;
+        }
+    },
      editDataByUser(){
         let vm=this;
         if(vm.pointData){
@@ -243,7 +255,9 @@ export default {
   methods: {
     ...mapActions({
        insertUserPoint:'userPoint/insertUserPoint',
-       updatePointByPointId:'userPoint/updatePointByPointId'
+       updatePointByPointId:'userPoint/updatePointByPointId',
+       getWidth:'getWidth'
+
     }),
     currentTime(){
       const date = new Date(+new Date() + 8 * 3600 * 1000)
@@ -407,6 +421,19 @@ export default {
 }
 </script>
 <style scoped>
+div{
+  font-size:14px !important;
+}
+.form-control{
+  font-size:14px !important;
+}
+h3{
+  font-size: 18px !important;
+}
+.img-fluid {
+    max-width: 80%;
+    height: auto;
+}
 .input-col{
   margin-bottom:20px
 }
@@ -444,6 +471,73 @@ option:first-of-type {
      box-shadow: 0 5px 10px rgba(56, 178, 105,0.05) ,
       0 15px 40px rgba(56, 178, 105,0.15)  !important;
 
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  div{
+    font-size:14px !important;
+  }
+  .form-control{
+    font-size:14px !important;
+  }
+  h3{
+    font-size: 18px !important;
+  }
+  .img-fluid {
+      max-width: 80%;
+      height: auto;
+  }
+ }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+  div{
+    font-size:16px !important;
+  }
+  .form-control{
+    font-size:18px !important;
+  }
+  h3{
+    font-size: 28px !important;
+  }
+  .img-fluid {
+      max-width: 100%;
+      height: auto;
+  }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  div{
+    font-size:16px !important;
+  }
+  .form-control{
+    font-size:18px !important;
+  }
+  h3{
+    font-size: 28px !important;
+  }
+  .img-fluid {
+      max-width: 100%;
+      height: auto;
+  }
+ }
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  div{
+    font-size:16px !important;
+  }
+  .form-control{
+    font-size:18px !important;
+  }
+  h3{
+    font-size: 28px !important;
+  }
+  .img-fluid {
+      max-width: 100%;
+      height: auto;
+  }
 }
 
 </style>>

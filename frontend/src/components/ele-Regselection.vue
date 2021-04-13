@@ -1,18 +1,21 @@
 <template>
     <div>
          <div class="d-flex mb-3">
-            <div v-if="isTA">
-              <h3 class="pointer hover" @click="$router.go(-1)">
-                <i class="fas fa-arrow-left icon-clickable"></i>
-              </h3>
-            </div>
-            <div :class="{'ml-4':isTA}">
-                <h3 class="font-weight-boldest">  選擇登錄點數</h3>
-            </div>
+           <div class="col-12 text-start">
+              <div v-if="isTA">
+                <h3 class="pointer hover" @click="$router.go(-1)">
+                  <i class="fas fa-arrow-left icon-clickable"></i>
+                </h3>
+              </div>
+              <div :class="{'ml-4':isTA}">
+                  <h3 class="font-weight-boldest">  選擇登錄點數</h3>
+              </div>
+           </div>
+
            </div>
   
-           <div class="row">
-             <div class="col-12 col-sm-6 p-1 col-md-4 p-md-4 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
+           <div class="row m-0">
+             <div class="col-12 col-sm-6 p-1 col-md-4 p-md-3 " :key="item.id" v-for="item in sectionType" @click="toRoute(item)">
                <div class="select-box bg-shadow-hover pointer ">
                   <img class="img-fluid" :src="require(`@/assets/icon/`+item.icon+`.svg`)" alt="">
                   <h6 class="font-weight-bold">{{item.title}}</h6>

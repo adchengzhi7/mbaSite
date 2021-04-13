@@ -21,8 +21,12 @@ computed:{
       
     }),
      isTA(){
-       if(this.$store.state.auth.userType == 0) return false
-       else return true
+       if(this.$store.state.auth.userType == 0){
+          return false
+        } else {
+          return true
+        }
+       
      },
      ConfirmGetUserId(){
       if(this.$store.state.auth.userId){
