@@ -1,22 +1,22 @@
 
 <template>
   <div > 
-     <div class="partTop mt-5">
-       <div class="row mb-3">
-         <div class="col"></div>
-         <div class="col-6">
+     <div class="partTop mt-0 mt-md-5">
+       <div class="row m-0 mb-3">
+         <div class="col d-none d-sm-block d-xl-block"></div>
+         <div class="col-12 col-md-6">
             <input class="form-control" v-model="filter" placeholder="輸入查詢的姓名、學號" type="text"  >
 
          </div>
-         <div class="col-4"></div>
-         <div class="col"></div>
+         <div class="col-4 d-none d-sm-block d-xl-block "></div>
+         <div class="col d-none d-sm-block d-xl-block"></div>
        </div>
-       <div class="row ">
-         <div class="col"></div>
-         <div class="col-6">
+       <div class="row m-0 ">
+         <div class="col d-none d-sm-block d-xl-block"></div>
+         <div class="col-12 col-md-6">
             <tables :filter= "filter" :studentList="studentList"></tables>
          </div>
-         <div class="col-4">
+         <div class="col-12 col-md-4 ">
            <div class="d-flex flex-wrap">
              <h5 class="font-weight-bold">待審核清單</h5>
              <div v-if="unreviewPoints" >
@@ -59,7 +59,7 @@
              </div>
            </div>
          </div>
-         <div class="col"></div>
+         <div class="col d-none d-sm-block d-xl-block"></div>
        </div>
      </div>
   </div>
@@ -191,6 +191,9 @@ data() {
 	height: 5px;
 
 }
-
+a{
+    color:var(--green);
+    font-weight:900;
+}
 
 </style>>

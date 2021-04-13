@@ -48,7 +48,7 @@
 
 
        </div>
-       <div v-else class="row mt-5">
+       <div v-else class="row m-0 mt-5">
          <div class="d-none col d-md-block d-xl-block"></div>
          <div class="p-0 p-sm-3 col-12 col-xl-9 col-md-9 overflow-auto ">
 
