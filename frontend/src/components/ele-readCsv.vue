@@ -2,7 +2,7 @@
     <div class="p-5">
         <div class="  alert alert-warning ">
             <i class="fas fa-exclamation-circle "></i>
-            <a href="/"> 檔案範本</a>
+            <a href="/file/example.csv" download> 檔案範本</a>
             只限CSV （儲存記得選擇 UTF-8 CSV，以免發生中文字體亂碼）
         </div>
         <div>
