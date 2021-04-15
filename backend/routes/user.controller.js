@@ -165,7 +165,7 @@ module.exports={
                     });
                     return res.json({
                         success:1,
-                        message:"login successfully",
+                        message:"成功登入",
                         token:jsontoken
                     });
 

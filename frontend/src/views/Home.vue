@@ -20,7 +20,7 @@
                 </div>
               </div>
               <div  class="font-weight-bold text-danger" v-if="!notFirstLogin">
-                {{ invalidUserMsg}}
+                <span :class="{'text-danger': invalidUserMsg != '成功登入' ,'text-success': invalidUserMsg == '成功登入'}">{{ invalidUserMsg}}</span>
               </div>
           </div>
         <div class="pt-3">
