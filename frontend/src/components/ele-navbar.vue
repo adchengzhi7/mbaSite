@@ -3,7 +3,9 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
       <img class="img-fluid" src="../assets/mba-logo.png" width="30" height="30" alt="">
+       <router-link :to="{ name: 'Home' }">
       <span class="ms-2 me-2 theme">特色學習登錄</span>
+      </router-link>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -88,6 +90,9 @@ export default {
 .theme{
     color: #38b269;
   font-weight: 900;
+}
+a {
+    text-decoration: none;
 }
 
 </style>
