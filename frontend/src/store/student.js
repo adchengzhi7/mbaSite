@@ -8,6 +8,7 @@ import auth from './auth'
         newStudentList:null,
         isInsertingStudent:null,
         loadingPrecentage:0,
+        adminRegSts:null,
     },
     getters:{
         studentList(state){
@@ -26,6 +27,9 @@ import auth from './auth'
         },
         loadingPrecentage(state){
             return state.loadingPrecentage
+        },
+        adminRegSts(state){
+            return state.adminRegSts
         }
     },
     mutations:{
@@ -45,6 +49,10 @@ import auth from './auth'
         },
         SET_LOADINGPERCENTAGE(state,data){
             state.loadingPrecentage = data;
+        },
+        SET_ADMINREGSTS(state,data){
+            state.adminRegSts = data;
+
         }
         
         
@@ -106,6 +114,7 @@ import auth from './auth'
              },)
              .then(function (response) {
                  dispatch("newStudent",response.data)
+                 return response.status;
               })
               .catch(function (error) {
                    throw error;
@@ -114,6 +123,18 @@ import auth from './auth'
                 dispatch("isInsertingStudent",false);
 
               });
+              
+        },
+        async insertAdminList({commit},data){
+            await axios.post('/users/',data,{ 
+                headers:{'Authorization':'Bearer ' +auth.state.token },
+             },)
+             .then(function (response) {
+                 console.log(response);
+                 return commit("SET_ADMINREGSTS",response.data)
+              })
+                 
+              console.log(commit);
               
         },
         isInsertingStudent({commit},data){

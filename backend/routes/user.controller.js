@@ -50,19 +50,37 @@ module.exports={
             
 
         }else{
-            body.password =hashSync(body.password,salt);
-            create(body,(err,result)=>{
-                if(err){
-                    return res.status(500).json({
-                        success:0,
-                        message:"Database connection error"
-                    })
-                }
-                return res.status(200).json({
-                    success:1,
-                    data:result
-                })
-            })
+            const mapLoop = async _ => {
+                    const newPassword=body.personalid;
+                    body.password =hashSync(newPassword,salt);
+                    body.type=1;
+
+                    try{
+                        const a = await create(body)
+                        console.log(a);
+                        res.send(a);
+
+                    }catch(e){
+                        console.log(e);
+                        res.send(e);
+                    }
+
+              }
+              mapLoop()
+           
+           
+            // create(body,(err,result)=>{
+            //     if(err){
+            //         return res.json({
+            //             success:0,
+            //             message:"Database connection error"
+            //         })
+            //     }
+            //     return res.status(200).json({
+            //         success:1,
+            //         data:result
+            //     })
+            // })
         }
     },
     getUserByStuId:(req,res)=>{
