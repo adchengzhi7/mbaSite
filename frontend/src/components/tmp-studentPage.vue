@@ -6,7 +6,7 @@
         <div class="col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 row">
             <div class="col-12 col-md-6">
                 <div class="d-flex  justify-content-center ">
-                <avatar :image="avatarImg" size="lg"></avatar>
+                <avatar :image="img" size="lg"></avatar>
                 <div class=" avatar-box">
                     <h4 class="font-weight-bold m-0">{{userData.name}}</h4>
                     <div>{{userData.stuId}}</div>
@@ -62,14 +62,14 @@
 <script>
 import avatar from "../components/ele-avatar"
 import tables from "../components/ele-tableStudent"
-import {mapActions} from "vuex"
+import {mapActions,mapGetters} from "vuex"
 
 export default {
     props:["isTA","userData","userPoints"],
     data() {
         return {
             finalPoints:0,
-            avatarImg:"http://placehold.it/64x64",
+            // avatarImg:"",
            }
     },
      components:{
@@ -77,8 +77,20 @@ export default {
     tables
   },
   mounted() {
+    
   },
   computed:{
+    ...mapGetters({
+      avatar:'avatar'
+    }),
+    img(){
+      if(this.userData){
+        console.log(this.avatar);
+       this.avatarImg(this.userData.stuId)
+        return this.avatar
+      }
+      return ''
+    },
     pointsLength(){
       let vm =this; 
       if(vm.userPoints){
@@ -118,7 +130,9 @@ export default {
   },
   methods: {
      ...mapActions({
-          regStudentIs:'regStudentIs'
+          regStudentIs:'regStudentIs',
+          avatarImg:'avatarImg'
+
       }),
     routerTo(path,id){
       let vm = this;

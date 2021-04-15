@@ -13,7 +13,8 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
      <ul class="navbar-nav me-auto mb-2 mb-lg-0 "></ul>
      <div class="d-flex">
-       <avatar class="me-1 ms-1" :image="avatarImg" size="default" ></avatar>
+       <avatar class="me-1 ms-1" :image="avatar" size="default" :api="avatarImg" ></avatar>
+       
        <ul class="navbar-nav me-2">
        <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -40,7 +41,7 @@ import avatar from "./ele-avatar"
 export default {
   data() {
     return {
-      avatarImg:"http://placehold.it/64x64"
+      // avatarImg:"https://avatars.dicebear.com/v2/male/c99f18efa2fbc33e0090345423012607.svg"
     }
   },
   components:{
@@ -49,7 +50,8 @@ export default {
   methods: {
     ...mapActions({
       signOutAction:'auth/signOut',
-      checkTokenInvalid:'auth/checkTokenInvalid'
+      checkTokenInvalid:'auth/checkTokenInvalid',
+      avatarImg:'avatarImg'
     }),
     signOut(){
         this.signOutAction().then(() =>{
@@ -67,19 +69,26 @@ export default {
 
       }
       )
-
-
-    }
+    },
+    randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  }
   },
   computed:{
     ...mapGetters({
       authenticated:'auth/authenticated',
       user:'auth/user',
-      isInvalidToken:'auth/isInvalidToken'
-    })
+      userId:'auth/userId',
+      isInvalidToken:'auth/isInvalidToken',
+      avatar:'avatar'
+    }),
+    
   },
   mounted() {
     this.checkIsLogin()
+    this.avatarImg(this.userId)
   },
 }
 </script>

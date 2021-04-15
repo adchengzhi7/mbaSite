@@ -7,6 +7,7 @@ export default createStore({
     state:{
         currentRegPointUser:null,
         windowWidth:null,
+        avatar:null,
 
     },
     getters:{
@@ -15,6 +16,9 @@ export default createStore({
         },
         windowWidth(state){
             return state.windowWidth
+        },
+        avatar(state){
+            return state.avatar
         }
     },
     mutations:{
@@ -23,7 +27,11 @@ export default createStore({
         },
         SET_WINDOWWIDTH(state,payload){
             state.windowWidth = payload;
+        },
+        SET_AVATAR(state,payload){
+            state.avatar = payload;
         }
+        
         
     },
     actions:{
@@ -33,7 +41,13 @@ export default createStore({
         getWidth({commit}){
             let width = window.innerWidth;
             commit("SET_WINDOWWIDTH",width)
-        }
+        },
+        avatarImg({commit},id){
+            let sex ="male"
+            let random =id;
+            let api = "https://avatars.dicebear.com/v2/"+ sex +"/"+ random+".svg?background=%23d3d3d3";
+            commit("SET_AVATAR",api)
+          }
     },
     modules:{
         userPoint:points,

@@ -74,6 +74,7 @@ export default {
             }
             try {
                 let decoded = jwt_decode(token);
+                console.log(decoded.result);
                 commit('SET_USER',decoded.result.usersDetails_cName)
                 commit('SET_USERDETAILS',decoded.result)
 
