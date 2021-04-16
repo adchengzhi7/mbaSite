@@ -53,7 +53,6 @@ export default createStore({
             let sex ="bottts"
             let random =data.id;
             let api = "https://avatars.dicebear.com/v2/"+ sex +"/"+ random+".svg?background=%23d3d3d3";
-            console.log(api);
             if(data.type == "loginUser"){
                 commit("SET_AVATAR",api)
             }else{

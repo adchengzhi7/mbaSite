@@ -108,7 +108,7 @@ export default {
 
           return vm.finalPoints= pointArray.reduce((sum,key)=> sum+key)
         }catch(e){
-          console.log(e);
+          // console.log(e);
           return vm.finalPoints=0;
           }
        }
