@@ -51,7 +51,6 @@ export default createStore({
         },
         avatarImg({commit},data){
             let sex ="bottts"
-            console.log(data);
             let random =data.id;
             let api = "https://avatars.dicebear.com/v2/"+ sex +"/"+ random+".svg?background=%23d3d3d3";
             console.log(api);
