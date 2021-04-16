@@ -99,5 +99,8 @@ export default {
 a {
     text-decoration: none;
 }
+.dropdown-menu > a:hover, .dropdown-menu > a:focus {
+   background-color:var(--hoverBgColor)
+}
 
 </style>
