@@ -6,7 +6,7 @@
         <div class="col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 row">
             <div class="col-12 col-md-6">
                 <div class="d-flex  justify-content-center ">
-                <avatar :image="img" size="lg"></avatar>
+                <avatar :image="img(userData.stuId)" size="lg"></avatar>
                 <div class=" avatar-box">
                     <h4 class="font-weight-bold m-0">{{userData.name}}</h4>
                     <div>{{userData.stuId}}</div>
@@ -81,16 +81,9 @@ export default {
   },
   computed:{
     ...mapGetters({
-      avatar:'avatar'
+      avatarViewer:'avatarViewer'
     }),
-    img(){
-      if(this.userData){
-        console.log(this.avatar);
-       this.avatarImg(this.userData.stuId)
-        return this.avatar
-      }
-      return ''
-    },
+   
     pointsLength(){
       let vm =this; 
       if(vm.userPoints){
@@ -134,6 +127,13 @@ export default {
           avatarImg:'avatarImg'
 
       }),
+      img(id){
+      if(id){
+       this.avatarImg({id:id,type:"admin"})
+        return this.avatarViewer
+      }
+      
+    },
     routerTo(path,id){
       let vm = this;
       vm.regStudentIs(id);

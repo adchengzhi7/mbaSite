@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios'   
 import auth from './auth'
  const student = {
     namespaced:true,
@@ -125,18 +125,7 @@ import auth from './auth'
               });
               
         },
-        async insertAdminList({commit},data){
-            await axios.post('/users/',data,{ 
-                headers:{'Authorization':'Bearer ' +auth.state.token },
-             },)
-             .then(function (response) {
-                 console.log(response);
-                 return commit("SET_ADMINREGSTS",response.data)
-              })
-                 
-              console.log(commit);
-              
-        },
+       
         isInsertingStudent({commit},data){
             commit("SET_STUDENTSTS",data)
             
