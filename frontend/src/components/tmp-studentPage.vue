@@ -6,7 +6,7 @@
         <div class="col-12 col-xl-9 col-md-9  col-sm-10 col-xs-12 row">
             <div class="col-12 col-md-6">
                 <div class="d-flex  justify-content-center ">
-                <avatar :image="img(userData.stuId)" size="lg"></avatar>
+                <avatar :image="img(userData.name)" size="lg"></avatar>
                 <div class=" avatar-box">
                     <h4 class="font-weight-bold m-0">{{userData.name}}</h4>
                     <div>{{userData.stuId}}</div>

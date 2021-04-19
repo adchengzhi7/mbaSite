@@ -84,7 +84,7 @@ export default {
   },
   mounted() {
     this.checkIsLogin()
-    this.avatarImg({id:this.userId,type:"loginUser"})
+    this.avatarImg({id:this.user,type:"loginUser"})
   },
 }
 </script>
