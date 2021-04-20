@@ -22,7 +22,7 @@
               <div class=" p-xl-3 p-md-3  p-sm-2 p-2 text-primary" role="alert">
                   <div>
                 <i class="fas fa-info-circle"></i>
-                    默認密碼為身分證10碼
+                    密碼為身份證字號10碼
                   </div>
                   <div class="small">
                   （含大寫英文字母）
