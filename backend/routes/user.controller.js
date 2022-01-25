@@ -10,6 +10,7 @@ const{
 const {genSaltSync,hashSync,compareSync} = require("bcrypt") 
 const {sign} = require("jsonwebtoken");
 const { json, response } = require("express");
+require("express").Router();
 
 module.exports={
     createUser:(req,res ) =>{
@@ -119,8 +120,6 @@ module.exports={
     },
     updateUser:(req,res) =>{
         const body = req.body;
-        const salt =genSaltSync(10);
-        body.password =hashSync(body.password,salt);
         updateUser(body,(err,result)=>{
             if(err){
                 console.log(err);
@@ -129,7 +128,9 @@ module.exports={
             if(!result){
                 return res.json({
                 success:0,
-                message:"Failed to update User"
+                message:"Failed to update User2",
+                error:err,
+                result:result,
                 })
             }
             return res.json({
@@ -160,11 +161,11 @@ module.exports={
 
     },
     login:(req,res)=>{
-        const body= req.body;
+        const body= req.body
         getUserByStuIdAll(body.user,(err,results)=>{
             if(err){
                 console.log(err);
-                return;
+                res.send(err);
             }
             if(!results){
                 res.json({

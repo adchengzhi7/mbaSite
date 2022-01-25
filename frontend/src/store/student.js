@@ -9,6 +9,7 @@ import auth from './auth'
         isInsertingStudent:null,
         loadingPrecentage:0,
         adminRegSts:null,
+        updatedStudent:null,
     },
     getters:{
         studentList(state){
@@ -53,6 +54,9 @@ import auth from './auth'
         SET_ADMINREGSTS(state,data){
             state.adminRegSts = data;
 
+        },
+        SET_UPDATEDSTUDENT(state,data){
+            state.updatedStudent =data;
         }
         
         
@@ -100,6 +104,20 @@ import auth from './auth'
         newStudent({commit,dispatch},data){
             commit('SET_NEWSTUDENTLIST',data)
             dispatch("setProgressNull");
+
+        },
+        async updateStudent({dispatch},data){
+            await axios.patch('/users/',data,{ 
+                headers:{'Authorization':'Bearer ' +auth.state.token },
+             },)
+             .then(function (response) {
+                dispatch("getStudentDataById",data.studentid)
+                return response.status;
+              })
+              .catch(function (error) {
+                   throw error;
+              })    
+            
 
         },
         setNewStudentNull({commit,dispatch}){

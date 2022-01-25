@@ -52,20 +52,20 @@ module.exports={
 
     },
     updateUser:(data,callBack) =>{
+        
         pool.query(
-            'UPDATE users_details SET usersDetails_cName=?,usersDetails_type=?,usersDetails_psId=?,usersDetails_pass=? WHERE usersDetails_stuId=?',
+            'UPDATE users_details SET usersDetails_cName=? WHERE usersDetails_stuId=?',
             [
-                data.cName,
-                data.type,
-                data.psId,
-                data.password,
-                data.stuId,
+                data.name,
+                data.studentid,
             ],
             (error,results)=>{
+                console.log(pool.query);
+                console.log(results);
                 if(error){
                     return callBack(error)
                 }
-                return callBack(null,results[0])
+                return callBack(null,results)
             }
         )
 

@@ -10,6 +10,7 @@
                 <div class=" avatar-box">
                     <h4 class="font-weight-bold m-0">{{userData.name}}</h4>
                     <div>{{userData.stuId}}</div>
+                    <a class="link-primary" v-if="isTA" @click="updateBox"  >編輯資訊</a>
                 </div>
                 </div>
             </div>
@@ -124,7 +125,10 @@ export default {
   methods: {
      ...mapActions({
           regStudentIs:'regStudentIs',
-          avatarImg:'avatarImg'
+          avatarImg:'avatarImg',
+        updateStudent:'student/updateStudent',
+
+          
 
       }),
       img(id){
@@ -133,12 +137,70 @@ export default {
         return this.avatarViewer
       }
       
+      
     },
     routerTo(path,id){
       let vm = this;
       vm.regStudentIs(id);
       vm.$router.push({name:path})
     },
+    async updateBox(){
+        let vm =this;
+        const { value: formValues } = await vm.$swal.fire({
+        icon:'info',
+        title: '修改資訊',
+        html:
+            '<input id="swal-input1" type="text" value="'+vm.userData.name +'" placeholder="姓名"class="form-control m-2">' +
+            '<input id="swal-input4" type="number" value="'+vm.userData.stuId +'" disabled placeholder="輸入代號/學號" class="form-control m-2">',
+        focusConfirm: true,
+        confirmButtonColor: '#38b269',
+        confirmButtonText: '<i class="fas fa-save"></i> 更新資料',
+         confirmButtonAriaLabel: '更新資料',
+        preConfirm: () => {
+            if(!document.getElementById('swal-input1').value ||!document.getElementById('swal-input4').value){
+                let msg = '未輸入'
+                if (!document.getElementById('swal-input1').value) {
+                    msg = msg+' 姓名、';
+                }
+                if (!document.getElementById('swal-input4').value) {
+                      msg = msg+' 輸入學號 ';
+                } 
+                    vm.$swal.showValidationMessage(msg)   
+
+            }
+            else {
+            return {
+                    name: document.getElementById('swal-input1').value,
+                    studentid:document.getElementById('swal-input4').value,
+                }
+            }
+
+        }
+        })
+
+        if (formValues) {
+          console.log(formValues);
+            vm.updateStudent(formValues);
+            // .then((res)=>{
+            //     if(res.data.affectedRows){
+            //         vm.$swal.fire({
+            //             icon: 'success',
+            //             title: '修改完畢',
+            //             text: '修改資料為：'+JSON.parse(res.config.data),
+            //         })
+            //     }else{  
+            //         vm.$swal.fire({
+            //                 icon: 'error',
+            //                 title: '發生錯誤',
+            //                 text: res.data.code,
+            //             })
+
+            //     }
+            // })
+          
+        }
+    }
+
   },
  
 
